@@ -1,6 +1,6 @@
 CREATE TABLE User (
     mail VARCHAR(255) PRIMARY KEY ,
-    password VARCHAR(255),
+    password VARCHAR(255)CHECK (LENGTH(password) >= 4),
     city VARCHAR(255)
 
 );
