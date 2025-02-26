@@ -1,20 +1,48 @@
 @startuml
 skinparam groupInheritance 2
 
+class Message{
+id
+message
+publicationDate
+}
+
+class OfferMessage extends Message{
+
+}
+
+
+class ApplicationMessage extends Message{
+
+}
+
 class User {
 mail
 password
 city
 }
-class Society{
+
+
+
+class JobOffer{
+id
+title
+taskdescription
+publicationDate
+}
+
+class Society extends User{
 denomination
 description
 }
-class Candidate{
+
+class Candidate extends User{
 lastname
 firstname
 }
+
 class Application{
+id
 cv
 appdate
 }
@@ -22,36 +50,21 @@ appdate
 class Field{
 label
 }
+
 class QualificationLevel{
 label
 }
-class JobOffer{
-title
-taskdescription
-publicationDate
-}
-class OfferMessage{
 
-}
-class ApplicationMessage{
 
-}
-class Message{
-message
-publicationDate
-}
-User <|-- Candidate
-User <|-- Society
-Message <|-- OfferMessage
-Message <|-- ApplicationMessage
-OfferMessage "0..*" -- "0..*" Application : is sent >
-ApplicationMessage "0..*" -- "0..*" JobOffer : is sent >
-Society "1..1"--  "0..*" JobOffer : publish >
-Candidate "1..1" -- "0..*"Application : publish >
-JobOffer "0..*" -- "1..*" Field : relate >
-JobOffer "0..*" -- "1..1" QualificationLevel : relate >
-Application "0..*" -- "1..*" Field : relate >
-Application "0..*" -- "1..1" QualificationLevel : relate >
-Application "1..1"-- "1..1" ApplicationMessage : publish >
-JobOffer "1..1" -- "1..1" OfferMessage : publish >
+
+JobOffer "0..*" -- "0..*" ApplicationMessage : is sent <
+JobOffer "0..*" -- "1..1" Society : publishes <
+JobOffer "0..*" -- "1..*" Field : requires >
+JobOffer "1..1" -- "1..1" OfferMessage : publishes >
+JobOffer "0..*" -- "1..1" QualificationLevel : requires >
+Application "0..*" -- "1..*" Field : requires >
+Application "0..*" -- "1..1" QualificationLevel : requires >
+ApplicationMessage "1..1"-- "1..1" Application : publishes >
+Application "0..*"  --"0..*" OfferMessage : is sent <
+Application "0..*" -- "1..1" Candidate : publishes <
 @enduml
