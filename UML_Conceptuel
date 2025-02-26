@@ -1,0 +1,57 @@
+@startuml
+skinparam groupInheritance 2
+
+class User {
+mail
+password
+city
+}
+class Society{
+denomination
+description
+}
+class Candidate{
+lastname
+firstname
+}
+class Application{
+cv
+appdate
+}
+
+class Field{
+label
+}
+class QualificationLevel{
+label
+}
+class JobOffer{
+title
+taskdescription
+publicationDate
+}
+class OfferMessage{
+
+}
+class ApplicationMessage{
+
+}
+class Message{
+message
+publicationDate
+}
+User <|-- Candidate
+User <|-- Society
+Message <|-- OfferMessage
+Message <|-- ApplicationMessage
+OfferMessage "0..*" -- "0..*" Application : is sent >
+ApplicationMessage "0..*" -- "0..*" JobOffer : is sent >
+Society "1..1"--  "0..*" JobOffer : publish >
+Candidate "1..1" -- "0..*"Application : publish >
+JobOffer "0..*" -- "1..*" Field : relate >
+JobOffer "0..*" -- "1..1" QualificationLevel : relate >
+Application "0..*" -- "1..*" Field : relate >
+Application "0..*" -- "1..1" QualificationLevel : relate >
+Application "1..1"-- "1..1" ApplicationMessage : publish >
+JobOffer "1..1" -- "1..1" OfferMessage : publish >
+@enduml
