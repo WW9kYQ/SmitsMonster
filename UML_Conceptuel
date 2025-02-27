@@ -16,7 +16,7 @@ class ApplicationMessage extends Message{
 
 }
 
-class User {
+class UserApp {
 mail
 password
 city
@@ -31,12 +31,12 @@ taskdescription
 publicationDate
 }
 
-class Company extends User{
+class Company extends UserApp{
 denomination
 description
 }
 
-class Candidate extends User{
+class Candidate extends UserApp{
 lastname
 firstname
 }
@@ -48,10 +48,12 @@ appdate
 }
 
 class Field{
+id
 label
 }
 
 class QualificationLevel{
+id
 label
 }
 
