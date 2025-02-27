@@ -1,0 +1,68 @@
+
+
+
+//header.html
+<div th:fragment="fheader"> 
+	<div id="header_div" class="row h-10">
+		<div class="col-2 align-self-start">
+			<img th:src="@{/img/logo_imt.png}"/>
+		</div>
+        <div class="col-6 align-self-center"></div>
+        <div class="col-2 align-self-end">
+                  <p th:if="${#ctx.session.uid} != null">
+                <img th:src="@{img/identity.png}" title="Identity" class="logo"/><br/>
+                <span th:text="${#ctx.session.usertype}" class="tiny_text"/>
+                <span th:text="${#ctx.session.uid}" class="tiny_text"/>
+            </p> 
+        </div>
+
+		<div class="col-2 align-self-end">
+			<img th:if="${#ctx.session.uid} != null" th:src="@{/img/mail.png}" title="Access to your message" class="logo"/>
+			<a th:if="${#ctx.session.uid} == null" title="Click to login" href="/login">
+                <img th:src="@{img/login.png}" title="Login to access your data" class="logo"/>
+            </a>
+            <a th:if="${#ctx.session.uid} != null" title="Click to logout" href="/logout">
+                <img th:src="@{img/logout.png}" title="Logout from the webapp" class="logo"/>
+        
+            </a>
+        </div>
+
+	</div>
+    <div id="nav" class="row">
+        <div class="col">
+            <nav class="navbar navbar-expand navbar-light">
+                <div class="container-fluid">
+                <a class="navbar-brand" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/companypanel">Companies </a>
+                        </li>
+                        <li class="nav-item active">
+                           <a class="nav-link" href="/jobpanel">Jobs</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/candidatepanel">Candidates </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/applicationpanel">Applications</a>
+                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/listqualificationlevels">Qualification levels</a>
+                         </li>
+                         <li class="nav-item active">
+                            <a class="nav-link" href="/listsectors">Sectors</a>
+                         </li>
+                      
+                    </ul>
+                  
+                </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+</div>
