@@ -2,7 +2,7 @@ package fr.atlantique.imt.inf211.jobmngt.service;
 
 
 import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
-import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
+import fr.atlantique.imt.inf211.jobmngt.entity.Field;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ public class SectorServiceImp implements SectorService {
     SectorDao qDAO;
 
     @Transactional(readOnly = true)
-    public List<Sector> listOfSectors(){
+    public List<Field> listOfSectors(){
         return qDAO.findAll("id", "ASC");
     }
     

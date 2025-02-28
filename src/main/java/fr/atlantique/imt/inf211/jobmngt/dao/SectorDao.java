@@ -25,7 +25,7 @@ public class SectorDao {
 
     @PersistenceContext private EntityManager entityManager;
     
-    public void persist(Sector transientInstance) {
+    public void persist(Field transientInstance) {
         logger.log(Level.INFO, "persisting Sector instance");
         try {
             entityManager.persist(transientInstance);
@@ -37,7 +37,7 @@ public class SectorDao {
         }
     }
     
-    public void remove(Sector persistentInstance) {
+    public void remove(Field persistentInstance) {
         logger.log(Level.INFO, "removing Sector instance");
         try {
             entityManager.remove(persistentInstance);
@@ -49,10 +49,10 @@ public class SectorDao {
         }
     }
     
-    public Sector merge(Sector detachedInstance) {
+    public Field merge(Field detachedInstance) {
         logger.log(Level.INFO, "merging Sector instance");
         try {
-            Sector result = entityManager.merge(detachedInstance);
+            Field result = entityManager.merge(detachedInstance);
             logger.log(Level.INFO, "merge successful");
             return result;
         }
@@ -62,10 +62,10 @@ public class SectorDao {
         }
     }
     
-    public Sector findById( int id) {
+    public Field findById(int id) {
         logger.log(Level.INFO, "getting Sector instance with id: " + id);
         try {
-            Sector instance = entityManager.find(Sector.class, id);
+            Field instance = entityManager.find(Field.class, id);
             logger.log(Level.INFO, "get successful");
             return instance;
         }
@@ -77,15 +77,15 @@ public class SectorDao {
 
 
 
-    public List<Sector> findAll(String sort, String order) {
-        String r = "SELECT s FROM Sector s ORDER BY s." + sort;
+    public List<Field> findAll(String sort, String order) {
+        String r = "SELECT s FROM Field s ORDER BY s." + sort;
         if (order.toLowerCase().equals("asc")) {
             r += " ASC";
         } else {
             r += " DESC";
         }
         Query q = entityManager.createQuery(r);
-        return (List<Sector>) q.getResultList();
+        return (List<Field>) q.getResultList();
     }
 }
 
