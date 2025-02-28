@@ -1,17 +1,18 @@
 package fr.atlantique.imt.inf211.jobmngt.service;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.UserApp;
+
 import java.util.List;
 import java.util.Optional;
 
 
 public interface UserAppService {
 
-    public List<UserApp> listOfUsers();
-    
-    public UserApp getUserapp(Integer id);
+    List<UserApp> listOfUsers();
 
-    public Long nbUsers();
+    UserApp getUserapp(Integer id);
 
-    public Optional<UserApp> checkLogin(UserApp u);
+    Long nbUsers();
+
+    Optional<UserApp> checkLogin(UserApp u);
 }

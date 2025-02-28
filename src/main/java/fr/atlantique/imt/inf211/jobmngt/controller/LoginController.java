@@ -48,10 +48,10 @@ public class LoginController {
         Optional<UserApp> user = compRepo.checkLogin(u);
         if( user.isPresent()){
             u = user.get();
-            System.out.println("User found uid: "+u.getId()+" usertype: "+ u.getUserType());
+            System.out.println("User found mail: "+u.getMail()); // +" usertype: "+ u.getUserType());
             mav.addObject("user", u);
-            session.setAttribute("uid", u.getId());
-            session.setAttribute("usertype", u.getUserType());
+            session.setAttribute("mail", u.getMail());
+//            session.setAttribute("usertype", u.getUserType());
             mav.setViewName("index");
 
         }else{
@@ -65,8 +65,8 @@ public class LoginController {
     @RequestMapping("/logout")
 	public String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
-        session.setAttribute("uid", null);
-        session.setAttribute("usertype", null);
+        session.setAttribute("mail", null);
+//        session.setAttribute("usertype", null);
         return "index.html";
     }
 

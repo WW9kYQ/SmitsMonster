@@ -15,21 +15,21 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Home object for domain model class Qualificationlevel.
+ * Home object for domain model class Field.
  *
  * @author Hibernate Tools
- * @see .Qualificationlevel
+ * @see .Field
  */
 @Repository
-public class QualificationLevelDao {
+public class FieldDao {
 
-    private static final Logger logger = Logger.getLogger(QualificationLevelDao.class.getName());
+    private static final Logger logger = Logger.getLogger(FieldDao.class.getName());
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void persist(QualificationLevel transientInstance) {
-        logger.log(Level.INFO, "persisting Qualificationlevel instance");
+    public void persist(Field transientInstance) {
+        logger.log(Level.INFO, "persisting Field instance");
         try {
             entityManager.persist(transientInstance);
             logger.log(Level.INFO, "persist successful");
@@ -39,8 +39,8 @@ public class QualificationLevelDao {
         }
     }
 
-    public void remove(QualificationLevel persistentInstance) {
-        logger.log(Level.INFO, "removing Qualificationlevel instance");
+    public void remove(Field persistentInstance) {
+        logger.log(Level.INFO, "removing Field instance");
         try {
             entityManager.remove(persistentInstance);
             logger.log(Level.INFO, "remove successful");
@@ -50,10 +50,10 @@ public class QualificationLevelDao {
         }
     }
 
-    public QualificationLevel merge(QualificationLevel detachedInstance) {
-        logger.log(Level.INFO, "merging Qualificationlevel instance");
+    public Field merge(Field detachedInstance) {
+        logger.log(Level.INFO, "merging Field instance");
         try {
-            QualificationLevel result = entityManager.merge(detachedInstance);
+            Field result = entityManager.merge(detachedInstance);
             logger.log(Level.INFO, "merge successful");
             return result;
         } catch (RuntimeException re) {
@@ -62,10 +62,10 @@ public class QualificationLevelDao {
         }
     }
 
-    public QualificationLevel findById(int id) {
-        logger.log(Level.INFO, "getting Qualificationlevel instance with id: " + id);
+    public Field findById(int id) {
+        logger.log(Level.INFO, "getting Field instance with id: " + id);
         try {
-            QualificationLevel instance = entityManager.find(QualificationLevel.class, id);
+            Field instance = entityManager.find(Field.class, id);
             logger.log(Level.INFO, "get successful");
             return instance;
         } catch (RuntimeException re) {
@@ -75,21 +75,21 @@ public class QualificationLevelDao {
     }
 
     @Transactional(readOnly = true)
-    public Long nbLevels() {
+    public Long nbUsers() {
         String r = "select count(*) from UserApp c";
         TypedQuery<Long> q = entityManager.createQuery(r, Long.class);
         return q.getSingleResult();
     }
 
     @Transactional(readOnly = true)
-    public List<QualificationLevel> findAll(String sort, String order) {
-        String r = "SELECT s FROM QualificationLevel s ORDER BY s." + sort;
+    public List<Field> findAll(String sort, String order) {
+        String r = "SELECT s FROM Field s ORDER BY s." + sort;
         if (order.equals("asc")) {
             r += " ASC";
         } else {
             r += " DESC";
         }
-        TypedQuery<QualificationLevel> q = entityManager.createQuery(r, QualificationLevel.class);
+        TypedQuery<Field> q = entityManager.createQuery(r, Field.class);
         return q.getResultList();
     }
 }

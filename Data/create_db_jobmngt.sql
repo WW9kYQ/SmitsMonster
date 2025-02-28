@@ -203,3 +203,6 @@ values ('Master'); --  4
 insert into qualificationlevel(label)
 values ('PhD'); --  5
 
+insert into userapp(mail, password, city)
+values ('test@test.fr', 'test', 'Paris');
+

@@ -7,13 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
+import fr.atlantique.imt.inf211.jobmngt.service.FieldService;
 
 @Controller
 public class SectorController {
 
     @Autowired
-    private SectorService sServ;
+    private FieldService sServ;
 
 	@RequestMapping("/listsectors")
 	public ModelAndView listOfSectors(){
