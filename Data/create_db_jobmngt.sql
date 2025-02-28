@@ -12,6 +12,7 @@ drop table if exists offermessage cascade;
 drop table if exists applicationmessage cascade;
 drop table if exists appmessdest cascade;
 drop table if exists offermessdest cascade;
+drop table if exists sector;
 
 
 CREATE TABLE userapp
