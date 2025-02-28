@@ -205,4 +205,12 @@ values ('PhD'); --  5
 
 insert into userapp(mail, password, city)
 values ('test@test.fr', 'test', 'Paris');
+insert into userapp(mail, password, city)
+values ('testcompany@test.fr', 'test', 'Paris');
+insert into company(mail, denomination, description)
+values ('testcompany@test.fr', 'TestCompany', 'This is a test company');
+insert into userapp(mail, password, city)
+values ('testcandidate@test.fr', 'test', 'Paris');
+insert into candidate(mail, lastname, firstname)
+values ('testcandidate@test.fr', 'Test', 'Candidate');
 
