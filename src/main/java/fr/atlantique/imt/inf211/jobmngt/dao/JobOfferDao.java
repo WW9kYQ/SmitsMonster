@@ -78,10 +78,10 @@ public class JobOfferDao {
     }
 
     @Transactional
-    public List<JobOffer> findOffersByCompany(String companyMail) {
-        logger.log(Level.INFO, "getting Joboffer instance with companyMail: " + companyMail);
+    public List<JobOffer> findOffersByCompany(String denomination) {
+        logger.log(Level.INFO, "getting Joboffer instance with companyMail: " + denomination);
         try {
-            List<JobOffer> instance = entityManager.createQuery("SELECT j FROM JobOffer j WHERE j.company.mail = :companyMail", JobOffer.class).setParameter("companyMail", companyMail).getResultList();
+            List<JobOffer> instance = entityManager.createQuery("SELECT j FROM JobOffer j WHERE j.company.denomination = :denomination", JobOffer.class).setParameter("denomination", denomination).getResultList();
             logger.log(Level.INFO, "get successful");
             return instance;
         } catch (RuntimeException re) {
