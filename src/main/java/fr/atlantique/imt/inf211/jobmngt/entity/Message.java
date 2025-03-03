@@ -26,7 +26,6 @@ import jakarta.persistence.TemporalType;
 @Table(name = "message"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Message implements java.io.Serializable {
 
 

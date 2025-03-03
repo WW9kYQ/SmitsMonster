@@ -4,6 +4,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,6 +69,19 @@ public class JobOfferDao {
         logger.log(Level.INFO, "getting Joboffer instance with id: " + id);
         try {
             JobOffer instance = entityManager.find(JobOffer.class, id);
+            logger.log(Level.INFO, "get successful");
+            return instance;
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional
+    public List<JobOffer> findOffersByCompany(String companyMail) {
+        logger.log(Level.INFO, "getting Joboffer instance with companyMail: " + companyMail);
+        try {
+            List<JobOffer> instance = entityManager.createQuery("SELECT j FROM JobOffer j WHERE j.company.mail = :companyMail", JobOffer.class).setParameter("companyMail", companyMail).getResultList();
             logger.log(Level.INFO, "get successful");
             return instance;
         } catch (RuntimeException re) {

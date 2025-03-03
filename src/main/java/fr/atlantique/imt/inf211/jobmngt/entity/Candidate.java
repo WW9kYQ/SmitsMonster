@@ -29,7 +29,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "candidate"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
 public class Candidate implements java.io.Serializable {
 
 

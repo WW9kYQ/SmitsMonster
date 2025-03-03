@@ -32,7 +32,6 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "applicationmessage"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ApplicationMessage implements java.io.Serializable {
 
 

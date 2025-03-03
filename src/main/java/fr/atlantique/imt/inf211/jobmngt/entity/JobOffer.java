@@ -2,8 +2,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 // Generated 28 févr. 2025, 21:16:57 by Hibernate Tools 5.6.15.Final
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.GeneratedValue;
@@ -85,6 +84,7 @@ public class JobOffer implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher")
+    @JsonManagedReference
     public Company getCompany() {
         return this.company;
     }
@@ -95,6 +95,7 @@ public class JobOffer implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "qualification")
+    @JsonManagedReference
     public QualificationLevel getQualificationlevel() {
         return this.qualificationlevel;
     }
@@ -137,6 +138,7 @@ public class JobOffer implements java.io.Serializable {
     @JoinTable(name = "offermessdest", schema = "public", joinColumns = {
             @JoinColumn(name = "iddestoffer", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idmessapp", nullable = false, updatable = false)})
+    @JsonManagedReference
     public Set<ApplicationMessage> getApplicationmessages() {
         return this.applicationMessages;
     }
@@ -149,6 +151,7 @@ public class JobOffer implements java.io.Serializable {
     @JoinTable(name = "offerfields", schema = "public", joinColumns = {
             @JoinColumn(name = "offerid", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idfield", nullable = false, updatable = false)})
+    @JsonManagedReference
     public Set<Field> getFields() {
         return this.fields;
     }
@@ -158,6 +161,7 @@ public class JobOffer implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "joboffer")
+    @JsonManagedReference
     public Set<OfferMessage> getOffermessages() {
         return this.offerMessages;
     }
@@ -166,6 +170,19 @@ public class JobOffer implements java.io.Serializable {
         this.offerMessages = offerMessages;
     }
 
+    public String toString() {
+        return "JobOffer{" +
+                "id=" + id +
+                ", company=" + company +
+                ", qualificationlevel=" + qualificationlevel +
+                ", title='" + title + '\'' +
+                ", taskdescription='" + taskdescription + '\'' +
+                ", publicationdate=" + publicationdate +
+                ", applicationMessages=" + applicationMessages +
+                ", fields=" + fields +
+                ", offerMessages=" + offerMessages +
+                '}';
+    }
 
 }
 

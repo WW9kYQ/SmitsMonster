@@ -3,6 +3,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
@@ -65,6 +66,7 @@ public class Field implements java.io.Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "applicationfields", schema = "public", joinColumns = {@JoinColumn(name = "idfield", nullable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "appid", nullable = false, updatable = false)})
+    @JsonManagedReference
     public Set<Application> getApplications() {
         return this.applications;
     }
@@ -75,6 +77,7 @@ public class Field implements java.io.Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "offerfields", schema = "public", joinColumns = {@JoinColumn(name = "idfield", nullable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "offerid", nullable = false, updatable = false)})
+    @JsonManagedReference
     public Set<JobOffer> getJoboffers() {
         return this.jobOffers;
     }

@@ -2,8 +2,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 // Generated 28 févr. 2025, 21:16:57 by Hibernate Tools 5.6.15.Final
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +28,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "company"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
 public class Company implements java.io.Serializable {
 
 
@@ -37,6 +36,7 @@ public class Company implements java.io.Serializable {
     private UserApp userapp;
     private String denomination;
     private String description;
+//    @JsonIgnoreProperties({"company"})
     private Set<JobOffer> jobOffers = new HashSet<JobOffer>(0);
 
     public Company() {
@@ -55,11 +55,7 @@ public class Company implements java.io.Serializable {
         this.jobOffers = jobOffers;
     }
 
-    @GenericGenerator(name = "CompanyIdGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "userapp"))
     @Id
-    @GeneratedValue(generator = "CompanyIdGenerator")
-
-
     @Column(name = "mail", unique = true, nullable = false)
     public String getMail() {
         return this.mail;
@@ -71,6 +67,7 @@ public class Company implements java.io.Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
+    @JsonBackReference
     public UserApp getUserapp() {
         return this.userapp;
     }
@@ -100,6 +97,7 @@ public class Company implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @JsonBackReference
     public Set<JobOffer> getJoboffers() {
         return this.jobOffers;
     }

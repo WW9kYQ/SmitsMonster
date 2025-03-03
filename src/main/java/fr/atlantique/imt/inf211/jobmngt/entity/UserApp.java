@@ -3,6 +3,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
@@ -21,15 +22,17 @@ import jakarta.persistence.Table;
 @Table(name = "userapp"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
 public class UserApp implements java.io.Serializable {
 
 
     private String mail;
     private String password;
     private String city;
-    private Candidate candidate;
+    @JsonManagedReference
     private Company company;
+    @JsonManagedReference
+    private Candidate candidate;
 
     public UserApp() {
     }

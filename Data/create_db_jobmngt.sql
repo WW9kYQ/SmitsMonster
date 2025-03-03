@@ -213,4 +213,10 @@ insert into userapp(mail, password, city)
 values ('testcandidate@test.fr', 'test', 'Paris');
 insert into candidate(mail, lastname, firstname)
 values ('testcandidate@test.fr', 'Test', 'Candidate');
+insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
+values ('TestOffer', 'This is a test offer', '2020-01-01', 'testcompany@test.fr', 5);
+insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
+values ('TestOffer2', 'This is a test offer 2', '2020-01-01', 'testcompany@test.fr',3);
+insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
+values ('TestOffer3', 'This is a test offer 3', '2020-01-01', 'testcompany@test.fr',3);
 

@@ -2,7 +2,9 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 // Generated 28 févr. 2025, 21:16:57 by Hibernate Tools 5.6.15.Final
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
@@ -31,7 +33,9 @@ public class QualificationLevel implements java.io.Serializable {
 
     private int id;
     private String label;
+    @JsonManagedReference
     private Set<JobOffer> jobOffers = new HashSet<JobOffer>(0);
+    @JsonManagedReference
     private Set<Application> applications = new HashSet<Application>(0);
 
     public QualificationLevel() {
@@ -50,6 +54,11 @@ public class QualificationLevel implements java.io.Serializable {
         this.applications = applications;
     }
 
+    @Column(name = "label", nullable = false)
+    public String getLabel() {
+        return this.label;
+    }
+
     @Id
     @SequenceGenerator(name = "QUALIFICATIONLEVEL_ID_GENERATOR", sequenceName = "QUALIFICATIONLEVEL_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUALIFICATIONLEVEL_ID_GENERATOR")
@@ -65,16 +74,12 @@ public class QualificationLevel implements java.io.Serializable {
     }
 
 
-    @Column(name = "label", nullable = false)
-    public String getLabel() {
-        return this.label;
-    }
-
     public void setLabel(String label) {
         this.label = label;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "qualificationlevel")
+    @JsonManagedReference
     public Set<JobOffer> getJoboffers() {
         return this.jobOffers;
     }
@@ -84,6 +89,7 @@ public class QualificationLevel implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "qualificationlevel")
+    @JsonManagedReference
     public Set<Application> getApplications() {
         return this.applications;
     }
