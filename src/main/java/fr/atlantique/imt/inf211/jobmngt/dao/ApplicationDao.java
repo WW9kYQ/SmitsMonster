@@ -4,6 +4,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,6 +75,19 @@ public class ApplicationDao {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
         }
+    }
+
+    @Transactional(readOnly = true)
+    //find by field and qualification level
+    public List<Application> findByFieldAndQualif(String field, String qualificationLevel){
+        logger.log(Level.INFO, "getting Application instance with field: " + field + " and qualification level: " + qualificationLevel);
+        List<Application> instances = entityManager.createQuery("SELECT a FROM Application a WHERE a.field = :field AND a.qualificationlevel = :qualificationlevel", Application.class)
+                .setParameter("field", field)
+                .setParameter("qualificationlevel", qualificationLevel)
+                .getResultList();
+        logger.log(Level.INFO, "get successful");
+        return instances;
+
     }
 }
 

@@ -96,5 +96,18 @@ public class FieldDao {
         TypedQuery<Field> q = entityManager.createQuery(r, Field.class);
         return q.getResultList();
     }
+    @Transactional(readOnly = true)
+    //Ajout d’une méthode pour l’obtention de la liste des secteurs dont le label est donné
+    //findByLabel
+    public List<Field> findByLabel(String label){
+        logger.log(Level.INFO, "getting Field instance with label: " + label);
+        List<Field> instances = entityManager.createQuery("SELECT f FROM Field f WHERE f.label = :label", Field.class)
+                .setParameter("label", label)
+                .getResultList();
+        logger.log(Level.INFO, "get successful");
+        return instances;
+
+    }
 }
+
 

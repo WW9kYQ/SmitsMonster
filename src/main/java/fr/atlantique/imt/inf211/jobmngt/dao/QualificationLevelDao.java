@@ -96,5 +96,17 @@ public class QualificationLevelDao {
         TypedQuery<QualificationLevel> q = entityManager.createQuery(r, QualificationLevel.class);
         return q.getResultList();
     }
+
+    @Transactional(readOnly = true)
+    //findByLabel
+    public List<QualificationLevel> findByLabel(String label){
+        logger.log(Level.INFO, "getting QualificationLevel instance with label: " + label);
+        List<QualificationLevel> instances = entityManager.createQuery("SELECT q FROM QualificationLevel q WHERE q.label = :label", QualificationLevel.class)
+                .setParameter("label", label)
+                .getResultList();
+        logger.log(Level.INFO, "get successful");
+        return instances;
+
+    }
 }
 
