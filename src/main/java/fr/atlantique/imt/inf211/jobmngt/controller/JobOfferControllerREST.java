@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-public class JobOfferControllerRest {
+public class JobOfferControllerREST {
 
     @Autowired
     private JobOfferDao jobOfferDao;
