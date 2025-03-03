@@ -3,9 +3,12 @@ package fr.atlantique.imt.inf211.jobmngt.controller;
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.FieldDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
+import fr.atlantique.imt.inf211.jobmngt.entity.Field;
+import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +22,10 @@ public class ApplicationControllerREST {
     private ApplicationDao appdao;
 
 
-    @RequestMapping("/findByFieldAndQualif")
-    public List<Application> applicationPanel(@RequestParam String field, @RequestParam String qualificationLevel) {
+    @RequestMapping(value = "/findByFieldAndQualifREST", method = RequestMethod.GET)
+    public List<Application> applicationPanel() {
+        Field field = new Field(2, "Administration");
+        QualificationLevel qualificationLevel = new QualificationLevel(3, "Licence");
         List<Application> li = appdao.findByFieldAndQualif(field, qualificationLevel);
         System.out.println(li);
         return li;

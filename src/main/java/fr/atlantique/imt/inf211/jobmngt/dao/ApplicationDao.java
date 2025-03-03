@@ -78,16 +78,16 @@ public class ApplicationDao {
     }
 
     @Transactional(readOnly = true)
-    //find by field and qualification level
-    public List<Application> findByFieldAndQualif(String field, String qualificationLevel){
-        logger.log(Level.INFO, "getting Application instance with field: " + field + " and qualification level: " + qualificationLevel);
-        List<Application> instances = entityManager.createQuery("SELECT a FROM Application a WHERE a.field = :field AND a.qualificationlevel = :qualificationlevel", Application.class)
+    public List<Application> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
+        logger.log(Level.INFO, "Recherche des applications pour field: " + field + " et qualification level: " + qualificationLevel);
+        List<Application> applications = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class)
                 .setParameter("field", field)
-                .setParameter("qualificationlevel", qualificationLevel)
+                .setParameter("qualificationLevel", qualificationLevel)
                 .getResultList();
-        logger.log(Level.INFO, "get successful");
-        return instances;
 
+        logger.log(Level.INFO, "Nombre d'applications trouvées : " + applications.size());
+        return applications;
     }
 }
+
 
