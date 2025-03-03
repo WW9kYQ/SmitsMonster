@@ -5,8 +5,8 @@ function show_error(msg){
     /*
     */
     ep = document.getElementById("error_panel_p");
-    ep.innerHTML = msg;
-    console.warn(msg);
+    ep.innerHTML = msg;(
+    console.warnmsg);
     setTimeout(() => {
          ep.innerHTML = "";
          ep.style.visibility = 'hidden';
@@ -46,3 +46,23 @@ function check_login(){
        show_error('Error while checking credentials : '+ err);
     });
 }
+
+$(document).ready(function () {
+    $('.table .delBtn').on('click', function (event) {
+        event.preventDefault();
+        
+        // Récupérer l'ID de l'élément à supprimer
+        var href = $(this).attr('href');
+        console.log($(this).attr('title'));
+        // Mettre à jour le message de suppression dans la modale
+        $('#deleteModal #delRecord').text($(this).attr('title'));
+        // Mettre à jour le lien de suppression dans la modale
+        $('#deleteModal #delRef').attr('href', href);
+        
+        // Afficher la modale
+        $('#deleteModal').modal();
+    });
+});
+
+
+ 

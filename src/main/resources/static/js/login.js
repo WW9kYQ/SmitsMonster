@@ -3,7 +3,7 @@ function getLoginForm (){
         return response.text();
     }).then(function (html) {
         console.log(html)
-        document.getElementById("central_content_div").innerHTML += html;
+        document.getElementById("error_panel_p").innerHTML += html;
     }).catch(function (err) {
         console.warn('Something went wrong while getting the login form.', err);
     });
