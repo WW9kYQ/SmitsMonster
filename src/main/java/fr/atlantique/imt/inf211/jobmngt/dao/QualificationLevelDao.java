@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
@@ -28,50 +29,14 @@ public class QualificationLevelDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
-    public void persist(QualificationLevel transientInstance) {
-        logger.log(Level.INFO, "persisting Qualificationlevel instance");
-        try {
-            entityManager.persist(transientInstance);
-            logger.log(Level.INFO, "persist successful");
-        } catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "persist failed", re);
-            throw re;
-        }
-    }
-
-    @Transactional
-    public void remove(QualificationLevel persistentInstance) {
-        logger.log(Level.INFO, "removing Qualificationlevel instance");
-        try {
-            entityManager.remove(persistentInstance);
-            logger.log(Level.INFO, "remove successful");
-        } catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "remove failed", re);
-            throw re;
-        }
-    }
-
-    @Transactional
-    public QualificationLevel merge(QualificationLevel detachedInstance) {
-        logger.log(Level.INFO, "merging Qualificationlevel instance");
-        try {
-            QualificationLevel result = entityManager.merge(detachedInstance);
-            logger.log(Level.INFO, "merge successful");
-            return result;
-        } catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "merge failed", re);
-            throw re;
-        }
-    }
-
     @Transactional(readOnly = true)
     public QualificationLevel findById(int id) {
         logger.log(Level.INFO, "getting Qualificationlevel instance with id: " + id);
         try {
-            QualificationLevel instance = entityManager.find(QualificationLevel.class, id);
+            TypedQuery<QualificationLevel> q = entityManager.createNamedQuery("QualificationLevel.findById",QualificationLevel.class);
+            q.setParameter("id", id);
             logger.log(Level.INFO, "get successful");
-            return instance;
+            return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
@@ -80,32 +45,25 @@ public class QualificationLevelDao {
 
     @Transactional(readOnly = true)
     public Long nbLevels() {
-        String r = "select count(*) from QualificationLevel c";
-        TypedQuery<Long> q = entityManager.createQuery(r, Long.class);
+        TypedQuery<Long> q = entityManager.createNamedQuery("QualificationLevel.countAll", Long.class);
         return q.getSingleResult();
     }
 
     @Transactional(readOnly = true)
-    public List<QualificationLevel> findAll(String sort, String order) {
-        String r = "SELECT s FROM QualificationLevel s ORDER BY s." + sort;
-        if (order.equals("asc")) {
-            r += " ASC";
-        } else {
-            r += " DESC";
-        }
-        TypedQuery<QualificationLevel> q = entityManager.createQuery(r, QualificationLevel.class);
-        return q.getResultList();
+    public List<QualificationLevel> findAll() {
+        TypedQuery<QualificationLevel> q = entityManager.createNamedQuery("QualificationLevel.findAll", QualificationLevel.class);
+        List<QualificationLevel> levels = q.getResultList();
+        System.out.println("q.getResultList() = " + levels);
+        return levels;
     }
 
     @Transactional(readOnly = true)
-    //findByLabel
-    public List<QualificationLevel> findByLabel(String label){
+    public QualificationLevel findByLabel(String label) {
         logger.log(Level.INFO, "getting QualificationLevel instance with label: " + label);
-        List<QualificationLevel> instances = entityManager.createQuery("SELECT q FROM QualificationLevel q WHERE q.label = :label", QualificationLevel.class)
-                .setParameter("label", label)
-                .getResultList();
+        TypedQuery<QualificationLevel> q =entityManager.createNamedQuery("QualificationLevel.findByLabel", QualificationLevel.class);
+        q.setParameter("label", label);
         logger.log(Level.INFO, "get successful");
-        return instances;
+        return q.getSingleResult();
 
     }
 }

@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fr.atlantique.imt.inf211.jobmngt.service.FieldService;
 
 @Controller
-public class SectorController {
+public class FieldController {
 
     @Autowired
     private FieldService sServ;
 
-	@RequestMapping("/listsectors")
+	@RequestMapping("/listfields")
 	public ModelAndView listOfSectors(){
-        ModelAndView mav = new ModelAndView("sectorlist");
+        ModelAndView mav = new ModelAndView("fieldlist");
       
-        mav.addObject("sectorlist", sServ.listOfSectors());
+        mav.addObject("fieldlist", sServ.listOfSectors());
         return mav;
 	}
 

@@ -21,7 +21,7 @@ public class FieldServiceImp implements FieldService {
 
     @Transactional(readOnly = true)
     public List<Field> listOfSectors() {
-        return qDAO.findAll("id", "asc");
+        return qDAO.findAll();
     }
 
 }

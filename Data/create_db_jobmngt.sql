@@ -213,6 +213,7 @@ insert into userapp(mail, password, city)
 values ('testcandidate@test.fr', 'test', 'Paris');
 insert into candidate(mail, lastname, firstname)
 values ('testcandidate@test.fr', 'Test', 'Candidate');
+
 insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
 values ('TestOffer', 'This is a test offer', '2020-01-01', 'testcompany@test.fr', 5);
 insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
@@ -220,3 +221,14 @@ values ('TestOffer2', 'This is a test offer 2', '2020-01-01', 'testcompany@test.
 insert into joboffer(title, taskdescription, publicationdate, publisher, qualification)
 values ('TestOffer3', 'This is a test offer 3', '2020-01-01', 'testcompany@test.fr',3);
 
+insert into application(cv, appdate, publisher, qualification)
+values ('testcv', '2020-01-01', 'testcandidate@test.fr', 5);
+insert into applicationfields(appid, idfield)
+values (1, 1);
+insert into applicationfields(appid, idfield)
+values (1, 2);
+
+insert into offerfields(offerid, idfield)
+values (1, 1);
+insert into offerfields(offerid, idfield)
+values (1, 2);

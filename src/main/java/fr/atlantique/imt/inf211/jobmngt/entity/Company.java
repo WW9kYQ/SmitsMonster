@@ -3,21 +3,11 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 
 import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -28,6 +18,12 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "company"
         , schema = "public"
 )
+@NamedQueries({
+        @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
+        @NamedQuery(name = "Company.findByMail", query = "SELECT c FROM Company c WHERE c.mail = :mail"),
+        @NamedQuery(name = "Company.findByDenomination", query = "SELECT c FROM Company c WHERE c.denomination = :denomination"),
+        @NamedQuery(name = "Company.findByDescription", query = "SELECT c FROM Company c WHERE c.description = :description")
+})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
 public class Company implements java.io.Serializable {
 

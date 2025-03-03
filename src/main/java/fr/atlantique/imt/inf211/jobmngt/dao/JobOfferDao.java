@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -68,26 +69,36 @@ public class JobOfferDao {
     public JobOffer findById(int id) {
         logger.log(Level.INFO, "getting Joboffer instance with id: " + id);
         try {
-            JobOffer instance = entityManager.find(JobOffer.class, id);
+            TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findById", JobOffer.class);
+            q.setParameter("id", id);
             logger.log(Level.INFO, "get successful");
-            return instance;
+            return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
         }
     }
 
-    @Transactional
-    public List<JobOffer> findOffersByCompany(String denomination) {
-        logger.log(Level.INFO, "getting Joboffer instance with companyMail: " + denomination);
+    @Transactional(readOnly = true)
+    public List<JobOffer> findOffersByCompany(Company company) {
+        logger.log(Level.INFO, "getting Joboffer instance by company: " + company);
         try {
-            List<JobOffer> instance = entityManager.createQuery("SELECT j FROM JobOffer j WHERE j.company.denomination = :denomination", JobOffer.class).setParameter("denomination", denomination).getResultList();
-            logger.log(Level.INFO, "get successful");
-            return instance;
+            TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByCompany", JobOffer.class);
+            q.setParameter("company", company);
+            return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<JobOffer> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
+        TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldAndQualif", JobOffer.class);
+        q.setParameter("field", field);
+        q.setParameter("qualificationLevel", qualificationLevel);
+        logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
+        return q.getResultList();
     }
 }
 

@@ -15,6 +15,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "field", schema = "public")
+@NamedQueries({
+        @NamedQuery(name = "Field.findAll", query = "SELECT f FROM Field f order by f.id ASC"),
+        @NamedQuery(name = "Field.findByLabel", query = "SELECT f FROM Field f WHERE f.label = :label"),
+        @NamedQuery(name = "Field.countAll", query = "select count(*) from Field f"),
+        @NamedQuery(name = "Field.findById", query = "SELECT f FROM Field f WHERE f.id = :id")
+})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Field implements java.io.Serializable {
 

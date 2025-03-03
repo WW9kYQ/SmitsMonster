@@ -7,6 +7,7 @@ import fr.atlantique.imt.inf211.jobmngt.entity.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -64,12 +65,27 @@ public class CompanyDao {
     }
 
     @Transactional(readOnly = true)
-    public Company findById(String id) {
-        logger.log(Level.INFO, "getting Company instance with id: " + id);
+    public Company findByMail(String mail) {
+        logger.log(Level.INFO, "getting Company instance with mail: " + mail);
         try {
-            Company instance = entityManager.find(Company.class, id);
+            TypedQuery<Company> q = entityManager.createNamedQuery("Company.findByMail", Company.class);
+            q.setParameter("mail", mail);
             logger.log(Level.INFO, "get successful");
-            return instance;
+            return q.getSingleResult();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Company findByDenomination(String denomination) {
+        logger.log(Level.INFO, "getting Company instance with denomination: " + denomination);
+        try {
+            TypedQuery<Company> q = entityManager.createNamedQuery("Company.findByDenomination", Company.class);
+            q.setParameter("denomination", denomination);
+            logger.log(Level.INFO, "get successful");
+            return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;

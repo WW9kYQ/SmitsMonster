@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -68,9 +69,10 @@ public class ApplicationDao {
     public Application findById(int id) {
         logger.log(Level.INFO, "getting Application instance with id: " + id);
         try {
-            Application instance = entityManager.find(Application.class, id);
+            TypedQuery<Application> q = entityManager.createNamedQuery("Application.findById", Application.class);
+            q.setParameter("id", id);
             logger.log(Level.INFO, "get successful");
-            return instance;
+            return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
@@ -80,11 +82,11 @@ public class ApplicationDao {
     @Transactional(readOnly = true)
     public List<Application> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
         logger.log(Level.INFO, "Recherche des applications pour field: " + field + " et qualification level: " + qualificationLevel);
-        List<Application> applications = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class)
-                .setParameter("field", field)
-                .setParameter("qualificationLevel", qualificationLevel)
-                .getResultList();
-        logger.log(Level.INFO, "Nombre d'applications trouvées : " + applications.size());
+        TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class);
+        q.setParameter("field", field);
+        q.setParameter("qualificationLevel", qualificationLevel);
+        List<Application> applications = q.getResultList();
+        logger.log(Level.INFO, "Number of applications found: " + applications.size());
         return applications;
     }
 }

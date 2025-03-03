@@ -20,7 +20,7 @@ public class QualificationLevelServiceImp implements QualificationLevelService {
 
     @Transactional(readOnly = true)
     public List<QualificationLevel> listOfQualificationLevels() {
-        return qDAO.findAll("id", "asc");
+        return qDAO.findAll();
     }
 
 }

@@ -5,12 +5,12 @@
 
 	<div class="row justify-content-center">
 		<div id="central_div">
-			<h1>List of sectors</h1>
+			<h1>List of fields</h1>
             <!-- <a href="javascript:history.back()"><img th:src="@{/img/back.png}" alt="Back"/></a> -->
 
-            <span th:if="${#lists.size(sectorlist)} == 0">No sector defined yet</span>
+            <span th:if="${#lists.size(fieldlist)} == 0">No sector defined yet</span>
 
-            <span th:if="${#lists.size(sectorlist)} > 0">
+            <span th:if="${#lists.size(fieldlist)} > 0">
                     
                     <table class="table table-striped">
                 <thead>
@@ -20,9 +20,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="sec : ${sectorlist}" >
-                        <th scope="row" th:text="${sec.id}"/>
-                        <td th:text="${sec.label}" />
+                    <tr th:each="f : ${fieldlist}" >
+                        <th scope="row" th:text="${f.id}"/>
+                        <td th:text="${f.label}" />
                         <td th:if="${#ctx.session.uid} != null AND ${#ctx.session.logintype} == 'adm'" class="nav-item active">
                             <a th:href="@{/deletesector/{id}(id=${sec.id})}">
                                 <img th:src="@{img/minus.png}" alt="Delete this sector" class="minilogo"/>
