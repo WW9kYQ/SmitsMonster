@@ -84,7 +84,6 @@ public class ApplicationDao {
                 .setParameter("field", field)
                 .setParameter("qualificationLevel", qualificationLevel)
                 .getResultList();
-
         logger.log(Level.INFO, "Nombre d'applications trouvées : " + applications.size());
         return applications;
     }
