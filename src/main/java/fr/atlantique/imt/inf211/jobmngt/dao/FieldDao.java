@@ -28,6 +28,7 @@ public class FieldDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     public void persist(Field transientInstance) {
         logger.log(Level.INFO, "persisting Field instance");
         try {
@@ -39,6 +40,7 @@ public class FieldDao {
         }
     }
 
+    @Transactional
     public void remove(Field persistentInstance) {
         logger.log(Level.INFO, "removing Field instance");
         try {
@@ -50,6 +52,7 @@ public class FieldDao {
         }
     }
 
+    @Transactional
     public Field merge(Field detachedInstance) {
         logger.log(Level.INFO, "merging Field instance");
         try {
@@ -62,6 +65,7 @@ public class FieldDao {
         }
     }
 
+    @Transactional(readOnly = true)
     public Field findById(int id) {
         logger.log(Level.INFO, "getting Field instance with id: " + id);
         try {
@@ -76,7 +80,7 @@ public class FieldDao {
 
     @Transactional(readOnly = true)
     public Long nbUsers() {
-        String r = "select count(*) from UserApp c";
+        String r = "select count(*) from Field c";
         TypedQuery<Long> q = entityManager.createQuery(r, Long.class);
         return q.getSingleResult();
     }

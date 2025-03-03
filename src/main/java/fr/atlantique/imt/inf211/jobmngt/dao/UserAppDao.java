@@ -30,6 +30,7 @@ public class UserAppDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     public void persist(UserApp transientInstance) {
         logger.log(Level.INFO, "persisting Userapp instance");
         try {
@@ -41,6 +42,7 @@ public class UserAppDao {
         }
     }
 
+    @Transactional
     public void remove(UserApp persistentInstance) {
         logger.log(Level.INFO, "removing Userapp instance");
         try {
@@ -52,6 +54,7 @@ public class UserAppDao {
         }
     }
 
+    @Transactional
     public UserApp merge(UserApp detachedInstance) {
         logger.log(Level.INFO, "merging Userapp instance");
         try {
@@ -64,6 +67,7 @@ public class UserAppDao {
         }
     }
 
+    @Transactional(readOnly = true)
     public UserApp findById(Integer id) {
         logger.log(Level.INFO, "getting Userapp instance with id: " + id);
         try {
@@ -95,12 +99,28 @@ public class UserAppDao {
         return q.getResultList();
     }
 
+    @Transactional(readOnly = true)
     public Optional<UserApp> checkLogin(UserApp user) {
         String r = "SELECT s FROM UserApp s WHERE s.mail = :login AND s.password = :pwd";
         TypedQuery<UserApp> q = entityManager.createQuery(r, UserApp.class);
         q.setParameter("login", user.getMail());
         q.setParameter("pwd", user.getPassword());
-        return Optional.ofNullable(q.getSingleResult());
+        if (q.getResultList().size() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(q.getResultList().get(0));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserApp> findByMail(String mail) {
+        String r = "SELECT s FROM UserApp s WHERE s.mail = :mail";
+        TypedQuery<UserApp> q = entityManager.createQuery(r, UserApp.class);
+        q.setParameter("mail", mail);
+        List<UserApp> res = q.getResultList();
+        if (res.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(res.get(0));
     }
 }
 

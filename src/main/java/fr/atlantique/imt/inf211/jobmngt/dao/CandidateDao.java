@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Home object for domain model class Candidate.
@@ -25,6 +26,7 @@ public class CandidateDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     public void persist(Candidate transientInstance) {
         logger.log(Level.INFO, "persisting Candidate instance");
         try {
@@ -36,6 +38,7 @@ public class CandidateDao {
         }
     }
 
+    @Transactional
     public void remove(Candidate persistentInstance) {
         logger.log(Level.INFO, "removing Candidate instance");
         try {
@@ -47,6 +50,7 @@ public class CandidateDao {
         }
     }
 
+    @Transactional
     public Candidate merge(Candidate detachedInstance) {
         logger.log(Level.INFO, "merging Candidate instance");
         try {
@@ -59,6 +63,7 @@ public class CandidateDao {
         }
     }
 
+    @Transactional(readOnly = true)
     public Candidate findById(String id) {
         logger.log(Level.INFO, "getting Candidate instance with id: " + id);
         try {
