@@ -16,14 +16,7 @@ import java.util.List;
 @RequestMapping("/REST/candidates")
 
 public class TestCandidateDaoController {
-/*
-* Dans un fichier nommé TestCandidateDaoController.java définissez des points d’entrée pour :
 
-lister toutes les candidats existants
-créer un nouveau candidat à partir d’informations passées dans la requête HTTP ou présentes directement dans le code Java
-récupérer les informations d’un candidat à partir de son identifiant passé en paramètre de la requête HTTP
-modifier les informations dont les informations sont passées en paramètre de la requête HTTP ou présentes directement dans le code Java
-*/
     @Autowired
     private CandidateDao candidateDao;
 
