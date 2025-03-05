@@ -32,9 +32,9 @@ public class QualificationLevel implements java.io.Serializable {
 
     private int id;
     private String label;
-    @JsonManagedReference
+
     private Set<JobOffer> jobOffers = new HashSet<JobOffer>(0);
-    @JsonManagedReference
+
     private Set<Application> applications = new HashSet<Application>(0);
 
     public QualificationLevel() {
@@ -77,7 +77,6 @@ public class QualificationLevel implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "qualificationlevel")
-    @JsonManagedReference
     public Set<JobOffer> getJoboffers() {
         return this.jobOffers;
     }
@@ -87,7 +86,6 @@ public class QualificationLevel implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "qualificationlevel")
-    @JsonManagedReference
     public Set<Application> getApplications() {
         return this.applications;
     }

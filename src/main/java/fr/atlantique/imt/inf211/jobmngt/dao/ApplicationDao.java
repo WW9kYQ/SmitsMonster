@@ -89,6 +89,22 @@ public class ApplicationDao {
         logger.log(Level.INFO, "Number of applications found: " + applications.size());
         return applications;
     }
+
+    //findAll
+    @Transactional(readOnly = true)
+    public List<Application> findAll() {
+        logger.log(Level.INFO, "getting all Applications");
+        try {
+            TypedQuery<Application> q = entityManager.createNamedQuery("Application.findAll", Application.class);
+            logger.log(Level.INFO, "get successful");
+            return q.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+
 }
 
 

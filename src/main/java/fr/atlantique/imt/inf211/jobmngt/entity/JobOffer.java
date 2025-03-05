@@ -78,7 +78,6 @@ public class JobOffer implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher")
-    @JsonManagedReference
     public Company getCompany() {
         return this.company;
     }
@@ -89,7 +88,6 @@ public class JobOffer implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "qualification")
-    @JsonManagedReference
     public QualificationLevel getQualificationlevel() {
         return this.qualificationlevel;
     }
@@ -132,7 +130,6 @@ public class JobOffer implements java.io.Serializable {
     @JoinTable(name = "offermessdest", schema = "public", joinColumns = {
             @JoinColumn(name = "iddestoffer", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idmessapp", nullable = false, updatable = false)})
-    @JsonManagedReference
     public Set<ApplicationMessage> getApplicationmessages() {
         return this.applicationMessages;
     }
@@ -145,7 +142,6 @@ public class JobOffer implements java.io.Serializable {
     @JoinTable(name = "offerfields", schema = "public", joinColumns = {
             @JoinColumn(name = "offerid", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idfield", nullable = false, updatable = false)})
-    @JsonManagedReference
     public Set<Field> getFields() {
         return this.fields;
     }
@@ -155,7 +151,6 @@ public class JobOffer implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "joboffer")
-    @JsonManagedReference
     public Set<OfferMessage> getOffermessages() {
         return this.offerMessages;
     }

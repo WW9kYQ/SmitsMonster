@@ -13,4 +13,5 @@ public class ApplicationController {
       
         return "applicationpanel";
 	}
+
 }

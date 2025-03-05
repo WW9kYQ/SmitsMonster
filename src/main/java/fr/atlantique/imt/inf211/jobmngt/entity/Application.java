@@ -128,6 +128,7 @@ public class Application implements java.io.Serializable {
     public Set<Field> getFields() {
         return this.fields;
     }
+
     public void setFields(Set<Field> fields) {
         this.fields = fields;
     }
@@ -143,8 +144,7 @@ public class Application implements java.io.Serializable {
     public void setOffermessages(Set<OfferMessage> offerMessages) {
         this.offerMessages = offerMessages;
     }
-
-
 }
+
 
 

@@ -29,14 +29,11 @@ public class UserApp implements java.io.Serializable {
     private String mail;
     private String password;
     private String city;
-    @JsonManagedReference
     private Company company;
-    @JsonManagedReference
     private Candidate candidate;
 
     public UserApp() {
     }
-
 
     public UserApp(String mail, String password) {
         this.mail = mail;
@@ -52,9 +49,6 @@ public class UserApp implements java.io.Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "USERAPP_ID_GENERATOR", sequenceName = "USERAPP_ID_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERAPP_ID_GENERATOR")
-
 
     @Column(name = "mail", unique = true, nullable = false)
     public String getMail() {

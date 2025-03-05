@@ -4,6 +4,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,6 +87,18 @@ public class CompanyDao {
             q.setParameter("denomination", denomination);
             logger.log(Level.INFO, "get successful");
             return q.getSingleResult();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+    @Transactional(readOnly = true)
+    public List<Company> findAll() {
+        logger.log(Level.INFO, "getting all Company instances");
+        try {
+            TypedQuery<Company> q = entityManager.createNamedQuery("Company.findAll", Company.class);
+            logger.log(Level.INFO, "get successful");
+            return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
