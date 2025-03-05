@@ -104,5 +104,19 @@ public class CompanyDao {
             throw re;
         }
     }
+
+    //removeCompany
+    @Transactional
+    public void removeCompany(String denomination) {
+        logger.log(Level.INFO, "removing Company instance with denomination: " + denomination);
+        try {
+            Company company = findByDenomination(denomination);
+            entityManager.remove(company);
+            logger.log(Level.INFO, "remove successful");
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "remove failed", re);
+            throw re;
+        }
+    }
 }
 

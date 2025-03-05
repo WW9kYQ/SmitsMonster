@@ -16,6 +16,9 @@ public class TestCompanyDaoController {
 
     @Autowired
     private CompanyDao companyDao;
+    /**
+     curl -X GET http://localhost:8080/REST/companies
+     */
 
     @GetMapping
     public ResponseEntity<List<Company>> listCompanies() {
@@ -74,6 +77,17 @@ public Company replaceCompany(@RequestBody Company newCompany, @PathVariable Str
     }
     return null;
 }
+
+/*
+curl -X GET "http://localhost:8080/REST/companies/remove/Updated%20IMT%20Atlantique"
+/
+ */
+    @GetMapping("/remove/{denomination}")
+    public ResponseEntity<Company> removeCompany(@PathVariable String denomination) {
+        Company company = companyDao.findByDenomination(denomination);
+        companyDao.remove(company);
+        return ResponseEntity.ok(company);
+    }
 
 
 
