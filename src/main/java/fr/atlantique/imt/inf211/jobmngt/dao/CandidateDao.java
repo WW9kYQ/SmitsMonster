@@ -4,6 +4,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,6 +73,32 @@ public class CandidateDao {
             return instance;
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+    //findAll
+    @Transactional(readOnly = true)
+    public List<Candidate> findAll() {
+        logger.log(Level.INFO, "getting all Candidate instances");
+        try {
+            String hql = "FROM Candidate";
+            return entityManager.createQuery(hql).getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get all failed", re);
+            throw re;
+        }
+    }
+
+
+    //findByMail
+    @Transactional(readOnly = true)
+    public Candidate findByMail(String mail) {
+        logger.log(Level.INFO, "getting Candidate instance with mail: " + mail);
+        try {
+            String hql = "FROM Candidate WHERE mail = :mail";
+            return (Candidate) entityManager.createQuery(hql).setParameter("mail", mail).getSingleResult();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get by mail failed", re);
             throw re;
         }
     }
