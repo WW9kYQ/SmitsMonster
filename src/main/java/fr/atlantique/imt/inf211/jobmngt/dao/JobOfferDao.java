@@ -66,6 +66,18 @@ public class JobOfferDao {
     }
 
     @Transactional(readOnly = true)
+    public List<JobOffer> findAll() {
+        logger.log(Level.INFO, "getting all Joboffer instances");
+        try {
+            TypedQuery<JobOffer> query = entityManager.createNamedQuery("JobOffer.findAll", JobOffer.class);
+            return query.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get all failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public JobOffer findById(int id) {
         logger.log(Level.INFO, "getting Joboffer instance with id: " + id);
         try {

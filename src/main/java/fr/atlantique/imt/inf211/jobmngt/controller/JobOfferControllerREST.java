@@ -30,19 +30,25 @@ public class JobOfferControllerREST {
     @Autowired
     private QualificationLevelDao qualificationLevelDao;
 
-    @RequestMapping(value = "/listjobofferREST/company", method = RequestMethod.GET, produces = "application/json")
-    public List<JobOffer> listJobOffersByCompany(@RequestParam("denomination") String denomination){
-        Company company = companyDao.findByDenomination(denomination);
-        List<JobOffer> li = jobOfferDao.findOffersByCompany(company);
-        return li;
-    }
+//    @RequestMapping(value = "/REST/joboffers", method = RequestMethod.GET, produces = "application/json")
+//    public List<JobOffer> listJobOffers(){
+//        List<JobOffer> li = jobOfferDao.findAll();
+//        return li;
+//    }
 
-    @RequestMapping(value = "/listjobofferREST/fieldandqualif", method = RequestMethod.GET, produces = "application/json")
-    public List<JobOffer> listJobOffersByFieldAndQualif(@RequestParam("field") String fieldLabel, @RequestParam("qualif") String qualifLabel){
-        Field field = fielddao.findByLabel(fieldLabel);
-        QualificationLevel qualificationLevel = qualificationLevelDao.findByLabel(qualifLabel);
-        List<JobOffer> li = jobOfferDao.findByFieldAndQualif(field, qualificationLevel);
-        System.out.println(li);
-        return li;
-    }
+//    @RequestMapping(value = "/REST/joboffers/company", method = RequestMethod.GET, produces = "application/json")
+//    public List<JobOffer> listJobOffersByCompany(@RequestParam("denomination") String denomination){
+//        Company company = companyDao.findByDenomination(denomination);
+//        List<JobOffer> li = jobOfferDao.findOffersByCompany(company);
+//        return li;
+//    }
+
+//    @RequestMapping(value = "/REST/joboffers/fieldandqualif", method = RequestMethod.GET, produces = "application/json")
+//    public List<JobOffer> listJobOffersByFieldAndQualif(@RequestParam("field") String fieldLabel, @RequestParam("qualif") String qualifLabel){
+//        Field field = fielddao.findByLabel(fieldLabel);
+//        QualificationLevel qualificationLevel = qualificationLevelDao.findByLabel(qualifLabel);
+//        List<JobOffer> li = jobOfferDao.findByFieldAndQualif(field, qualificationLevel);
+//        System.out.println(li);
+//        return li;
+//    }
 }

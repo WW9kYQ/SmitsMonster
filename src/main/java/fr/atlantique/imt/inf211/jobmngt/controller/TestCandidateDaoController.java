@@ -86,6 +86,12 @@ public class TestCandidateDaoController {
         return candidate;
     }
 
+    @GetMapping("/remove/{mail}")
+    public ResponseEntity<String> removeCompany(@PathVariable String mail) {
+        Candidate candidate = candidateDao.findByMail(mail);
+        candidateDao.remove(candidate);
+        return ResponseEntity.ok("Candidate has been removed");
+    }
 
 
 

@@ -44,11 +44,11 @@ public class TestCompanyDaoController {
 
 
     /*
-    *curl -X GET "http://localhost:8080/REST/companies/search/TestCompany" -H "Content-Type: application/json"
+    *curl -X GET "http://localhost:8080/REST/companies/search/testcompany@test.fr" -H "Content-Type: application/json"
      * */
-    @GetMapping("/search/{denomination}")
-    public ResponseEntity<Company> getCompanyByDenomination(@PathVariable String denomination) {
-        Company company = companyDao.findByDenomination(denomination);
+    @GetMapping("/search/{mail}")
+    public ResponseEntity<Company> getCompanyByMail(@PathVariable String mail) {
+        Company company = companyDao.findByMail(mail);
         return ResponseEntity.ok(company);
     }
 /**
@@ -82,11 +82,11 @@ public Company replaceCompany(@RequestBody Company newCompany, @PathVariable Str
 curl -X GET "http://localhost:8080/REST/companies/remove/Updated%20IMT%20Atlantique"
 /
  */
-    @GetMapping("/remove/{denomination}")
-    public ResponseEntity<Company> removeCompany(@PathVariable String denomination) {
-        Company company = companyDao.findByDenomination(denomination);
+    @GetMapping("/remove/{mail}")
+    public ResponseEntity<String> removeCompany(@PathVariable String mail) {
+        Company company = companyDao.findByMail(mail);
         companyDao.remove(company);
-        return ResponseEntity.ok(company);
+        return ResponseEntity.ok("Company has been removed");
     }
 
 
