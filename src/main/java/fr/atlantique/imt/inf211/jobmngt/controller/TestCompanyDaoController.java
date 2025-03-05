@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/REST/companies")
 public class TestCompanyDaoController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class TestCompanyDaoController {
 
 
     /*
-    * curl -X POST localhost:8080/companies -H \
+    * curl -X POST localhost:8080/REST/companies -H \
 'Content-type: application/json' -d \
 '{"mail": "atlantique@imt.fr", "denomination": "myFirstCompany", "description": "Desc of my new company", "userapp": {"password": "6678", "city": "Brest"}}'
     * */
@@ -41,7 +41,7 @@ public class TestCompanyDaoController {
 
 
     /*
-    *curl -X GET "http://localhost:8080/companies/search/TestCompany" -H "Content-Type: application/json"
+    *curl -X GET "http://localhost:8080/REST/companies/search/TestCompany" -H "Content-Type: application/json"
      * */
     @GetMapping("/search/{denomination}")
     public ResponseEntity<Company> getCompanyByDenomination(@PathVariable String denomination) {
@@ -49,7 +49,7 @@ public class TestCompanyDaoController {
         return ResponseEntity.ok(company);
     }
 /**
- curl -X PUT localhost:8080/companies/atlantique%40imt.fr \
+ curl -X PUT localhost:8080/REST/companies/atlantique%40imt.fr \
  -H "Content-Type: application/json" \
  -d "{
  \"denomination\": \"Updated IMT Atlantique\",
