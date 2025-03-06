@@ -32,7 +32,8 @@ import org.hibernate.annotations.Cascade;
         , schema = "public"
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
-@JsonIgnoreProperties(value = {"applications", "userapp"}, allowSetters = true) // Ignore the joboffers field when serializing Company objects
+@JsonIgnoreProperties(value = {"applications", "userapp"}, allowSetters = true)
+// Ignore the joboffers field when serializing Company objects
 
 public class Candidate implements java.io.Serializable {
 

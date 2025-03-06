@@ -15,15 +15,13 @@ public class QualificationLevelController {
     @Autowired
     private QualificationLevelService sServ;
 
-	@RequestMapping("/listqualificationlevels")
-	public ModelAndView listOfQualificationLevels(){
+    @RequestMapping("/listqualificationlevels")
+    public ModelAndView listOfQualificationLevels() {
         ModelAndView mav = new ModelAndView("qualificationlevellist");
-      
+
         mav.addObject("qualificationlevellist", sServ.listOfQualificationLevels());
         return mav;
-	}
+    }
 
-	
-	
-	
+
 }

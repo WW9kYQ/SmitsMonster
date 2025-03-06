@@ -92,6 +92,7 @@ public class CompanyDao {
             throw re;
         }
     }
+
     @Transactional(readOnly = true)
     public List<Company> findAll() {
         logger.log(Level.INFO, "getting all Company instances");

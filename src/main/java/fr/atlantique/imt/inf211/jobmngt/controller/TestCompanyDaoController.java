@@ -16,8 +16,9 @@ public class TestCompanyDaoController {
 
     @Autowired
     private CompanyDao companyDao;
+
     /**
-     curl -X GET http://localhost:8080/REST/companies
+     * curl -X GET http://localhost:8080/REST/companies
      */
 
     @GetMapping
@@ -44,52 +45,51 @@ public class TestCompanyDaoController {
 
 
     /*
-    *curl -X GET "http://localhost:8080/REST/companies/search/testcompany@test.fr" -H "Content-Type: application/json"
+     *curl -X GET "http://localhost:8080/REST/companies/search/testcompany@test.fr" -H "Content-Type: application/json"
      * */
     @GetMapping("/search/{mail}")
     public ResponseEntity<Company> getCompanyByMail(@PathVariable String mail) {
         Company company = companyDao.findByMail(mail);
         return ResponseEntity.ok(company);
     }
-/**
- curl -X PUT localhost:8080/REST/companies/atlantique%40imt.fr \
- -H "Content-Type: application/json" \
- -d "{
- \"denomination\": \"Updated IMT Atlantique\",
- \"description\": \"Une école d'ingénieurs généraliste mise a jour\",
- \"userapp\": {
- \"mail\": \"atlantique@imt.fr\",
- \"password\": \"6678\",
- \"city\": \"Brest\"
- }
- }"
- */
 
-@PutMapping(value = "/{mail}")
-public Company replaceCompany(@RequestBody Company newCompany, @PathVariable String mail) {
-    Company company = companyDao.findByMail(mail);
-    if (company != null) {
-        company.getUserapp().setMail(newCompany.getUserapp().getMail());
-        company.getUserapp().setPassword(newCompany.getUserapp().getPassword());
-        company.setDenomination(newCompany.getDenomination());
-        company.setDescription(newCompany.getDescription());
-        return companyDao.merge(company);
+    /**
+     * curl -X PUT localhost:8080/REST/companies/atlantique%40imt.fr \
+     * -H "Content-Type: application/json" \
+     * -d "{
+     * \"denomination\": \"Updated IMT Atlantique\",
+     * \"description\": \"Une école d'ingénieurs généraliste mise a jour\",
+     * \"userapp\": {
+     * \"mail\": \"atlantique@imt.fr\",
+     * \"password\": \"6678\",
+     * \"city\": \"Brest\"
+     * }
+     * }"
+     */
+
+    @PutMapping(value = "/{mail}")
+    public Company replaceCompany(@RequestBody Company newCompany, @PathVariable String mail) {
+        Company company = companyDao.findByMail(mail);
+        if (company != null) {
+            company.getUserapp().setMail(newCompany.getUserapp().getMail());
+            company.getUserapp().setPassword(newCompany.getUserapp().getPassword());
+            company.setDenomination(newCompany.getDenomination());
+            company.setDescription(newCompany.getDescription());
+            return companyDao.merge(company);
+        }
+        return null;
     }
-    return null;
-}
 
-/*
-curl -X GET "http://localhost:8080/REST/companies/remove/Updated%20IMT%20Atlantique"
-/
- */
+    /*
+    curl -X GET "http://localhost:8080/REST/companies/remove/Updated%20IMT%20Atlantique"
+    /
+     */
     @GetMapping("/remove/{mail}")
     public ResponseEntity<String> removeCompany(@PathVariable String mail) {
         Company company = companyDao.findByMail(mail);
         companyDao.remove(company);
         return ResponseEntity.ok("Company has been removed");
     }
-
-
 
 
 }

@@ -21,13 +21,14 @@ public class TestCandidateDaoController {
     private CandidateDao candidateDao;
 
     /*
-    * curl -X GET http://localhost:8080/REST/candidates
-    * */
+     * curl -X GET http://localhost:8080/REST/candidates
+     * */
     @GetMapping
     public ResponseEntity<List<Candidate>> listCandidates() {
         List<Candidate> candidates = candidateDao.findAll();
         return ResponseEntity.ok(candidates);
     }
+
     /*
     curl -X POST http://localhost:8080/REST/candidates \
      -H "Content-Type: application/json" \
@@ -75,7 +76,7 @@ public class TestCandidateDaoController {
           }
       }'
     * */
-    @PutMapping(value ="/{mail}")
+    @PutMapping(value = "/{mail}")
     public Candidate updateCandidate(@PathVariable String mail, @RequestBody Candidate candidate) {
         if (candidate.getMail() == null) {
             throw new IllegalArgumentException("This Candidate is unknown");
@@ -92,7 +93,6 @@ public class TestCandidateDaoController {
         candidateDao.remove(candidate);
         return ResponseEntity.ok("Candidate has been removed");
     }
-
 
 
 }

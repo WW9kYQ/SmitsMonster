@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class ApplicationController {
-    
+
 
     @RequestMapping("/applicationpanel")
-	public String applicationPanel(){
-      
+    public String applicationPanel() {
+
         return "applicationpanel";
-	}
+    }
 
 }

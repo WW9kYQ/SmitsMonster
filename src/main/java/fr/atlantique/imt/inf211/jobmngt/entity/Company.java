@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -18,7 +19,8 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "company"
         , schema = "public"
 )
-@JsonIgnoreProperties(value = {"userapp"}, allowSetters = true) // Ignore the joboffers field when serializing Company objects
+@JsonIgnoreProperties(value = {"userapp"}, allowSetters = true)
+// Ignore the joboffers field when serializing Company objects
 @NamedQueries({
         @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
         @NamedQuery(name = "Company.findByMail", query = "SELECT c FROM Company c WHERE c.mail = :mail"),
@@ -101,7 +103,6 @@ public class Company implements java.io.Serializable {
     public void setJoboffers(Set<JobOffer> jobOffers) {
         this.jobOffers = jobOffers;
     }
-
 
 
 }

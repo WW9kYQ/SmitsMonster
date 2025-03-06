@@ -15,15 +15,13 @@ public class FieldController {
     @Autowired
     private FieldService sServ;
 
-	@RequestMapping("/listfields")
-	public ModelAndView listOfSectors(){
+    @RequestMapping("/listfields")
+    public ModelAndView listOfSectors() {
         ModelAndView mav = new ModelAndView("fieldlist");
-      
+
         mav.addObject("fieldlist", sServ.listOfSectors());
         return mav;
-	}
+    }
 
-	
-	
-	
+
 }

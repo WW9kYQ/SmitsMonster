@@ -9,17 +9,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class PagesController {
 
 
-	@RequestMapping("/")
-	public ModelAndView welcomePage(){
-		ModelAndView modelAndView = new ModelAndView("index");
-		modelAndView.addObject("countCompanies", 0);
-		modelAndView.addObject("countCandidates", 0);
+    @RequestMapping("/")
+    public ModelAndView welcomePage() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("countCompanies", 0);
+        modelAndView.addObject("countCandidates", 0);
 
-		return modelAndView;
-        
-	}
+        return modelAndView;
 
-	
-	
-	
+    }
+
+
 }

@@ -76,6 +76,7 @@ public class CandidateDao {
             throw re;
         }
     }
+
     //findAll
     @Transactional(readOnly = true)
     public List<Candidate> findAll() {

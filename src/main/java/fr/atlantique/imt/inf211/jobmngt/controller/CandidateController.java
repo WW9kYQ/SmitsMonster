@@ -7,14 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CandidateController {
-    
+
 
     @RequestMapping("/candidatepanel")
-	public ModelAndView candidatePanel(){
+    public ModelAndView candidatePanel() {
         ModelAndView mav = new ModelAndView("candidatepanel");
         mav.addObject("nb_candidates", 0);
         return mav;
-	}
+    }
 
-    
+
 }

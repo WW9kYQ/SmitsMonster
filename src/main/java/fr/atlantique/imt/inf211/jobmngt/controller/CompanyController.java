@@ -7,14 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CompanyController {
-    
+
 
     @RequestMapping("/companypanel")
-	public ModelAndView companyPanel(){
+    public ModelAndView companyPanel() {
         ModelAndView mav = new ModelAndView("companypanel");
         mav.addObject("nb_companies", 0);
         return mav;
-	}
+    }
 
-    
+
 }

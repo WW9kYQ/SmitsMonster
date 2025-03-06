@@ -33,7 +33,7 @@ public class QualificationLevelDao {
     public QualificationLevel findById(int id) {
         logger.log(Level.INFO, "getting Qualificationlevel instance with id: " + id);
         try {
-            TypedQuery<QualificationLevel> q = entityManager.createNamedQuery("QualificationLevel.findById",QualificationLevel.class);
+            TypedQuery<QualificationLevel> q = entityManager.createNamedQuery("QualificationLevel.findById", QualificationLevel.class);
             q.setParameter("id", id);
             logger.log(Level.INFO, "get successful");
             return q.getSingleResult();
@@ -60,7 +60,7 @@ public class QualificationLevelDao {
     @Transactional(readOnly = true)
     public QualificationLevel findByLabel(String label) {
         logger.log(Level.INFO, "getting QualificationLevel instance with label: " + label);
-        TypedQuery<QualificationLevel> q =entityManager.createNamedQuery("QualificationLevel.findByLabel", QualificationLevel.class);
+        TypedQuery<QualificationLevel> q = entityManager.createNamedQuery("QualificationLevel.findByLabel", QualificationLevel.class);
         q.setParameter("label", label);
         logger.log(Level.INFO, "get successful");
         return q.getSingleResult();

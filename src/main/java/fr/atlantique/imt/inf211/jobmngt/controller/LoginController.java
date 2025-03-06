@@ -28,10 +28,10 @@ public class LoginController {
     UserAppService compRepo;
 
     // Login form
-	@RequestMapping("/login")
-	public String login() {
-		return "login.html";
-	}
+    @RequestMapping("/login")
+    public String login() {
+        return "login.html";
+    }
 
     // Login form
     //post method
@@ -42,19 +42,19 @@ public class LoginController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/checklogin")
-    public ModelAndView checkLog(@ModelAttribute UserApp u, HttpServletRequest request){
-        ModelAndView mav= new ModelAndView();
+    public ModelAndView checkLog(@ModelAttribute UserApp u, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession();
         Optional<UserApp> user = compRepo.checkLogin(u);
-        if( user.isPresent()){
+        if (user.isPresent()) {
             u = user.get();
-            System.out.println("User found mail: "+u.getMail()); // +" usertype: "+ u.getUserType());
+            System.out.println("User found mail: " + u.getMail()); // +" usertype: "+ u.getUserType());
             mav.addObject("user", u);
             session.setAttribute("mail", u.getMail());
 //            session.setAttribute("usertype", u.getUserType());
             mav.setViewName("index");
 
-        }else{
+        } else {
             mav.addObject("error", "Password or username incorrect");
             mav.setViewName("login");
 
@@ -63,7 +63,7 @@ public class LoginController {
     }
 
     @RequestMapping("/logout")
-	public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("mail", null);
 //        session.setAttribute("usertype", null);
