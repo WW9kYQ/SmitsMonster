@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.atlantique.imt.inf211.jobmngt.dao.FieldDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
