@@ -7,4 +7,9 @@ import java.util.List;
 public interface CandidateService {
     List<Candidate> listOfCandidates();
     Integer countOfCandidates();
+    Candidate getCandidate(String mail);
+    void editCandidate(Candidate c);
+    void addCandidate(Candidate c);
+    void deleteCandidate(Candidate c);
+
 }

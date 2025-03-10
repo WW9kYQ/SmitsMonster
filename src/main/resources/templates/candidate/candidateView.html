@@ -50,7 +50,7 @@
 
 
     <footer>
-        <a th:href="@{/candidates/{candidateId}/edit(candidateId=${candidate.mail})}" class="btn btn-large btn-primary"
+        <a th:href="@{|/candidates/edit/${candidate.mail}|}" class="btn btn-large btn-primary"
             title="Unlock to update"><i class="bi bi-pencil"></i></a>
         <a th:href="@{/candidates}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
         </footer>

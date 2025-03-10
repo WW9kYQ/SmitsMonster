@@ -26,7 +26,7 @@
                     <a th:href="@{companies/{companyMail}/edit(companyId=${comp.mail})}" class="btn btn-large btn-success" alt="Edit" title="edit company">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{companies/{companyMail}/delete(companyId=${comp.mail})}" class="btn btn-large btn-danger delBtn"
+                    <a th:href="@{companies/{companyMail}/delete(companyId=${comp.mail})}" class="btn btn-large btn-danger"
                         alt="Delete" title="delete company " data-id="@{companies/{companyId}/delete(companyId=${comp.id})}" th:attrappend="title=${' ' + comp.denomination}">
                         <i class="bi bi-trash"></i>
                     </a>

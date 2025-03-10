@@ -5,21 +5,11 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Cascade;
@@ -31,6 +21,10 @@ import org.hibernate.annotations.Cascade;
 @Table(name = "candidate"
         , schema = "public"
 )
+@NamedQueries({
+        @NamedQuery(name = "Candidate.findAll", query = "SELECT c FROM Candidate c"),
+        @NamedQuery(name = "Candidate.findByMail", query = "SELECT c FROM Candidate c WHERE c.mail = :mail")
+})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
 @JsonIgnoreProperties(value = {"applications", "userapp"}, allowSetters = true)
 // Ignore the joboffers field when serializing Company objects
@@ -115,7 +109,16 @@ public class Candidate implements java.io.Serializable {
         this.applications = applications;
     }
 
-
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "mail='" + mail + '\'' +
+                ", userapp=" + userapp +
+                ", lastname='" + lastname + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", applications=" + applications +
+                '}';
+    }
 }
 
 

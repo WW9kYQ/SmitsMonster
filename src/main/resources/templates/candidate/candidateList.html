@@ -20,14 +20,13 @@
                 <td th:text="${cand.userapp.city}" />
                 <td th:text="${cand.applications.size()}" />
                 <td>
-                    <a th:href="@{candidates/${cand.id}}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
+                    <a th:href="@{|candidates/${cand.mail}|}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{candidates/{candidateId}/edit(candidateId=${cand.mail})}" class="btn btn-large btn-success" alt="Edit" title="Edit candidate">
+                    <a th:href="@{|candidates/edit/${cand.mail}|}" class="btn btn-large btn-success" alt="Edit" title="Edit candidate">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{candidates/{candidateId}/delete(candidateId=${cand.mail})}" class="btn btn-large btn-danger delBtn"
-                        alt="Delete" title="Delete candidate " data-id="@{candidates/{candidateId}/delete(candidateId=${cand.mail})}" th:attrappend="title=${' ' + cand.mail}">
+                    <a th:href="@{|candidates/delete/${cand.mail}|}" class="btn btn-large btn-danger" alt="Delete" title="Delete candidate">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>
@@ -35,7 +34,7 @@
         </tbody>
     </table>
     <footer>
-        <a th:href="@{candidate/create}" class="btn btn-large btn-primary" title="Add new candidate">
+        <a th:href="@{candidates/add}" class="btn btn-large btn-primary" title="Add new candidate">
             <i class="bi bi-plus"></i>
         </a>
 

@@ -2,21 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
 <article>
     <header>
-        <h2>Candidate entry form</h2>
+        <h2>Edit candidate</h2>
     </header>
     <!-- (${action}=='create')@{/companies/create}: @{/companies/${company.id}/edit}
      "@{{action}==create? /companies/create : /companies/{id}/edit(id=${company.id},action=${action})}"
      @{${action}=='create1'? /companies/create : /companies/{id}/edit(id=${company.id})}
      -->
-    <form th:action="@{''}" method="post">
+    <form th:action="@{|/candidates/edit/${candidate.mail}|}" method="post">
         <fieldset class="mb-3">
             <label for="nameid" class="form-label">Lastname</label>:
-            <input type="text" id="nameid" class="form-control" name="denomination" autofocus="autofocus"
+            <input type="text" id="nameid" class="form-control" name="lastname" autofocus="autofocus"
                 th:value="${candidate.lastname}" required />
         </fieldset>
         <fieldset class="mb-3">
             <label for="descid" class="form-label">Firstname</label>:
-            <input type="text" id="descid" class="form-control" name="description" th:value="${candidate.firstname}"
+            <input type="text" id="descid" class="form-control" name="firstname" th:value="${candidate.firstname}"
                 required />
         </fieldset>
         <fieldset class="mb-3">
@@ -25,7 +25,7 @@
         </fieldset>
         <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
         <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
-        <a th:href="@{/candidatepanel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+        <a th:href="@{/candidates}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
     </form>
 
     <aside th:if="${#lists.size(candidate.applications)} > 0">

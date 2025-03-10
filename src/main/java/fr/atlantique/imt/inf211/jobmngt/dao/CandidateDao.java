@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -76,19 +77,6 @@ public class CandidateDao {
         }
     }
 
-    @Transactional(readOnly = true)
-    public Candidate findById(String id) {
-        logger.log(Level.INFO, "getting Candidate instance with id: " + id);
-        try {
-            Candidate instance = entityManager.find(Candidate.class, id);
-            logger.log(Level.INFO, "get successful");
-            return instance;
-        } catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "get failed", re);
-            throw re;
-        }
-    }
-
     //findAll
     @Transactional(readOnly = true)
     public List<Candidate> findAll() {
@@ -108,8 +96,9 @@ public class CandidateDao {
     public Candidate findByMail(String mail) {
         logger.log(Level.INFO, "getting Candidate instance with mail: " + mail);
         try {
-            String hql = "FROM Candidate WHERE mail = :mail";
-            return (Candidate) entityManager.createQuery(hql).setParameter("mail", mail).getSingleResult();
+            TypedQuery<Candidate> q = entityManager.createNamedQuery("Candidate.findByMail", Candidate.class);
+            q.setParameter("mail", mail);
+            return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get by mail failed", re);
             throw re;

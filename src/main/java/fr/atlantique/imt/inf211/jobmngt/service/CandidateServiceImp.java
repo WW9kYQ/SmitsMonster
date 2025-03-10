@@ -23,4 +23,24 @@ public class CandidateServiceImp implements CandidateService {
     public Integer countOfCandidates() {
         return candidateDao.count();
     }
+
+    @Transactional(readOnly = true)
+    public Candidate getCandidate(String mail) {
+        return candidateDao.findByMail(mail);
+    }
+
+    @Transactional
+    public void editCandidate(Candidate c) {
+        candidateDao.merge(c);
+    }
+
+    @Transactional
+    public void addCandidate(Candidate c) {
+        candidateDao.persist(c);
+    }
+
+    @Transactional
+    public void deleteCandidate(Candidate c) {
+        candidateDao.remove(c);
+    }
 }
