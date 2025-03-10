@@ -45,9 +45,6 @@ public class CompanyController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
         }
         System.out.println("Company found: " + company.getMail() + ", " + company.getDenomination());
-        if (company.getJoboffers() == null) {
-            company.setJoboffers(new HashSet<>());
-        }
         ModelAndView mav = new ModelAndView("company/companyView");
         mav.addObject("company", company);
         return mav;
