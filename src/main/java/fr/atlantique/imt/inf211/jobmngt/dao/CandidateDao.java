@@ -65,6 +65,18 @@ public class CandidateDao {
     }
 
     @Transactional(readOnly = true)
+    public Integer count() {
+        logger.log(Level.INFO, "getting Candidate count");
+        try {
+            String hql = "SELECT COUNT(*) FROM Candidate";
+            return ((Long) entityManager.createQuery(hql).getSingleResult()).intValue();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get count failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public Candidate findById(String id) {
         logger.log(Level.INFO, "getting Candidate instance with id: " + id);
         try {

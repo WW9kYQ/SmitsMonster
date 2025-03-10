@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
+<article>
+    <p th:if="${#lists.size(candidateslist)} == 0">No candidate registered yet.</p>
+    <table class="table table-striped" th:if="${#lists.size(candidateslist)} > 0">
+        <caption>List of candidates (<span th:text="${candidateslist.size}"></span>)</caption>
+        <thead>
+            <tr>
+                <th scope="col">Lastname</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">City</th>
+                <th scope="col">Nb. of applications</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cand : ${candidateslist}">
+                 <td th:text="${cand.lastname}" />
+                <td th:text="${cand.firstname}" />
+                <td th:text="${cand.userapp.city}" />
+                <td th:text="${cand.applications.size()}" />
+                <td>
+                    <a th:href="@{candidates/${cand.id}}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a th:href="@{candidates/{candidateId}/edit(candidateId=${cand.mail})}" class="btn btn-large btn-success" alt="Edit" title="Edit candidate">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:href="@{candidates/{candidateId}/delete(candidateId=${cand.mail})}" class="btn btn-large btn-danger delBtn"
+                        alt="Delete" title="Delete candidate " data-id="@{candidates/{candidateId}/delete(candidateId=${cand.mail})}" th:attrappend="title=${' ' + cand.mail}">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <footer>
+        <a th:href="@{candidate/create}" class="btn btn-large btn-primary" title="Add new candidate">
+            <i class="bi bi-plus"></i>
+        </a>
+
+    </footer>
+</article>
+
+</html>
