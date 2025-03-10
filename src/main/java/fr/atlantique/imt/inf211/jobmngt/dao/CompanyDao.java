@@ -66,6 +66,18 @@ public class CompanyDao {
     }
 
     @Transactional(readOnly = true)
+    public Integer count() {
+        logger.log(Level.INFO, "getting Company count");
+        try {
+            String hql = "select count(*) from Company";
+            return ((Long) entityManager.createQuery(hql).getSingleResult()).intValue();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public Company findByMail(String mail) {
         logger.log(Level.INFO, "getting Company instance with mail: " + mail);
         try {

@@ -8,14 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
 
 @Controller
+@RequestMapping("/qualificationlevels")
 public class QualificationLevelController {
 
     @Autowired
     private QualificationLevelService sServ;
 
-    @RequestMapping("/listqualificationlevels")
+    @RequestMapping("")
     public ModelAndView listOfQualificationLevels() {
-        ModelAndView mav = new ModelAndView("qualificationlevellist");
+        ModelAndView mav = new ModelAndView("qualificationLevel/qualificationLevelList");
 
         mav.addObject("qualificationlevellist", sServ.listOfQualificationLevels());
         return mav;

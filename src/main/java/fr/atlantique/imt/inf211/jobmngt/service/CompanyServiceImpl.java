@@ -21,4 +21,9 @@ public class CompanyServiceImpl implements CompanyService {
         return qDAO.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Integer countOfCompanies() {
+        return qDAO.count();
+    }
+
 }

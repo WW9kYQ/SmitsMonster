@@ -8,26 +8,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/companies")
 public class CompanyController {
 
     @Autowired
-    private CompanyService sServ;
+    private CompanyService cServ;
 
 
-    @RequestMapping("/companypanel")
+    @RequestMapping("/panel")
     public ModelAndView companyPanel() {
-        ModelAndView mav = new ModelAndView("companypanel");
-        mav.addObject("nb_companies", 0);
+        ModelAndView mav = new ModelAndView("company/companyPanel");
+        mav.addObject("nb_companies", cServ.countOfCompanies());
         return mav;
     }
 
-    @RequestMapping("/listcompanies")
+    @RequestMapping("")
     public ModelAndView listCompanies() {
         //model and view is located in the templates/company folder
         ModelAndView mav = new ModelAndView("company/companyList");
-        mav.addObject("companieslist", sServ.listOfCompanies());
+        mav.addObject("companieslist", cServ.listOfCompanies());
         return mav;
-
     }
 
 
