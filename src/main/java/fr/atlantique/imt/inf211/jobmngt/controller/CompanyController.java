@@ -1,12 +1,17 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 
+import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CompanyController {
+
+    @Autowired
+    private CompanyService sServ;
 
 
     @RequestMapping("/companypanel")
@@ -16,5 +21,12 @@ public class CompanyController {
         return mav;
     }
 
+    @RequestMapping("/listcompanies")
+    public ModelAndView listCompanies() {
+        ModelAndView mav = new ModelAndView("companieslist");
+        mav.addObject("companieslist", sServ.listOfCompanies());
+        return mav;
+
+    }
 
 }
