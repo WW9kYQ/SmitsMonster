@@ -23,10 +23,13 @@ public class CompanyController {
 
     @RequestMapping("/listcompanies")
     public ModelAndView listCompanies() {
-        ModelAndView mav = new ModelAndView("companieslist");
+        //model and view is located in the templates/company folder
+        ModelAndView mav = new ModelAndView("company/companyList");
         mav.addObject("companieslist", sServ.listOfCompanies());
         return mav;
 
     }
+
+
 
 }
