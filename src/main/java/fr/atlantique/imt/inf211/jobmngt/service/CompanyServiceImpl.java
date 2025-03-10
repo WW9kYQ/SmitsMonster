@@ -26,4 +26,8 @@ public class CompanyServiceImpl implements CompanyService {
         return qDAO.count();
     }
 
+    @Transactional(readOnly = true)
+    public Company getCompany(String mail) {
+        return qDAO.findByMail(mail);
+    }
 }

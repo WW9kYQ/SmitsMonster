@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CompanyService {
     List<Company> listOfCompanies();
-
+    Company getCompany(String mail);
     Integer countOfCompanies();
 }
