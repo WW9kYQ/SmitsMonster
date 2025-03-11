@@ -23,12 +23,14 @@
                     <a th:href="@{|candidates/${cand.mail}|}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{|candidates/edit/${cand.mail}|}" class="btn btn-large btn-success" alt="Edit" title="Edit candidate">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a th:href="@{|candidates/delete/${cand.mail}|}" class="btn btn-large btn-danger" alt="Delete" title="Delete candidate">
-                        <i class="bi bi-trash"></i>
-                    </a>
+                    <th:block th:if="${#ctx.session.mail} == ${cand.mail}">
+                        <a th:href="@{|candidates/edit/${cand.mail}|}" class="btn btn-large btn-success" alt="Edit" title="Edit candidate">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a th:href="@{|candidates/delete/${cand.mail}|}" class="btn btn-large btn-danger" alt="Delete" title="Delete candidate">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </th:block>
                 </td>
             </tr>
         </tbody>

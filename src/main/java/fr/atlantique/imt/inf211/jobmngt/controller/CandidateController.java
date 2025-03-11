@@ -4,6 +4,8 @@ package fr.atlantique.imt.inf211.jobmngt.controller;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.entity.UserApp;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -81,9 +83,12 @@ public class CandidateController {
     }
 
     @RequestMapping("/delete/{mail}")
-    public String deleteCandidate(@PathVariable String mail) {
+    public String deleteCandidate(@PathVariable String mail, HttpServletRequest request) {
         Candidate c = cServ.getCandidate(mail);
         cServ.deleteCandidate(c);
+        HttpSession session = request.getSession();
+        session.setAttribute("mail", null);
+        session.setAttribute("usertype", null);
         return "redirect:/candidates";
     }
 
