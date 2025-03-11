@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Edit Company</h2>
+    </header>
+    <!-- (${action}=='create')@{/companies/create}: @{/companies/${company.id}/edit}
+     "@{{action}==create? /companies/create : /companies/{id}/edit(id=${company.id},action=${action})}"
+     @{${action}=='create1'? /companies/create : /companies/{id}/edit(id=${company.id})}
+     -->
+    <form th:action="@{|/companies/edit/${company.mail}|}" method="post">
+        <fieldset class="mb-3">
+            <label for="nameid" class="form-label">Description</label>:
+            <input type="text" id="nameid" class="form-control" name="description" autofocus="autofocus"
+                   th:value="${company.description}" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="descid" class="form-label">Denomination</label>:
+            <input type="text" id="descid" class="form-control" name="denomination" th:value="${company.denomination}"
+                   required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cityid" class="form-label">City</label>:
+            <input type="text" id="cityid" class="form-control" name="city" th:value="${company.userapp.city}" required />
+        </fieldset>
+        <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
+        <a th:href="@{/companies}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+    </form>
+
+    <aside th:if="${#lists.size(company.joboffers)} > 0">
+        <h2>List of associated applications</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Task</th>
+                <th scope="col">Fields</th>
+                <th scope="col">Qualification level</th>
+                <th scope="col">Publication date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${company.joboffers}">
+                <th scope="row" th:text="${app.id}" />
+                <td th:text="${app.title}" />
+                <td th:text="${app.taskdescription}" />
+                <td th:text="${app.publicationdate}" />
+                <td th:text="${app.qualificationlevel.label}" />
+                <td><span th:each="field : ${app.fields}"><span th:text="${field.label}"></span> </span></td>
+                <td><a th:href="@{'modoffer?oid='+${app.id}}"><img th:src="@{/img/zoom.png}"
+                                                                   alt="Application modification" /></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </aside>
+</article>
+
+</html>

@@ -69,4 +69,31 @@ public class CompanyController {
         cServ.addCompany(c);
         return "redirect:/companies/" + mail;
     }
+
+    @RequestMapping("/remove/{mail}")
+    public String removeCompany(@PathVariable String mail) {
+        Company c = cServ.getCompany(mail);
+        cServ.deleteCompany(c);
+        return "redirect:/companies";
+    }
+
+    @RequestMapping("/edit/{mail}")
+    public ModelAndView editCompany(@PathVariable String mail) {
+        ModelAndView mav = new ModelAndView("company/companyEditForm");
+
+        Company c = cServ.getCompany(mail);
+        mav.addObject("company", c);
+        return mav;
+    }
+    @RequestMapping(value="/edit/{mail}", method = RequestMethod.POST)
+    public String editCompany(@PathVariable String mail ,@RequestParam String description, @RequestParam String denomination, @RequestParam String city) {
+        Company c = cServ.getCompany(mail);
+        c.setDescription(description);
+        c.setDenomination(denomination);
+        c.getUserapp().setCity(city);
+
+        cServ.editCompany(c);
+        return "redirect:/companies/" + mail;
+    }
+
 }

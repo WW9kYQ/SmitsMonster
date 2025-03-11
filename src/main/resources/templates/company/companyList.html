@@ -23,10 +23,10 @@
                     <a th:href="@{companies/{companyMail}(companyMail=${comp.mail})}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{companies/{companyMail}/edit(companyId=${comp.mail})}" class="btn btn-large btn-success" alt="Edit" title="edit company">
+                    <a th:href="@{companies/edit/{companyMail}(companyMail=${comp.mail})}" class="btn btn-large btn-success" alt="Edit" title="edit company">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{companies/{companyMail}/delete(companyId=${comp.mail})}" class="btn btn-large btn-danger"
+                    <a th:href="@{companies/remove/{companyMail}(companyMail=${comp.mail})}" class="btn btn-large btn-danger"
                         alt="Delete" title="delete company " data-id="@{companies/{companyId}/delete(companyId=${comp.id})}" th:attrappend="title=${' ' + comp.denomination}">
                         <i class="bi bi-trash"></i>
                     </a>
