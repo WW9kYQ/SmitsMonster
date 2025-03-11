@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/application/applicationBase :: article(~{::article})}">
+<article>
+    <p th:if="${#lists.size(applicationslist)} == 0">No application registered yet.</p>
+    <table class="table table-striped" th:if="${#lists.size(applicationslist)} > 0">
+        <caption>List of applications (<span th:text="${applicationslist.size}"></span>)</caption>
+        <thead>
+        <tr>
+            <th scope="col">Lastname</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Fields</th>
+            <th scope="col">Qualification Level</th>
+            <th scope="col">Application Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="app : ${applicationslist}">
+            <td th:text="${app.candidate.lastname}"/>
+            <td th:text="${app.candidate.firstname}"/>
+            <td>
+                <ul th:each="field : ${app.fields}">
+                    <li th:text="${field.label}"></li>
+                </ul>
+            </td>
+            <td th:text="${app.qualificationlevel.label}"/>
+            <td th:text="${app.appdate}"/>
+            <td>
+                <a th:href="@{|applications/${app.id}|}" alt="Application details" title="view details"
+                   class="btn btn-large btn-secondary">
+                    <i class="bi bi-eye"></i>
+                </a>
+                <th:block th:if="${#ctx.session.mail} == ${app.candidate.userapp.mail}">
+                    <a th:href="@{|applications/edit/${app.id}|}" class="btn btn-large btn-success" alt="Edit"
+                       title="Edit application">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:href="@{|applications/delete/${app.id}|}" class="btn btn-large btn-danger" alt="Delete"
+                       title="Delete application">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </th:block>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <footer>
+        <a th:href="@{applications/add}" class="btn btn-large btn-primary" title="Add new candidate">
+            <i class="bi bi-plus"></i>
+        </a>
+
+    </footer>
+</article>
+
+</html>

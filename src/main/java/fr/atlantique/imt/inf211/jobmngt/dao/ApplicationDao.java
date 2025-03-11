@@ -80,6 +80,19 @@ public class ApplicationDao {
     }
 
     @Transactional(readOnly = true)
+    public Integer countOfApplications() {
+        logger.log(Level.INFO, "getting count of Applications");
+        try {
+            TypedQuery<Long> q = entityManager.createNamedQuery("Application.countOfApplications", Long.class);
+            logger.log(Level.INFO, "get successful");
+            return q.getSingleResult().intValue();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Application> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
         logger.log(Level.INFO, "Recherche des applications pour field: " + field + " et qualification level: " + qualificationLevel);
         TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class);

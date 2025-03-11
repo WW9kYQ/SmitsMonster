@@ -23,6 +23,7 @@ import java.util.Set;
         @NamedQuery(name = "Application.findByFieldAndQualif", query = "SELECT a FROM Application a Where :field MEMBER OF a.fields and a.qualificationlevel = :qualificationLevel"),
         @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a order by a.id ASC"),
         @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :id"),
+        @NamedQuery(name = "Application.countOfApplications", query = "SELECT COUNT(a) FROM Application a"),
 })
 
 public class Application implements java.io.Serializable {

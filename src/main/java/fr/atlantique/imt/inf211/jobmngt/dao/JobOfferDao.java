@@ -5,6 +5,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -109,6 +110,15 @@ public class JobOfferDao {
         TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldAndQualif", JobOffer.class);
         q.setParameter("field", field);
         q.setParameter("qualificationLevel", qualificationLevel);
+        logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
+        return q.getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<JobOffer> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualificationLevel) {
+        TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldsAndQualif", JobOffer.class);
+        q.setParameter("fields", fields);
+        q.setParameter("qualificationlevel", qualificationLevel);
         logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
         return q.getResultList();
     }

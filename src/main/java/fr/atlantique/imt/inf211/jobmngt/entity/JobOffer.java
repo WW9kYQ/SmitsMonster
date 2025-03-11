@@ -23,7 +23,8 @@ import java.util.Set;
         @NamedQuery(name = "JobOffer.findByTaskdescription", query = "SELECT j FROM JobOffer j WHERE j.taskdescription = :taskdescription"),
         @NamedQuery(name = "JobOffer.findByPublicationdate", query = "SELECT j FROM JobOffer j WHERE j.publicationdate = :publicationdate"),
         @NamedQuery(name = "JobOffer.findByCompany", query = "SELECT j FROM JobOffer j WHERE j.company = :company"),
-        @NamedQuery(name = "JobOffer.findByFieldAndQualif", query = "SELECT j FROM JobOffer j Where :field MEMBER OF j.fields and j.qualificationlevel = :qualificationLevel")
+        @NamedQuery(name = "JobOffer.findByFieldAndQualif", query = "SELECT j FROM JobOffer j Where :field MEMBER OF j.fields and j.qualificationlevel = :qualificationLevel"),
+        @NamedQuery(name = "JobOffer.findByFieldsAndQualif", query = "SELECT DISTINCT j FROM JobOffer j JOIN j.fields f WHERE j.qualificationlevel = :qualificationlevel AND f IN :fields")
 })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class JobOffer implements java.io.Serializable {

@@ -14,11 +14,10 @@
                 </div>
                 <div class="widget_info col-12">
                     <p>
-							<span th:if="${nb_applications}">
-    							<span th:if="${nb_applications} > 1">applications</span>
-	    						<span th:if="${nb_applications} < 2">application</span>
-		    					registered
-                            </span>
+                        <span th:text="${nb_applications}"></span>
+                        <span th:if="${nb_applications} > 1">applications</span>
+                        <span th:if="${nb_applications} < 2">application</span>
+                        registered
                     </p>
                 </div>
             </div><!-- end widget 1-->

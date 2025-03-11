@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/application/applicationBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Application details</h2>
+    </header>
+    <form>
+        <fieldset class="mb-3">
+            <label for="lastnameid" class="form-label">Lastname</label>:
+            <input type="text" id="lastnameid" class="form-control" name="lastname" autofocus="autofocus"
+                   th:value="${app.candidate.lastname}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="firstnameid" class="form-label">Firstname</label>:
+            <input type="text" id="firstnameid" class="form-control" name="firstname"
+                   th:value="${app.candidate.firstname}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cityid" class="form-label">City</label>:
+            <input type="text" id="cityid" class="form-control" name="city"
+                   th:value="${app.candidate.userapp.city}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="mailid" class="form-label">Mail</label>:
+            <input type="text" id="mailid" class="form-control" name="mail"
+                   th:value="${app.candidate.mail}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cvid" class="form-label">CV</label>:
+            <input type="text" id="cvid" class="form-control" name="cv" th:value="${app.cv}"
+                   readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="qualifid" class="form-label">Qualification level</label>:
+            <input type="text" id="qualifid" class="form-control" name="qualif"
+                   th:value="${app.qualificationlevel.label}"
+                   readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <aside th:each="field : ${fieldslist}">
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" th:name="${field.label}"
+                th:checked="${#lists.contains(app.fields, field)}" disabled>
+            </aside>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="appdateid" class="form-label">Application date</label>:
+            <input type="text" id="appdateid" class="form-control" name="appdate"
+                   th:value="${app.appdate}"
+                   readonly/>
+        </fieldset>
+    </form>
+<!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'-->
+    <aside th:if="${#lists.size(offerslist) > 0 } and ${#ctx.session.mail == app.candidate.mail}">
+        <h2>List of eligible job offers</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Company</th>
+                <th scope="col">Fields</th>
+                <th scope="col">Qualification Level</th>
+                <th scope="col">Publication Date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="offer : ${offerslist}">
+                <th scope="row" th:text="${offer.id}"/>
+                <td th:text="${offer.title}"/>
+                <td th:text="${offer.company.denomination}"/>
+                <td>
+                    <ul th:each="field : ${offer.fields}">
+                        <li th:text="${field.label}"></li>
+                    </ul>
+                </td>
+                <td th:text="${offer.qualificationlevel.label}"/>
+                <td th:text="${offer.publicationdate}"/>
+                <td><a th:href="@{'modapp?oid='+${offer.id}}"><img th:src="@{/img/zoom.png}"
+                                                                 alt="Applications modification"/></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </aside>
+
+
+    <footer>
+        <a th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"
+           title="Unlock to update"><i class="bi bi-pencil"></i></a>
+        <a th:href="@{/applications}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+    </footer>
+</article>
+
+</html>
