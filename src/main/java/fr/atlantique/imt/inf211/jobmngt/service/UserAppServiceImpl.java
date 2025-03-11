@@ -38,4 +38,11 @@ public class UserAppServiceImpl implements UserAppService {
     public Optional<UserApp> checkLogin(UserApp u) {
         return cDAO.checkLogin(u);
     }
+
+    @Transactional(readOnly = true)
+    public String getUserType(String mail) {
+        return cDAO.getUserType(mail);
+    }
+
+
 }

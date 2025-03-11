@@ -122,5 +122,18 @@ public class UserAppDao {
         }
         return Optional.of(res.get(0));
     }
+
+    @Transactional(readOnly = true)
+    public String getUserType(String mail) {
+        TypedQuery<Company> query = entityManager.createNamedQuery("Company.findByMail", Company.class);
+        query.setParameter("mail", mail);
+        if (query.getResultList().isEmpty()) {
+            return "candidate";
+        } else {
+            return "company";
+        }
+
+    }
+
 }
 

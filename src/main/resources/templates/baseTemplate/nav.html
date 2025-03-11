@@ -6,21 +6,21 @@
         </div>
         <div class="col-6 align-self-center"></div>
         <div class="col-2 align-self-end">
-            <p th:if="${#ctx.session.uid} != null">
+            <p th:if="${#ctx.session.mail} != null">
                 <i class="bi bi-" style="font-size: 2rem; color: white;" th:title="${#ctx.session.usertype}"
                     th:attrappend="class=${#ctx.session.usertype=='company'?'buildings':'person'}"></i>
-                <span th:text="${#ctx.session.user.mail}" class="tiny_text" />
+                <span th:text="${#ctx.session.mail}" class="tiny_text"></span>
             </p>
         </div>
 
         <div class="col-2 align-self-end">
-            <th:block th:if="${#ctx.session.uid} != null">
+            <th:block th:if="${#ctx.session.mail} != null">
                 <a th:if="${#ctx.session.hasMessages == true}" th:href="@{/messages}" title="access to your message"><i
                         class="bi bi-envelope-at" style="font-size: 2rem; color: white;"></i></a>
-                <a href="/logout" title="logout from the webapp"><i class="bi bi-box-arrow-in-up"
+                <a href="/login/logout" title="logout from the webapp"><i class="bi bi-box-arrow-in-up"
                         style="font-size: 2rem; color: white;"></i></a>
             </th:block>
-            <a th:if="${#ctx.session.uid} == null" title="Click to login" href="/login">
+            <a th:if="${#ctx.session.mail} == null" title="Click to login" href="/login">
                 <i class="bi bi-box-arrow-in-down" style="font-size: 2rem; color: white;"
                     title="login to access your data"></i>
             </a>

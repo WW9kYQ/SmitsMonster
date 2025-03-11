@@ -11,7 +11,7 @@
       </header>
        <article class="modal-body p-5 pt-0">        
         <small class="text-secondary">Log in by entering your email address and password.</small>
-        <form action="login" method="post">
+        <form action="/login/check" method="post">
           <fieldset class="mb-3 form-floating">
             <input type="email" id="uid" class="form-control rounded-3" name="mail" autofocus="autofocus" required
               placeholder="name@domain.com" />
@@ -31,8 +31,8 @@
       </article>
       <footer class="modal-body p-5 pt-0">
         <hr class="my-4">
-        <a th:href="@{/companies/create}" class="btn w-100 mb-2 btn btn-lg rounded-3 btn-secondary">Sign up as company</a>
-        <a th:href="@{/candidates/create}" class="btn w-100 mb-2 btn btn-lg rounded-3 btn-secondary">Sign up as candidate</a>
+        <a th:href="@{/companies/add}" class="btn w-100 mb-2 btn btn-lg rounded-3 btn-secondary">Sign up as company</a>
+        <a th:href="@{/candidates/add}" class="btn w-100 mb-2 btn btn-lg rounded-3 btn-secondary">Sign up as candidate</a>
         <small class="text-secondary">By clicking Sign up, you agree to the terms of use.</small>
       </footer>
     </div>

@@ -15,4 +15,7 @@ public interface UserAppService {
     Long nbUsers();
 
     Optional<UserApp> checkLogin(UserApp u);
+
+    String getUserType(String mail);
+
 }

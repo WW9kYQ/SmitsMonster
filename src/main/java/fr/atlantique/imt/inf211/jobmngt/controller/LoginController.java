@@ -18,6 +18,7 @@ import fr.atlantique.imt.inf211.jobmngt.entity.UserApp;
 import fr.atlantique.imt.inf211.jobmngt.service.UserAppService;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
     //value injected from the application.properties file
@@ -28,7 +29,7 @@ public class LoginController {
     UserAppService compRepo;
 
     // Login form
-    @RequestMapping("/login")
+    @RequestMapping("")
     public String login() {
         return "login.html";
     }
@@ -41,18 +42,19 @@ public class LoginController {
      * @param request
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/checklogin")
+    @RequestMapping(method = RequestMethod.POST, value = "/check")
     public ModelAndView checkLog(@ModelAttribute UserApp u, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession();
+        System.out.println(u);
         Optional<UserApp> user = compRepo.checkLogin(u);
         if (user.isPresent()) {
             u = user.get();
-            System.out.println("User found mail: " + u.getMail()); // +" usertype: "+ u.getUserType());
+            System.out.println("User found mail: " + u.getMail() +" usertype: "+ compRepo.getUserType(u.getMail()));
             mav.addObject("user", u);
             session.setAttribute("mail", u.getMail());
-//            session.setAttribute("usertype", u.getUserType());
-            mav.setViewName("index");
+            session.setAttribute("usertype", compRepo.getUserType(u.getMail()));
+            mav.setViewName("redirect:/");
 
         } else {
             mav.addObject("error", "Password or username incorrect");
@@ -66,8 +68,8 @@ public class LoginController {
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("mail", null);
-//        session.setAttribute("usertype", null);
-        return "index.html";
+        session.setAttribute("usertype", null);
+        return "redirect:/";
     }
 
 }

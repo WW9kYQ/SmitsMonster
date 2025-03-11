@@ -97,7 +97,6 @@ public class UserApp implements java.io.Serializable {
         this.company = company;
     }
 
-
 }
 
 
