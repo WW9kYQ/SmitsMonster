@@ -41,9 +41,10 @@ public class Company implements java.io.Serializable {
     }
 
 
-    public Company(UserApp userapp, String denomination) {
+    public Company(UserApp userapp, String denomination, String description) {
         this.userapp = userapp;
         this.denomination = denomination;
+        this.description = description;
     }
 
     public Company(UserApp userapp, String denomination, String description, Set<JobOffer> jobOffers) {
@@ -52,8 +53,9 @@ public class Company implements java.io.Serializable {
         this.description = description;
         this.jobOffers = jobOffers;
     }
-
+    @GenericGenerator(name = "CompanyIdGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "userapp"))
     @Id
+    @GeneratedValue(generator = "CompanyIdGenerator")
     @Column(name = "mail", unique = true, nullable = false)
     public String getMail() {
         return this.mail;
