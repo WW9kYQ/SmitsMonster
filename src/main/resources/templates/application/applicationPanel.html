@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/application/applicationBase :: article(~{::article})}">
+<article>
+    <div id="central_div">
+        <div class="widget_bar">
+            <div class="widget col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="widget_title col-12">
+                    <p>List of applications</p>
+                </div>
+                <div class="widget_button col-12">
+                    <a href="/applications">
+                        <img th:src="@{/img/list.png}" alt="List of applications submitted"/>
+                    </a>
+                </div>
+                <div class="widget_info col-12">
+                    <p>
+							<span th:if="${nb_applications}">
+    							<span th:if="${nb_applications} > 1">applications</span>
+	    						<span th:if="${nb_applications} < 2">application</span>
+		    					registered
+                            </span>
+                    </p>
+                </div>
+            </div><!-- end widget 1-->
+            <div th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'}"
+                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3 widget">
+                <div class="widget_title col-12">
+                    <p>Apply</p>
+                </div>
+                <div class="widget_button col-12">
+                    <a href="/applications/add">
+                        <img th:src="@{/img/addL.png}" alt="Reference a new company"/>
+                    </a>
+                </div>
+                <div class="widget_info col-12"></div>
+            </div>
+            <!-- end widget 2 -->
+        </div>
+    </div>
+</article>
+
+</html>

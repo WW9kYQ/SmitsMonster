@@ -6,11 +6,12 @@ import org.springframework.stereotype.Controller;
 
 
 @Controller
+@RequestMapping("/joboffers")
 public class JobOfferController {
 
-    @RequestMapping("/jobofferpanel")
+    @RequestMapping("/panel")
     public String jobofferPanel() {
 
-        return "jobofferpanel";
+        return "joboffer/jobPanel";
     }
 }

@@ -5,13 +5,14 @@ import org.springframework.stereotype.Controller;
 
 
 @Controller
+@RequestMapping("/applications")
 public class ApplicationController {
 
 
-    @RequestMapping("/applicationpanel")
+    @RequestMapping("/panel")
     public String applicationPanel() {
 
-        return "applicationpanel";
+        return "application/applicationPanel";
     }
 
 }

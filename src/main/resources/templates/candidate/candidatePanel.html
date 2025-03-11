@@ -1,47 +1,40 @@
-<div th:replace="~{/includes/head :: fhead}"> </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
+<article>
+    <div id="central_div">
 
-<div th:replace="~{/includes/header :: fheader}"> </div>
+        <div class="widget_bar">
+            <div class="widget col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="widget_title col-12">
+                    <p>List of candidates</p>
+                </div>
+                <div class="widget_button col-12">
+                    <a href="/candidates">
+                        <img th:src="@{/img/list.png}" alt="List of registered candidates"/>
+                    </a>
+                </div>
+                <div class="widget_info col-12">
+                    <p>
+                        <span th:text="${nb_candidates}"></span>
+                        <span th:if="${nb_candidates} > 1">candidates</span>
+                        <span th:if="${nb_candidates} < 2">candidate</span>
+                        registered
+                    </p>
+                </div>
+            </div><!-- end widget 1-->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 widget">
+                <div class="widget_title col-12">
+                    <p>New candidate</p>
+                </div>
+                <div class="widget_button col-12">
+                    <a href="/candidates/add">
+                        <img th:src="@{/img/addL.png}" alt="Reference a new candidate"/>
+                    </a>
+                </div>
+                <div class="widget_info col-12"></div>
+            </div><!-- end widget 2-->
+        </div>
+    </div>
+</article>
 
-	<!-- <div class="row justify-content-center"> -->
-		<div id="central_div" >
-			<h1>Candidate management panel</h1>
-		
-			<div class="widget_bar">
-				<div class="widget col-xs-12 col-sm-6 col-md-4 col-lg-3" >
-					<div class="widget_title col-12">
-						<p>List of candidates</p>
-					</div>
-					<div class="widget_button col-12">
-						<a href="/candidates">
-							<img  th:src="@{/img/list.png}" alt="List of registered candidates"/>
-						</a>
-					</div>
-					<div class="widget_info col-12">
-						<p>	
-							 <span th:text="${nb_candidates}"></span>
-							<span th:if="${nb_candidates} > 1">candidates</span>
-							<span th:if="${nb_candidates} < 2">candidate</span>
-							registered
-						</p>
-					</div>
-				</div><!-- end widget 1-->
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 widget">
-					<div class="widget_title col-12">
-						<p>New candidate</p>
-					</div>
-					<div class="widget_button col-12">
-						<a href="/candidates/add">
-							<img  th:src="@{/img/addL.png}" alt="Reference a new candidate"/>
-						</a>
-					</div>
-					<div class="widget_info col-12"></div>
-				</div><!-- end widget 2-->
-			</div>			
-		</div>
-			
-	<!-- </div> -->
-
-
-<div th:replace="~{/includes/footer :: ffooter}"> </div>
-
-
+</html>
