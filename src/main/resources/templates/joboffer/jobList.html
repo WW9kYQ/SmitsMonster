@@ -18,7 +18,7 @@
         <tr th:each="job : ${jobofferslist}">
             <td th:text="${job.title}"/>
             <td th:text="${job.company.denomination}"/>
-=            <td>
+            <td>
                 <ul th:each="field : ${job.fields}">
                     <li th:text="${field.label}"></li>
                 </ul>
@@ -45,7 +45,7 @@
         </tbody>
     </table>
     <footer>
-        <a th:href="@{joboffers/add}" class="btn btn-large btn-primary" title="Add new job offer">
+        <a th:if="${#ctx.session.mail!=null and #ctx.session.usertype == 'company'}" th:href="@{joboffers/add}" class="btn btn-large btn-primary" title="Add new job offer">
             <i class="bi bi-plus"></i>
         </a>
 

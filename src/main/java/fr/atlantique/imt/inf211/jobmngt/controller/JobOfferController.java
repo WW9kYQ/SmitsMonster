@@ -69,7 +69,7 @@ public class JobOfferController {
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public String addJobOffer(@RequestParam String title, @RequestParam String qualif,
                               @RequestParam String selectedFields,
-                              @RequestParam String taskdescription, HttpSession request) {
+                              @RequestParam String desc, HttpSession request) {
         JobOffer j = new JobOffer();
         Company c = cServ.getCompany((String) request.getAttribute("mail"));
         QualificationLevel q = qServ.findQualificationLevel(qualif);
@@ -77,7 +77,7 @@ public class JobOfferController {
         j.setCompany(c);
         j.setTitle(title);
         j.setQualificationlevel(q);
-        j.setTaskdescription(taskdescription);
+        j.setTaskdescription(desc);
         j.setFields(f);
         j.setPublicationdate(Date.from(java.time.Instant.now()));
         jServ.addJobOffer(j);

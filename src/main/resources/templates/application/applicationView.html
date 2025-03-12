@@ -63,7 +63,7 @@
                 <th scope="col">Qualification Level</th>
                 <th scope="col">Publication Date</th>
                 <th scope="col"></th>
-            </tr>Can
+            </tr>
             </thead>
             <tbody>
             <tr th:each="offer : ${offerslist}">
@@ -77,8 +77,8 @@
                 </td>
                 <td th:text="${offer.qualificationlevel.label}"/>
                 <td th:text="${offer.publicationdate}"/>
-                <td><a th:href="@{'modapp?oid='+${offer.id}}"><img th:src="@{/img/zoom.png}"
-                                                                 alt="Applications modification"/></a></td>
+                <td><a th:href="@{|/joboffers/${offer.id}|}"><img th:src="@{/img/zoom.png}"
+                                                                 alt="Job offers details"/></a></td>
             </tr>
             </tbody>
         </table>
@@ -86,7 +86,7 @@
 
 
     <footer>
-        <a th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"
+        <a th:if="${app.candidate.mail == #ctx.session.mail}" th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"
            title="Unlock to update"><i class="bi bi-pencil"></i></a>
         <a th:href="@{/applications}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
     </footer>
