@@ -29,5 +29,19 @@ public class ApplicationServiceImp implements ApplicationService {
         return applicationDao.findById(id);
     }
 
+    @Transactional
+    public void addApplication(Application a) {
+        applicationDao.persist(a);
+    }
+
+    @Transactional
+    public void editApplication(Application a) {
+        applicationDao.merge(a);
+    }
+
+    @Transactional
+    public void deleteApplication(Application a) {
+        applicationDao.remove(a);
+    }
 
 }

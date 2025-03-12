@@ -38,9 +38,9 @@
         </fieldset>
         <fieldset class="mb-3">
             <aside th:each="field : ${fieldslist}">
+                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+                       th:checked="${#lists.contains(app.fields, field)}" disabled>
                 <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
-                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" th:name="${field.label}"
-                th:checked="${#lists.contains(app.fields, field)}" disabled>
             </aside>
         </fieldset>
         <fieldset class="mb-3">

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/application/applicationBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Application details</h2>
+    </header>
+    <form th:action="@{|/applications/edit/${app.id}|}" method="post">
+        <fieldset class="mb-3">
+            <label for="id" class="form-label">Numéro</label>:
+            <input type="text" id="id" class="form-control" name="id"
+                   th:value="${app.id}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cvid" class="form-label">CV</label>:
+            <input type="text" id="cvid" class="form-control" name="cv" th:value="${app.cv}"/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="qualifid" class="form-label">Qualification level</label>:
+            <input type="text" id="qualifid" class="form-control" name="qualif"
+                   th:value="${app.qualificationlevel.label}"/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <div th:each="field : ${fieldslist}">
+                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+                       th:value="${field.label}" th:checked="${#lists.contains(app.fields, field)}">
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+            </div>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="appdateid" class="form-label">Application date</label>:
+            <input type="text" id="appdateid" class="form-control" name="appdate"
+                   th:value="${app.appdate}"
+                   readonly/>
+        </fieldset>
+        <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i>
+        </button>
+        <a th:href="@{/applications/panel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+    </form>
+
+</article>
+
+</html>

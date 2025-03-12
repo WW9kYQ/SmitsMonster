@@ -9,4 +9,6 @@ public interface QualificationLevelService {
 
     List<QualificationLevel> listOfQualificationLevels();
 
+    QualificationLevel findQualificationLevel(String qualif);
+
 }

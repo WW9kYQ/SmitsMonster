@@ -23,6 +23,7 @@
                     <a th:href="@{companies/{companyMail}(companyMail=${comp.mail})}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
+                    <th:block th:if="${#ctx.session.mail} == ${comp.mail}">
                     <a th:href="@{companies/edit/{companyMail}(companyMail=${comp.mail})}" class="btn btn-large btn-success" alt="Edit" title="edit company">
                         <i class="bi bi-pencil"></i>
                     </a>
@@ -30,6 +31,7 @@
                         alt="Delete" title="delete company " data-id="@{companies/{companyId}/delete(companyId=${comp.id})}" th:attrappend="title=${' ' + comp.denomination}">
                         <i class="bi bi-trash"></i>
                     </a>
+                    </th:block>
                 </td>
             </tr>
         </tbody>

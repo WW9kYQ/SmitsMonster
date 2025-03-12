@@ -8,16 +8,17 @@
         <fieldset class="mb-3">
             <label for="nameid" class="form-label">Lastname</label>:
             <input type="text" id="nameid" class="form-control" name="denomination" autofocus="autofocus"
-                th:value="${candidate.lastname}" readonly />
+                   th:value="${candidate.lastname}" readonly/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="descid" class="form-label">Firstname</label>:
             <input type="text" id="descid" class="form-control" name="description" th:value="${candidate.firstname}"
-                readonly />
+                   readonly/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="cityid" class="form-label">City</label>:
-            <input type="text" id="cityid" class="form-control" name="city" th:value="${candidate.userapp.city}" readonly />
+            <input type="text" id="cityid" class="form-control" name="city" th:value="${candidate.userapp.city}"
+                   readonly/>
         </fieldset>
     </form>
 
@@ -36,13 +37,26 @@
             </thead>
             <tbody>
             <tr th:each="app : ${candidate.applications}">
-                <th scope="row" th:text="${app.id}" />
-                <td th:text="${app.cv}" />
-                <td th:text="${app.appdate}" />
-                <td th:text="${app.qualificationlevel.label}" />
-                <td><span th:each="field : ${app.fields}"><span th:text="${field.label}"></span> </span></td>
-                <td><a th:href="@{'modapp?oid='+${app.id}}"><img th:src="@{/img/zoom.png}"
-                                                                   alt="Applications modification" /></a></td>
+                <th scope="row" th:text="${app.id}"/>
+                <td th:text="${app.cv}"/>
+                <td th:text="${app.appdate}"/>
+                <td th:text="${app.qualificationlevel.label}"/>
+                <td>
+                    <ul th:each="field : ${app.fields}">
+                        <li th:text="${field.label}"></li>
+                    </ul>
+                </td>
+
+                <td>
+                    <a th:if="${#ctx.session.mail} == ${candidate.mail}"
+                       th:href="@{|/applications/edit/${app.id}|}"><img th:src="@{/img/modify.png}"
+                                                                        alt="Applications modification"/>
+                    </a>
+                    <a th:if="${#ctx.session.mail == null} or ${#ctx.session.mail} != ${candidate.mail}"
+                       th:href="@{|/applications/${app.id}|}"><img th:src="@{/img/zoom.png}"
+                                                                        alt="Applications Details"/>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -50,10 +64,12 @@
 
 
     <footer>
-        <a th:href="@{|/candidates/edit/${candidate.mail}|}" class="btn btn-large btn-primary"
-            title="Unlock to update"><i class="bi bi-pencil"></i></a>
+        <th:block th:if="${#ctx.session.mail} == ${candidate.mail}">
+            <a th:href="@{|/candidates/edit/${candidate.mail}|}" class="btn btn-large btn-primary"
+               title="Unlock to update"><i class="bi bi-pencil"></i></a>
+        </th:block>
         <a th:href="@{/candidates}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
-        </footer>
+    </footer>
 </article>
 
 </html>

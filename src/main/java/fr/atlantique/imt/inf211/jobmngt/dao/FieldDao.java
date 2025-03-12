@@ -4,7 +4,9 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +63,21 @@ public class FieldDao {
         logger.log(Level.INFO, "get successful");
         return q.getSingleResult();
 
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Field> findFields(String fields) {
+        Set<Field> fieldsSet = new HashSet<Field>();
+        System.out.println("fields: " + fields);
+        String[] fieldsArray = fields.split(",");
+        for (String field : fieldsArray) {
+            logger.log(Level.INFO, "getting Field instance with label: " + field);
+            TypedQuery<Field> q = entityManager.createNamedQuery("Field.findByLabel", Field.class);
+            q.setParameter("label", field);
+            fieldsSet.add(q.getSingleResult());
+        }
+        logger.log(Level.INFO, "get successful");
+        return fieldsSet;
     }
 }
 

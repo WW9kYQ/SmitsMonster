@@ -23,4 +23,9 @@ public class QualificationLevelServiceImp implements QualificationLevelService {
         return qDAO.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public QualificationLevel findQualificationLevel(String qualif) {
+        return qDAO.findByLabel(qualif);
+    }
+
 }
