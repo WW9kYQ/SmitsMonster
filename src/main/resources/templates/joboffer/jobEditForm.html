@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobBase :: article(~{::article})}">
+<article>
+  <header>
+    <h2>Job Offers details</h2>
+  </header>
+  <form th:action="@{|/joboffers/edit/${job.id}|}" method="post">
+    <fieldset class="mb-3">
+      <label for="id" class="form-label">Numéro</label>:
+      <input type="text" id="id" class="form-control" name="id"
+             th:value="${job.id}" readonly/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="title" class="form-label">Title</label>:
+      <input type="text" id="title" class="form-control" name="title" th:value="${job.title}"/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="descriptionid" class="form-label">Task Description</label>:
+      <input type="text" id="descriptionid" class="form-control" name="taskdescription" th:value="${job.taskdescription}"/>
+    </fieldset>
+
+    <fieldset class="mb-3">
+      <label for="qualifid" class="form-label">Qualification level</label>:
+      <input type="text" id="qualifid" class="form-control" name="qualif"
+             th:value="${job.qualificationlevel.label}"/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <div th:each="field : ${fieldslist}">
+        <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+               th:value="${field.label}" th:checked="${#lists.contains(job.fields, field)}">
+        <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+      </div>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="jobdateid" class="form-label">Publication date</label>:
+      <input type="text" id="jobdateid" class="form-control" name="publicationdate"
+             th:value="${job.publicationdate}"
+             readonly/>
+    </fieldset>
+    <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+    <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i>
+    </button>
+    <a th:href="@{/joboffers/panel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+  </form>
+
+</article>
+
+</html>

@@ -122,5 +122,11 @@ public class JobOfferDao {
         logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
         return q.getResultList();
     }
+    //countOfJobOffers
+    @Transactional(readOnly = true)
+    public Integer countOfJobOffers() {
+        TypedQuery<Long> q = entityManager.createNamedQuery("JobOffer.countOfJobOffers", Long.class);
+        return q.getSingleResult().intValue();
+    }
 }
 

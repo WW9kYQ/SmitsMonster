@@ -20,4 +20,31 @@ public class JobOfferServiceImp implements JobOfferService {
     public List<JobOffer> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualif) {
         return jobOfferDao.findByFieldsAndQualif(fields, qualif);
     }
+
+    @Override
+    public Integer countOfJobOffers() {
+        return jobOfferDao.countOfJobOffers();
+    }
+    @Override
+    public List<JobOffer> listOfJobOffers() {
+        return jobOfferDao.findAll();
+    }
+
+    @Override
+    public JobOffer findById(Integer id) {
+        return jobOfferDao.findById(id);
+    }
+
+    @Override
+    public void addJobOffer(JobOffer a) {
+        jobOfferDao.persist(a);
+    }
+    @Override
+    public void editJobOffer(JobOffer a) {
+        jobOfferDao.merge(a);
+    }
+    @Override
+    public void deleteJobOffer(JobOffer a) {
+        jobOfferDao.remove(a);
+    }
 }

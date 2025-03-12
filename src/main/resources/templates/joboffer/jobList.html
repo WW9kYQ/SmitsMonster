@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobBase :: article(~{::article})}">
+<article>
+    <p th:if="${#lists.size(jobofferslist)} == 0">No Job Offer registered yet.</p>
+    <table class="table table-striped" th:if="${#lists.size(jobofferslist)} > 0">
+        <caption>List of job offers (<span th:text="${jobofferslist.size}"></span>)</caption>
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Denomination</th>
+            <th scope="col">Fields</th>
+            <th scope="col">Qualification Level</th>
+            <th scope="col">Publication Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${jobofferslist}">
+            <td th:text="${job.title}"/>
+            <td th:text="${job.company.denomination}"/>
+=            <td>
+                <ul th:each="field : ${job.fields}">
+                    <li th:text="${field.label}"></li>
+                </ul>
+            </td>
+            <td th:text="${job.qualificationlevel.label}"/>
+            <td th:text="${job.publicationdate}"/>
+            <td>
+                <a th:href="@{|joboffers/${job.id}|}" alt="Job Offer details" title="view details"
+                   class="btn btn-large btn-secondary">
+                    <i class="bi bi-eye"></i>
+                </a>
+                <th:block th:if="${#ctx.session.mail} == ${job.company.userapp.mail}">
+                    <a th:href="@{|joboffers/edit/${job.id}|}" class="btn btn-large btn-success" alt="Edit"
+                       title="Edit Job Offers">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:href="@{|joboffers/delete/${job.id}|}" class="btn btn-large btn-danger" alt="Delete"
+                       title="Delete Job Offers">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </th:block>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <footer>
+        <a th:href="@{joboffers/add}" class="btn btn-large btn-primary" title="Add new job offer">
+            <i class="bi bi-plus"></i>
+        </a>
+
+    </footer>
+</article>
+
+</html>

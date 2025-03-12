@@ -5,29 +5,29 @@
         <div class="widget_bar">
             <div class="widget col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="widget_title col-12">
-                    <p>List of job offers</p>
+                    <p>List of Job Offers</p>
                 </div>
                 <div class="widget_button col-12">
                     <a href="/joboffers">
-                        <img th:src="@{/img/list.png}" alt="List of applications submitted"/>
+                        <img th:src="@{/img/list.png}" alt="List of joboffers submitted"/>
                     </a>
                 </div>
                 <div class="widget_info col-12">
                     <p>
-							<span th:if="${nb_joboffers}">
-    							<span th:if="${nb_joboffers} > 1">job offers</span>
-	    						<span th:if="${nb_joboffers} < 2">job offer</span>
-		    					registered
-                            </span>
+                        <span th:text="${nb_joboffers}"></span>
+                        <span th:if="${nb_joboffers} > 1">joboffers</span>
+                        <span th:if="${nb_joboffers} < 2">joboffer</span>
+                        registered
                     </p>
                 </div>
             </div><!-- end widget 1-->
-            <div th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'company'}" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 widget">
+            <div th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'}"
+                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3 widget">
                 <div class="widget_title col-12">
                     <p>Apply</p>
                 </div>
                 <div class="widget_button col-12">
-                    <a href="/applications/add">
+                    <a href="/joboffers/add">
                         <img th:src="@{/img/addL.png}" alt="Reference a new company"/>
                     </a>
                 </div>

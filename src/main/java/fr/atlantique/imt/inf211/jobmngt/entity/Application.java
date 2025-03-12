@@ -24,6 +24,7 @@ import java.util.Set;
         @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a order by a.id ASC"),
         @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :id"),
         @NamedQuery(name = "Application.countOfApplications", query = "SELECT COUNT(a) FROM Application a"),
+        @NamedQuery(name = "Application.findByFieldsAndQualif", query = "SELECT DISTINCT a FROM Application a JOIN a.fields f WHERE a.qualificationlevel = :qualificationlevel AND f IN :fields")
 })
 
 public class Application implements java.io.Serializable {

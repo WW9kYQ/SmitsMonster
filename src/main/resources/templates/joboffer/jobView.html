@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobBase :: article(~{::article})}">
+<article>
+  <header>
+    <h2>Job Offer details</h2>
+  </header>
+  <form>
+    <fieldset class="mb-3">
+      <label for="companyndenominationid" class="form-label">Denomination</label>:
+      <input type="text" id="companyndenominationid" class="form-control" name="denomination" autofocus="autofocus"
+             th:value="${job.company.denomination}" readonly/>
+    </fieldset>
+
+    <fieldset class="mb-3">
+      <label for="cityid" class="form-label">City</label>:
+      <input type="text" id="cityid" class="form-control" name="city"
+             th:value="${job.company.userapp.city}" readonly/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="mailid" class="form-label">Mail</label>:
+      <input type="text" id="mailid" class="form-control" name="mail"
+             th:value="${job.company.mail}" readonly/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="titleid" class="form-label">Title</label>:
+      <input type="text" id="titleid" class="form-control" name="title" th:value="${job.title}"
+             readonly/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="qualifid" class="form-label">Qualification level</label>:
+      <input type="text" id="qualifid" class="form-control" name="qualif"
+             th:value="${job.qualificationlevel.label}"
+             readonly/>
+    </fieldset>
+    <fieldset class="mb-3">
+      <aside th:each="field : ${fieldslist}">
+        <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+               th:checked="${#lists.contains(job.fields, field)}" disabled>
+        <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+      </aside>
+    </fieldset>
+    <fieldset class="mb-3">
+      <label for="pubdateid" class="form-label">Job Offer Publication date</label>:
+      <input type="text" id="pubdateid" class="form-control" name="publicationdate"
+             th:value="${job.publicationdate}"
+             readonly/>
+    </fieldset>
+  </form>
+  <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'company'-->
+  <aside th:if="${#lists.size(applicationslist) > 0 } and ${#ctx.session.mail == job.company.mail}">
+    <h2>List of eligible Applications</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">CV</th>
+        <th scope="col">Candidate</th>
+        <th scope="col">Fields</th>
+        <th scope="col">Qualification Level</th>
+        <th scope="col">Application Date</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="offer : ${applicationslist}">
+        <th scope="row" th:text="${application.id}"/>
+        <td th:text="${application.cv}"/>
+        <td th:text="${application.candidate.firstname}"/>
+        <td th:text="${application.candidate.lastname}"/>
+        <td>
+          <ul th:each="field : ${application.fields}">
+            <li th:text="${field.label}"></li>
+          </ul>
+        </td>
+        <td th:text="${application.qualificationlevel.label}"/>
+        <td th:text="${application.publicationdate}"/>
+        <td><a th:href="@{'modapp?oid='+${offer.id}}"><img th:src="@{/img/zoom.png}"
+                                                           alt="Job Offers modification"/></a></td>
+      </tr>
+      </tbody>
+    </table>
+  </aside>
+
+
+  <footer>
+    <a th:href="@{|/joboffers/edit/${job.id}|}" class="btn btn-large btn-primary"
+       title="Unlock to update"><i class="bi bi-pencil"></i></a>
+    <a th:href="@{/joboffers}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+  </footer>
+</article>
+
+</html>

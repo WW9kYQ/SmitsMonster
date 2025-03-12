@@ -2,11 +2,14 @@ package fr.atlantique.imt.inf211.jobmngt.service;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
+import fr.atlantique.imt.inf211.jobmngt.entity.Field;
+import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class ApplicationServiceImp implements ApplicationService {
@@ -44,4 +47,8 @@ public class ApplicationServiceImp implements ApplicationService {
         applicationDao.remove(a);
     }
 
+    @Transactional
+    public List<Application> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualif) {
+        return applicationDao.findByFieldsAndQualif(fields, qualif);
+    }
 }

@@ -5,6 +5,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,6 +116,16 @@ public class ApplicationDao {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Application> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualificationLevel) {
+        logger.log(Level.INFO, "Recherche des applications pour fields: " + fields + " et qualification level: " + qualificationLevel);
+        TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldsAndQualif", Application.class);
+        q.setParameter("fields", fields);
+        q.setParameter("qualificationlevel", qualificationLevel);
+        logger.log(Level.INFO, "Number of applications found: " + q.getResultList().size());
+        return q.getResultList();
     }
 
 
