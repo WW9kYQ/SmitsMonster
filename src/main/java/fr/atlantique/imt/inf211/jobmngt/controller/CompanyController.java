@@ -1,6 +1,9 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 
+import fr.atlantique.imt.inf211.jobmngt.service.UserAppService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
@@ -23,6 +26,7 @@ public class CompanyController {
 
     @Autowired
     private CompanyService cServ;
+
 
 
     @RequestMapping("/panel")
@@ -89,9 +93,12 @@ public class CompanyController {
     }
 
     @RequestMapping("/remove/{mail}")
-    public String removeCompany(@PathVariable String mail) {
+    public String removeCompany(@PathVariable String mail, HttpServletRequest request) {
         Company c = cServ.getCompany(mail);
         cServ.deleteCompany(c);
+        HttpSession session = request.getSession();
+        session.setAttribute("mail", null);
+        session.setAttribute("usertype", null);
         return "redirect:/companies";
     }
 
