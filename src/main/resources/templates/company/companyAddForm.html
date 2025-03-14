@@ -12,6 +12,7 @@
         <fieldset class="mb-3">
             <label for="mailid" class="form-label">Mail</label>:
             <input type="text" id="mailid" class="form-control" name="mail" autofocus="autofocus" required/>
+            <p th:if="${mailError}" th:text="${mailError}" class="text-danger"></p>
         </fieldset>
         <fieldset class="mb-3">
             <label for="passwordid" class="form-label">Password</label>:
@@ -34,6 +35,9 @@
         </button>
         <a th:href="@{/companies/panel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
     </form>
+    <!-- check if an error is returned in the model-->
+    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+
 
 </article>
 

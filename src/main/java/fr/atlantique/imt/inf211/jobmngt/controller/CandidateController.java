@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -70,7 +71,11 @@ public class CandidateController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public String addCandidate(@RequestParam String mail, @RequestParam String password, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city) {
+    public String addCandidate(@RequestParam String mail, @RequestParam String password, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, Model model) {
+        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            model.addAttribute("mailError", "Invalid email format");
+            return "company/companyAddForm";
+        }
         UserApp userApp = new UserApp(mail, password);
         Candidate c = new Candidate();
         c.setUserapp(userApp);

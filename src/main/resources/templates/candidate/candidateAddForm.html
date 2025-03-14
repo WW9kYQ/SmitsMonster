@@ -12,6 +12,7 @@
         <fieldset class="mb-3">
             <label for="mailid" class="form-label">Mail</label>:
             <input type="text" id="mailid" class="form-control" name="mail" autofocus="autofocus" required/>
+            <p th:if="${mailError}" th:text="${mailError}" class="text-danger"></p>
         </fieldset>
         <fieldset class="mb-3">
             <label for="passwordid" class="form-label">Password</label>:

@@ -1,6 +1,7 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 
+import org.springframework.ui.Model;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.UserApp;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.HashSet;
 
 @Controller
@@ -59,7 +59,12 @@ public class CompanyController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public String addCompany(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city) {
+    public String addCompany(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, Model model) {
+        //check that email is  a mail with regex
+        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            model.addAttribute("mailError", "Invalid email format");
+            return "company/companyAddForm";
+        }
         UserApp userApp = new UserApp(mail, password);
         Company c = new Company();
         c.setUserapp(userApp);
@@ -68,6 +73,15 @@ public class CompanyController {
         c.getUserapp().setCity(city);
         cServ.addCompany(c);
         return "redirect:/companies/" + mail;
+
+    }
+    public ModelAndView checkMail(String mail){
+        ModelAndView mav = new ModelAndView("company/companyAddForm");
+        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            mav.addObject("error", "Invalid email");
+            return mav;
+        }
+        return null;
     }
 
     @RequestMapping("/remove/{mail}")
