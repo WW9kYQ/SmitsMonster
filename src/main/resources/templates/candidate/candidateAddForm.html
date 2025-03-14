@@ -17,6 +17,8 @@
         <fieldset class="mb-3">
             <label for="passwordid" class="form-label">Password</label>:
             <input type="password" id="passwordid" class="form-control" name="password" required/>
+            <p th:if="${passwordError}" th:text="${passwordError}" class="text-danger"></p>
+
         </fieldset>
         <fieldset class="mb-3">
             <label for="nameid" class="form-label">Lastname</label>:

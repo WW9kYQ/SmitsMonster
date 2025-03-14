@@ -65,6 +65,10 @@ public class CompanyController {
             model.addAttribute("mailError", "Invalid email format");
             return "company/companyAddForm";
         }
+        if (password.length()<4) {
+            model.addAttribute("passwordError", "Password must be at least 4 characters long");
+            return "company/companyAddForm";
+        }
         UserApp userApp = new UserApp(mail, password);
         Company c = new Company();
         c.setUserapp(userApp);
