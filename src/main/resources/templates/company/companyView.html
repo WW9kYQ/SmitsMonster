@@ -41,8 +41,19 @@
                 <td th:text="${job.publicationdate}"></td>
                 <td th:text="${job.qualificationlevel.label}"></td>
                 <td>
-                    <span th:each="field : ${job.fields}" th:text="${field.label}"></span>
-                    <span th:if="${#lists.size(job.fields) == 0}">No field</span>
+                    <ul th:each="field : ${job.fields}">
+                        <li th:text="${field.label}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a th:if="${#ctx.session.mail} == ${company.mail}"
+                       th:href="@{|/applications/edit/${job.id}|}"><img th:src="@{/img/modify.png}"
+                                                                        alt="Applications modification"/>
+                    </a>
+                    <a th:if="${#ctx.session.mail == null} or ${#ctx.session.mail} != ${company.mail}"
+                       th:href="@{|/applications/${job.id}|}"><img th:src="@{/img/zoom.png}"
+                                                                   alt="Applications Details"/>
+                    </a>
                 </td>
             </tr>
             </tbody>

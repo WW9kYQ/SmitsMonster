@@ -46,7 +46,6 @@
                         <li th:text="${field.label}"></li>
                     </ul>
                 </td>
-
                 <td>
                     <a th:if="${#ctx.session.mail} == ${candidate.mail}"
                        th:href="@{|/applications/edit/${app.id}|}"><img th:src="@{/img/modify.png}"
