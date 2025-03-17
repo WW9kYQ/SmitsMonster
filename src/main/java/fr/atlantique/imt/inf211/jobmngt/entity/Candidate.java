@@ -101,6 +101,7 @@ public class Candidate implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public Set<Application> getApplications() {
         return this.applications;
     }
