@@ -4,6 +4,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -132,6 +133,7 @@ public class JobOffer implements java.io.Serializable {
     @JoinTable(name = "offermessdest", schema = "public", joinColumns = {
             @JoinColumn(name = "iddestoffer", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idmessapp", nullable = false, updatable = false)})
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public Set<ApplicationMessage> getApplicationmessages() {
         return this.applicationMessages;
     }
@@ -161,19 +163,6 @@ public class JobOffer implements java.io.Serializable {
         this.offerMessages = offerMessages;
     }
 
-    public String toString() {
-        return "JobOffer{" +
-                "id=" + id +
-                ", company=" + company +
-                ", qualificationlevel=" + qualificationlevel +
-                ", title='" + title + '\'' +
-                ", taskdescription='" + taskdescription + '\'' +
-                ", publicationdate=" + publicationdate +
-                ", applicationMessages=" + applicationMessages +
-                ", fields=" + fields +
-                ", offerMessages=" + offerMessages +
-                '}';
-    }
 
 }
 

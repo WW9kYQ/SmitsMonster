@@ -5,6 +5,7 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -139,6 +140,7 @@ public class Application implements java.io.Serializable {
     @JoinTable(name = "appmessdest", schema = "public", joinColumns = {
             @JoinColumn(name = "iddestapp", nullable = false, updatable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "idmessoffer", nullable = false, updatable = false)})
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public Set<OfferMessage> getOffermessages() {
         return this.offerMessages;
     }
