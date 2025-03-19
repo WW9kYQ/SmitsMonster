@@ -47,12 +47,19 @@
                     </ul>
                 </td>
                 <td>
-                    <a th:if="${#ctx.session.mail} == ${candidate.mail}"
-                       th:href="@{|/applications/edit/${app.id}|}"><img th:src="@{/img/modify.png}"
-                                                                        alt="Applications modification"/>
+                    <a th:href="@{|/applications/${app.id}|}" alt="Job offer Details"
+                       class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{|/applications/${app.id}|}"><img th:src="@{/img/zoom.png}"
-                                                                        alt="Applications Details"/>
+                    <a th:if="${#ctx.session.mail} == ${candidate.mail}"
+                       th:href="@{|/applications/edit/${app.id}|}"
+                       alt="Job offer modification" class="btn btn-large btn-success">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail} == ${candidate.mail}"
+                       th:href="@{|/applications/delete/${app.id}|}"
+                       alt="Job offer deletion" class="btn btn-large btn-danger">
+                        <i class="bi bi-trash"></i>
                     </a>
                 </td>
             </tr>

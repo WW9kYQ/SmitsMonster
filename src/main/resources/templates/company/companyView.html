@@ -8,20 +8,20 @@
         <fieldset class="mb-3">
             <label for="mail" class="form-label">Email</label>:
             <input type="text" id="mail" class="form-control" name="mail"
-                   th:value="${company.mail}" readonly />
+                   th:value="${company.mail}" readonly/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="denomination" class="form-label">Name</label>:
             <input type="text" id="denomination" class="form-control" name="denomination"
-                   th:value="${company.denomination}" readonly />
+                   th:value="${company.denomination}" readonly/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="description" class="form-label">Description</label>:
             <input type="text" id="description" class="form-control" name="description"
-                   th:value="${company.description}" readonly />
+                   th:value="${company.description}" readonly/>
         </fieldset>
     </form>
-    <aside th:if="${#lists.size(company.joboffers) > 0}">        <h2>List of Associated Job Offers</h2>
+    <aside th:if="${#lists.size(company.joboffers) > 0}"><h2>List of Associated Job Offers</h2>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -46,12 +46,19 @@
                     </ul>
                 </td>
                 <td>
-                    <a th:if="${#ctx.session.mail} == ${company.mail}"
-                       th:href="@{|/joboffers/edit/${job.id}|}"><img th:src="@{/img/modify.png}"
-                                                                        alt="Applications modification"/>
+                    <a th:href="@{|/joboffers/${job.id}|}" alt="Application Details"
+                       class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{|/joboffers/${job.id}|}"><img th:src="@{/img/zoom.png}"
-                                                                   alt="Applications Details"/>
+                    <a th:if="${#ctx.session.mail} == ${company.mail}"
+                       th:href="@{|/joboffers/edit/${job.id}|}"
+                       alt="Application modification" class="btn btn-large btn-success">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail} == ${company.mail}"
+                       th:href="@{|/joboffers/delete/${job.id}|}"
+                       alt="Application deletion" class="btn btn-large btn-danger">
+                        <i class="bi bi-trash"></i>
                     </a>
                 </td>
             </tr>
