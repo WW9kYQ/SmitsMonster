@@ -51,8 +51,7 @@
                        th:href="@{|/applications/edit/${app.id}|}"><img th:src="@{/img/modify.png}"
                                                                         alt="Applications modification"/>
                     </a>
-                    <a th:if="${#ctx.session.mail == null} or ${#ctx.session.mail} != ${candidate.mail}"
-                       th:href="@{|/applications/${app.id}|}"><img th:src="@{/img/zoom.png}"
+                    <a th:href="@{|/applications/${app.id}|}"><img th:src="@{/img/zoom.png}"
                                                                         alt="Applications Details"/>
                     </a>
                 </td>

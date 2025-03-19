@@ -65,6 +65,7 @@ public class ApplicationController {
     public ModelAndView addApplication() {
         ModelAndView mav = new ModelAndView("application/applicationAddForm");
         mav.addObject("fieldslist", fServ.listOfSectors());
+        mav.addObject("levels", qServ.listOfQualificationLevels());
         return mav;
     }
 
@@ -89,6 +90,7 @@ public class ApplicationController {
         Application a = aServ.findById(id);
         mav.addObject("app", a);
         mav.addObject("fieldslist", fServ.listOfSectors());
+        mav.addObject("levels", qServ.listOfQualificationLevels());
         return mav;
     }
 

@@ -47,11 +47,10 @@
                 </td>
                 <td>
                     <a th:if="${#ctx.session.mail} == ${company.mail}"
-                       th:href="@{|/applications/edit/${job.id}|}"><img th:src="@{/img/modify.png}"
+                       th:href="@{|/joboffers/edit/${job.id}|}"><img th:src="@{/img/modify.png}"
                                                                         alt="Applications modification"/>
                     </a>
-                    <a th:if="${#ctx.session.mail == null} or ${#ctx.session.mail} != ${company.mail}"
-                       th:href="@{|/applications/${job.id}|}"><img th:src="@{/img/zoom.png}"
+                    <a th:href="@{|/joboffers/${job.id}|}"><img th:src="@{/img/zoom.png}"
                                                                    alt="Applications Details"/>
                     </a>
                 </td>
@@ -60,7 +59,7 @@
         </table>
     </aside>
     <footer>
-        <a th:href="@{/companies/edit/{companyId}(companyId=${company.mail})}" class="btn btn-large btn-primary"
+        <a th:href="@{|/companies/edit/${company.mail}|}" class="btn btn-large btn-primary"
            title="Unlock to update"><i class="bi bi-pencil"></i></a>
         <a th:href="@{/companies}" class="btn btn-secondary" title="Go back"><i class="bi bi-list-columns"></i></a>
     </footer>

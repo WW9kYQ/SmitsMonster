@@ -1,72 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobBase :: article(~{::article})}">
 <article>
-  <header>
-    <h2>Job Offer details</h2>
-  </header>
-  <form th:action="@{/joboffers/add}" method="post">
-    <fieldset class="mb-3">
-      <label for="titleid" class="form-label">Title</label>:
-      <input type="text" id="titleid" class="form-control" name="title" />
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="descid" class="form-label">Task Description</label>:
-      <input type="text" id="descid" class="form-control" name="desc" />
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="qualifid" class="form-label">Qualification level</label>:
-      <input type="text" id="qualifid" class="form-control" name="qualif" />
-    </fieldset>
-    <fieldset class="mb-3">
-      <div th:each="field : ${fieldslist}">
-        <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields" th:value="${field.label}">
-        <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
-      </div>
-    </fieldset>
-    <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
-    <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i>
-    </button>
-    <a th:href="@{/joboffers/panel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
-  </form>
-  <!--    <aside th:if="${#lists.size(offerslist) > 0 } and ${#ctx.session.mail == app.candidate.mail}">-->
-  <!--        <h2>List of eligible job offers</h2>-->
-  <!--        <table class="table table-striped">-->
-  <!--            <thead>-->
-  <!--            <tr>-->
-  <!--                <th scope="col">#</th>-->
-  <!--                <th scope="col">Title</th>-->
-  <!--                <th scope="col">Company</th>-->
-  <!--                <th scope="col">Fields</th>-->
-  <!--                <th scope="col">Qualification Level</th>-->
-  <!--                <th scope="col">Publication Date</th>-->
-  <!--                <th scope="col"></th>-->
-  <!--            </tr>-->
-  <!--            </thead>-->
-  <!--            <tbody>-->
-  <!--            <tr th:each="offer : ${offerslist}">-->
-  <!--                <th scope="row" th:text="${offer.id}"/>-->
-  <!--                <td th:text="${offer.title}"/>-->
-  <!--                <td th:text="${offer.company.denomination}"/>-->
-  <!--                <td>-->
-  <!--                    <ul th:each="field : ${offer.fields}">-->
-  <!--                        <li th:text="${field.label}"></li>-->
-  <!--                    </ul>-->
-  <!--                </td>-->
-  <!--                <td th:text="${offer.qualificationlevel.label}"/>-->
-  <!--                <td th:text="${offer.publicationdate}"/>-->
-  <!--                <td><a th:href="@{'modapp?oid='+${offer.id}}"><img th:src="@{/img/zoom.png}"-->
-  <!--                                                                   alt="Applications modification"/></a></td>-->
-  <!--            </tr>-->
-  <!--            </tbody>-->
-  <!--        </table>-->
-  <!--    </aside>-->
+    <header>
+        <h2>Job Offer details</h2>
+    </header>
+    <form th:action="@{/joboffers/add}" method="post">
+        <fieldset class="mb-3">
+            <label for="titleid" class="form-label">Title</label>:
+            <input type="text" id="titleid" class="form-control" name="title"/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="descid" class="form-label">Task Description</label>:
+            <input type="text" id="descid" class="form-control" name="desc"/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="qualifid" class="form-label">Qualification level</label>:
+            <select id="qualifid" name="qualif" required class="form-select">
+                <option value="" disabled>Select your qualification level.</option>
+                <option th:each="level : ${levels}" th:value="${level.label}" th:utext="${level.label}"
+                ></option>
+            </select>
+        </fieldset>
+        <fieldset class="mb-3">
+            <div th:each="field : ${fieldslist}">
+                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+                       th:value="${field.label}">
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i>
+        </button>
+        <a th:href="@{/joboffers/panel}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+    </form>
+    <!--    <aside th:if="${#lists.size(offerslist) > 0 } and ${#ctx.session.mail == app.candidate.mail}">-->
+    <!--        <h2>List of eligible job offers</h2>-->
+    <!--        <table class="table table-striped">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--                <th scope="col">#</th>-->
+    <!--                <th scope="col">Title</th>-->
+    <!--                <th scope="col">Company</th>-->
+    <!--                <th scope="col">Fields</th>-->
+    <!--                <th scope="col">Qualification Level</th>-->
+    <!--                <th scope="col">Publication Date</th>-->
+    <!--                <th scope="col"></th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr th:each="offer : ${offerslist}">-->
+    <!--                <th scope="row" th:text="${offer.id}"/>-->
+    <!--                <td th:text="${offer.title}"/>-->
+    <!--                <td th:text="${offer.company.denomination}"/>-->
+    <!--                <td>-->
+    <!--                    <ul th:each="field : ${offer.fields}">-->
+    <!--                        <li th:text="${field.label}"></li>-->
+    <!--                    </ul>-->
+    <!--                </td>-->
+    <!--                <td th:text="${offer.qualificationlevel.label}"/>-->
+    <!--                <td th:text="${offer.publicationdate}"/>-->
+    <!--                <td><a th:href="@{'modapp?oid='+${offer.id}}"><img th:src="@{/img/zoom.png}"-->
+    <!--                                                                   alt="Applications modification"/></a></td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--        </table>-->
+    <!--    </aside>-->
 
 
-  <!--    <footer>-->
-  <!--        <a th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"-->
-  <!--           title="Unlock to update"><i class="bi bi-pencil"></i></a>-->
-  <!--        <a th:href="@{/applications}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>-->
-  <!--    </footer>-->
+    <!--    <footer>-->
+    <!--        <a th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"-->
+    <!--           title="Unlock to update"><i class="bi bi-pencil"></i></a>-->
+    <!--        <a th:href="@{/applications}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>-->
+    <!--    </footer>-->
 </article>
 
 </html>

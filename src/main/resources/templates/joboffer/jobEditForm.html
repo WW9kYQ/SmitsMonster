@@ -20,8 +20,11 @@
     </fieldset>
     <fieldset class="mb-3">
       <label for="qualifid" class="form-label">Qualification level</label>:
-      <input type="text" id="qualifid" class="form-control" name="qualif"
-             th:value="${job.qualificationlevel.label}"/>
+      <select id="qualifid" name="qualif" required class="form-select">
+        <option value="" disabled>Select your qualification level.</option>
+        <option th:each="level : ${levels}" th:value="${level.label}" th:utext="${level.label}"
+                th:selected="${level.label} == ${job.qualificationlevel.label}"></option>
+      </select>
     </fieldset>
     <fieldset class="mb-3">
       <div th:each="field : ${fieldslist}">

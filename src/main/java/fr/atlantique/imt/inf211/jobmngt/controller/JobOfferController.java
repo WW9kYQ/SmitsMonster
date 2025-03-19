@@ -64,6 +64,7 @@ public class JobOfferController {
     public ModelAndView addJobOffer() {
         ModelAndView mav = new ModelAndView("joboffer/jobAddForm");
         mav.addObject("fieldslist", fServ.listOfSectors());
+        mav.addObject("levels", qServ.listOfQualificationLevels());
         return mav;
     }
     @RequestMapping(value="/add", method = RequestMethod.POST)
@@ -90,6 +91,7 @@ public class JobOfferController {
         JobOffer j = jServ.findById(id);
         mav.addObject("job", j);
         mav.addObject("fieldslist", fServ.listOfSectors());
+        mav.addObject("levels", qServ.listOfQualificationLevels());
         return mav;
     }
 
