@@ -21,7 +21,7 @@
             <div th:each="field : ${fieldslist}">
                 <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
                        th:value="${field.label}">
-                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>
             </div>
         </fieldset>
         <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>

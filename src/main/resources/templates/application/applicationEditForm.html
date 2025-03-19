@@ -26,7 +26,7 @@
             <div th:each="field : ${fieldslist}">
                 <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
                        th:value="${field.label}" th:checked="${#lists.contains(app.fields, field)}">
-                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>
             </div>
         </fieldset>
         <fieldset class="mb-3">

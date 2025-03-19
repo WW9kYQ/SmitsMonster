@@ -80,8 +80,22 @@
         </td>
         <td th:text="${app.qualificationlevel.label}"/>
         <td th:text="${app.appdate}"/>
-        <td><a th:href="@{|/applications/${app.id}|}"><img th:src="@{/img/zoom.png}"
-                                                           alt="Application details"/></a></td>
+        <td>
+          <a th:href="@{|/applications/${app.id}|}" alt="Application Details"
+             class="btn btn-large btn-secondary">
+            <i class="bi bi-eye"></i>
+          </a>
+          <a th:if="${#ctx.session.mail} == ${app.candidate.mail}"
+             th:href="@{|/applications/edit/${app.id}|}"
+             alt="Application modification" class="btn btn-large btn-success">
+            <i class="bi bi-pencil"></i>
+          </a>
+          <a th:if="${#ctx.session.mail} == ${app.candidate.mail}"
+             th:href="@{|/applications/delete/${app.id}|}"
+             alt="Job offer deletion" class="btn btn-large btn-danger">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
       </tr>
       </tbody>
     </table>

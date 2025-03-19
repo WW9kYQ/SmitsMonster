@@ -51,7 +51,7 @@
         </fieldset>
     </form>
 <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'-->
-    <aside th:if="${#lists.size(offerslist) > 0 } and ${#ctx.session.mail == app.candidate.mail}">
+    <aside th:if="${#lists.size(offerslist) > 0}">
         <h2>List of eligible job offers</h2>
         <table class="table table-striped">
             <thead>
@@ -77,8 +77,22 @@
                 </td>
                 <td th:text="${offer.qualificationlevel.label}"/>
                 <td th:text="${offer.publicationdate}"/>
-                <td><a th:href="@{|/joboffers/${offer.id}|}"><img th:src="@{/img/zoom.png}"
-                                                                 alt="Job offers details"/></a></td>
+                <td>
+                    <a th:href="@{|/joboffers/${app.id}|}" alt="Job offer Details"
+                       class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail} == ${offer.company.mail}"
+                       th:href="@{|/joboffers/edit/${offer.id}|}"
+                       alt="Job offer modification" class="btn btn-large btn-success">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail} == ${offer.company.mail}"
+                       th:href="@{|/joboffers/delete/${offer.id}|}"
+                       alt="Job offer deletion" class="btn btn-large btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

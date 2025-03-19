@@ -46,18 +46,18 @@
                     </ul>
                 </td>
                 <td>
-                    <a th:href="@{|/joboffers/${job.id}|}" alt="Application Details"
+                    <a th:href="@{|/joboffers/${job.id}|}" alt="Job offer Details"
                        class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
                     <a th:if="${#ctx.session.mail} == ${company.mail}"
                        th:href="@{|/joboffers/edit/${job.id}|}"
-                       alt="Application modification" class="btn btn-large btn-success">
+                       alt="Job offer modification" class="btn btn-large btn-success">
                         <i class="bi bi-pencil"></i>
                     </a>
                     <a th:if="${#ctx.session.mail} == ${company.mail}"
                        th:href="@{|/joboffers/delete/${job.id}|}"
-                       alt="Application deletion" class="btn btn-large btn-danger">
+                       alt="Job offer deletion" class="btn btn-large btn-danger">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>
@@ -66,8 +66,10 @@
         </table>
     </aside>
     <footer>
+        <th:block th:if="${#ctx.session.mail} == ${company.mail}">
         <a th:href="@{|/companies/edit/${company.mail}|}" class="btn btn-large btn-primary"
            title="Unlock to update"><i class="bi bi-pencil"></i></a>
+        </th:block>
         <a th:href="@{/companies}" class="btn btn-secondary" title="Go back"><i class="bi bi-list-columns"></i></a>
     </footer>
 </article>
