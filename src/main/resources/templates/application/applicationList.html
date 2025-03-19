@@ -35,10 +35,27 @@
                        title="Edit application">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{|applications/delete/${app.id}|}" class="btn btn-large btn-danger" alt="Delete"
-                       title="Delete application">
+                    <a href="" class="btn btn-large btn-danger" alt="Delete"
+                       title="Delete application" data-bs-toggle="modal" data-bs-target="#deleteModal" th:data="'Application ' + ${app.id}">
                         <i class="bi bi-trash"></i>
                     </a>
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ApplicationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ApplicationModalLabel">Confirmation of deletion</h5>
+                                    <a href="" class="btn btn-close"><i class="bi bi-x"></i></a>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">Are you sure you want to delete application n°<span th:text="${app.id}"></span> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                    <a th:href="@{|applications/delete/${app.id}|}" class="btn btn-danger" id="delRef">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </th:block>
             </td>
         </tr>
@@ -51,5 +68,6 @@
 
     </footer>
 </article>
+
 
 </html>

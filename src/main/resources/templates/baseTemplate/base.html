@@ -21,6 +21,12 @@
 <body>
     <nav th:insert="~{/baseTemplate/nav :: fheader}" />
     <main class="container">
+        <div class="border border-danger p-3 bg-danger bg-opacity-10 rounded-3 justify-content-around d-flex align-items-center" th:if="${error} != null">
+            <p class="text-danger fw-bold" th:text="${error}"></p>
+        </div>
+        <div class="border border-success p-3 bg-success bg-opacity-10 rounded-3 justify-content-around d-flex align-items-center" th:if="${ack} != null">
+            <p class="text-success fw-bold " th:text="${ack}"></p>
+        </div>
         <th:block th:replace="${content}">
             Empty Page
         </th:block>

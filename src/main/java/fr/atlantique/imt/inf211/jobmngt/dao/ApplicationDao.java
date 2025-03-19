@@ -76,7 +76,7 @@ public class ApplicationDao {
             return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            throw re;
+            return null;
         }
     }
 
@@ -96,12 +96,16 @@ public class ApplicationDao {
     @Transactional(readOnly = true)
     public List<Application> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
         logger.log(Level.INFO, "Recherche des applications pour field: " + field + " et qualification level: " + qualificationLevel);
-        TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class);
-        q.setParameter("field", field);
-        q.setParameter("qualificationLevel", qualificationLevel);
-        List<Application> applications = q.getResultList();
-        logger.log(Level.INFO, "Number of applications found: " + applications.size());
-        return applications;
+        try {
+            TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldAndQualif", Application.class);
+            q.setParameter("field", field);
+            q.setParameter("qualificationLevel", qualificationLevel);
+            logger.log(Level.INFO, "get successful");
+            return q.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            return null;
+        }
     }
 
     //findAll
@@ -114,18 +118,23 @@ public class ApplicationDao {
             return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            throw re;
+            return null;
         }
     }
 
     @Transactional(readOnly = true)
     public List<Application> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualificationLevel) {
         logger.log(Level.INFO, "Recherche des applications pour fields: " + fields + " et qualification level: " + qualificationLevel);
-        TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldsAndQualif", Application.class);
-        q.setParameter("fields", fields);
-        q.setParameter("qualificationlevel", qualificationLevel);
-        logger.log(Level.INFO, "Number of applications found: " + q.getResultList().size());
-        return q.getResultList();
+        try {
+            TypedQuery<Application> q = entityManager.createNamedQuery("Application.findByFieldsAndQualif", Application.class);
+            q.setParameter("fields", fields);
+            q.setParameter("qualificationlevel", qualificationLevel);
+            logger.log(Level.INFO, "Number of applications found: " + q.getResultList().size());
+            return q.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            return null;
+        }
     }
 
 
