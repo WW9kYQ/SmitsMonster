@@ -50,7 +50,7 @@
                 <td th:text="${app.appdate}"/>
                 <td th:text="${app.qualificationlevel.label}"/>
                 <td><span th:each="field : ${app.fields}"><span th:text="${field.label}"></span> </span></td>
-                <td><a th:href="@{'modoffer?oid='+${app.id}}"><img th:src="@{/img/zoom.png}"
+                <td><a th:href="@{'/applications/'+${app.id}}"><img th:src="@{/img/zoom.png}"
                                                                    alt="Application modification"/></a></td>
             </tr>
             </tbody>

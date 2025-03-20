@@ -45,14 +45,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="app : ${company.joboffers}">
+            <tr th:each="job : ${company.joboffers}">
                 <th scope="row" th:text="${app.id}"/>
-                <td th:text="${app.title}"/>
-                <td th:text="${app.taskdescription}"/>
-                <td th:text="${app.publicationdate}"/>
-                <td th:text="${app.qualificationlevel.label}"/>
-                <td><span th:each="field : ${app.fields}"><span th:text="${field.label}"></span> </span></td>
-                <td><a th:href="@{'modoffer?oid='+${app.id}}"><img th:src="@{/img/zoom.png}"
+                <td th:text="${job.title}"/>
+                <td th:text="${job.taskdescription}"/>
+                <td th:text="${job.publicationdate}"/>
+                <td th:text="${job.qualificationlevel.label}"/>
+                <td><span th:each="field : ${job.fields}"><span th:text="${field.label}"></span> </span></td>
+                <td><a th:href="@{'/joboffers/'+${job.id}}"><img th:src="@{/img/zoom.png}"
                                                                    alt="Application modification"/></a></td>
             </tr>
             </tbody>
