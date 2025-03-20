@@ -12,19 +12,21 @@
         <fieldset class="mb-3">
             <label for="nameid" class="form-label">Description</label>:
             <input type="text" id="nameid" class="form-control" name="description" autofocus="autofocus"
-                   th:value="${company.description}" required />
+                   th:value="${company.description}" required/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="descid" class="form-label">Denomination</label>:
             <input type="text" id="descid" class="form-control" name="denomination" th:value="${company.denomination}"
-                   required />
+                   required/>
         </fieldset>
         <fieldset class="mb-3">
             <label for="cityid" class="form-label">City</label>:
-            <input type="text" id="cityid" class="form-control" name="city" th:value="${company.userapp.city}" required />
+            <input type="text" id="cityid" class="form-control" name="city" th:value="${company.userapp.city}"
+                   required/>
         </fieldset>
-        <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
-        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
+        <button type="submit" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i>
+        </button>
         <a th:href="@{/companies}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
     </form>
 
@@ -44,14 +46,14 @@
             </thead>
             <tbody>
             <tr th:each="app : ${company.joboffers}">
-                <th scope="row" th:text="${app.id}" />
-                <td th:text="${app.title}" />
-                <td th:text="${app.taskdescription}" />
-                <td th:text="${app.publicationdate}" />
-                <td th:text="${app.qualificationlevel.label}" />
+                <th scope="row" th:text="${app.id}"/>
+                <td th:text="${app.title}"/>
+                <td th:text="${app.taskdescription}"/>
+                <td th:text="${app.publicationdate}"/>
+                <td th:text="${app.qualificationlevel.label}"/>
                 <td><span th:each="field : ${app.fields}"><span th:text="${field.label}"></span> </span></td>
                 <td><a th:href="@{'modoffer?oid='+${app.id}}"><img th:src="@{/img/zoom.png}"
-                                                                   alt="Application modification" /></a></td>
+                                                                   alt="Application modification"/></a></td>
             </tr>
             </tbody>
         </table>

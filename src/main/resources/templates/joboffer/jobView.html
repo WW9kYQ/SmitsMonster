@@ -1,112 +1,134 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobBase :: article(~{::article})}">
 <article>
-  <header>
-    <h2>Job Offer details</h2>
-  </header>
-  <form>
-    <fieldset class="mb-3">
-      <label for="companyndenominationid" class="form-label">Denomination</label>:
-      <input type="text" id="companyndenominationid" class="form-control" name="denomination" autofocus="autofocus"
-             th:value="${job.company.denomination}" readonly/>
-    </fieldset>
+    <header>
+        <h2>Job Offer details</h2>
+    </header>
+    <form>
+        <fieldset class="mb-3">
+            <label for="companyndenominationid" class="form-label">Denomination</label>:
+            <input type="text" id="companyndenominationid" class="form-control" name="denomination"
+                   autofocus="autofocus"
+                   th:value="${job.company.denomination}" readonly/>
+        </fieldset>
 
-    <fieldset class="mb-3">
-      <label for="cityid" class="form-label">City</label>:
-      <input type="text" id="cityid" class="form-control" name="city"
-             th:value="${job.company.userapp.city}" readonly/>
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="mailid" class="form-label">Mail</label>:
-      <input type="text" id="mailid" class="form-control" name="mail"
-             th:value="${job.company.mail}" readonly/>
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="titleid" class="form-label">Title</label>:
-      <input type="text" id="titleid" class="form-control" name="title" th:value="${job.title}"
-             readonly/>
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="descid" class="form-label">Task description</label>:
-      <input type="text" id="descid" class="form-control" name="desc" th:value="${job.taskdescription}"
-             readonly/>
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="qualifid" class="form-label">Qualification level</label>:
-      <input type="text" id="qualifid" class="form-control" name="qualif"
-             th:value="${job.qualificationlevel.label}"
-             readonly/>
-    </fieldset>
-    <fieldset class="mb-3">
-      <aside th:each="field : ${fieldslist}">
-        <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
-               th:checked="${#lists.contains(job.fields, field)}" disabled>
-        <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
-      </aside>
-    </fieldset>
-    <fieldset class="mb-3">
-      <label for="pubdateid" class="form-label">Job Offer Publication date</label>:
-      <input type="text" id="pubdateid" class="form-control" name="publicationdate"
-             th:value="${job.publicationdate}"
-             readonly/>
-    </fieldset>
-  </form>
-  <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'company'-->
-  <aside th:if="${#lists.size(applicationslist) > 0 } and ${#ctx.session.mail == job.company.mail}">
-    <h2>List of eligible Applications</h2>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">CV</th>
-        <th scope="col">Firstname</th>
-        <th scope="col">Lastname</th>
-        <th scope="col">Fields</th>
-        <th scope="col">Qualification Level</th>
-        <th scope="col">Application Date</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="app : ${applicationslist}">
-        <th scope="row" th:text="${app.id}"/>
-        <td th:text="${app.cv}"/>
-        <td th:text="${app.candidate.firstname}"/>
-        <td th:text="${app.candidate.lastname}"/>
-        <td>
-          <ul th:each="field : ${app.fields}">
-            <li th:text="${field.label}"></li>
-          </ul>
-        </td>
-        <td th:text="${app.qualificationlevel.label}"/>
-        <td th:text="${app.appdate}"/>
-        <td>
-          <a th:href="@{|/applications/${app.id}|}" alt="Application Details"
-             class="btn btn-large btn-secondary">
-            <i class="bi bi-eye"></i>
-          </a>
-          <a th:if="${#ctx.session.mail} == ${app.candidate.mail}"
-             th:href="@{|/applications/edit/${app.id}|}"
-             alt="Application modification" class="btn btn-large btn-success">
-            <i class="bi bi-pencil"></i>
-          </a>
-          <a th:if="${#ctx.session.mail} == ${app.candidate.mail}"
-             th:href="@{|/applications/delete/${app.id}|}"
-             alt="Job offer deletion" class="btn btn-large btn-danger">
-            <i class="bi bi-trash"></i>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </aside>
+        <fieldset class="mb-3">
+            <label for="cityid" class="form-label">City</label>:
+            <input type="text" id="cityid" class="form-control" name="city"
+                   th:value="${job.company.userapp.city}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="mailid" class="form-label">Mail</label>:
+            <input type="text" id="mailid" class="form-control" name="mail"
+                   th:value="${job.company.mail}" readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="titleid" class="form-label">Title</label>:
+            <input type="text" id="titleid" class="form-control" name="title" th:value="${job.title}"
+                   readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="descid" class="form-label">Task description</label>:
+            <input type="text" id="descid" class="form-control" name="desc" th:value="${job.taskdescription}"
+                   readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="qualifid" class="form-label">Qualification level</label>:
+            <input type="text" id="qualifid" class="form-control" name="qualif"
+                   th:value="${job.qualificationlevel.label}"
+                   readonly/>
+        </fieldset>
+        <fieldset class="mb-3">
+            <aside th:each="field : ${fieldslist}">
+                <input type="checkbox" th:id="${field.label.toLowerCase()}+'id'" name="selectedFields"
+                       th:checked="${#lists.contains(job.fields, field)}" disabled>
+                <label th:for="${field.label.toLowerCase()}+'id'" th:text="${field.label}"></label>:
+            </aside>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="pubdateid" class="form-label">Job Offer Publication date</label>:
+            <input type="text" id="pubdateid" class="form-control" name="publicationdate"
+                   th:value="${job.publicationdate}"
+                   readonly/>
+        </fieldset>
+    </form>
+    <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'company'-->
+    <aside th:if="${#lists.size(applicationslist) > 0 } and ${#ctx.session.mail == job.company.mail}">
+        <h2>List of eligible Applications</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">CV</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Lastname</th>
+                <th scope="col">Fields</th>
+                <th scope="col">Qualification Level</th>
+                <th scope="col">Application Date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${applicationslist}">
+                <th scope="row" th:text="${app.id}"/>
+                <td th:text="${app.cv}"/>
+                <td th:text="${app.candidate.firstname}"/>
+                <td th:text="${app.candidate.lastname}"/>
+                <td>
+                    <ul th:each="field : ${app.fields}">
+                        <li th:text="${field.label}"></li>
+                    </ul>
+                </td>
+                <td th:text="${app.qualificationlevel.label}"/>
+                <td th:text="${app.appdate}"/>
+                <td>
+                    <a th:href="@{|/applications/${app.id}|}" alt="Application Details"
+                       class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail} == ${app.candidate.mail}"
+                       th:href="@{|/applications/edit/${app.id}|}"
+                       alt="Application modification" class="btn btn-large btn-success">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:if="${#ctx.session.mail == app.candidate.mail}" href="" class="btn btn-large btn-danger"
+                       alt="Delete"
+                       title="Delete job offer" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                       th:data="'Application ' + ${app.id}">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="ApplicationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ApplicationModalLabel">Confirmation of deletion</h5>
+                                    <a href="" class="btn btn-close"><i class="bi bi-x"></i></a>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">Are you sure you want to delete application n°<span
+                                            th:text="${app.id}"></span> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                    <a th:href="@{|joboffers/delete/${app.id}|}" class="btn btn-danger" id="delRef">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </aside>
 
 
-  <footer>
-    <a th:if="${job.company.mail == #ctx.session.mail}" th:href="@{|/joboffers/edit/${job.id}|}" class="btn btn-large btn-primary"
-       title="Unlock to update"><i class="bi bi-pencil"></i></a>
-    <a th:href="@{/joboffers}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
-  </footer>
+    <footer>
+        <a th:if="${job.company.mail == #ctx.session.mail}" th:href="@{|/joboffers/edit/${job.id}|}"
+           class="btn btn-large btn-primary"
+           title="Unlock to update"><i class="bi bi-pencil"></i></a>
+        <a th:href="@{/joboffers}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+    </footer>
 </article>
 
 </html>

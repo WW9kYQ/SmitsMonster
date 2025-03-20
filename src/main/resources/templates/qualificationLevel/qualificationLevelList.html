@@ -12,21 +12,21 @@
             <table class="table table-striped">
                 <caption>List of qualification levels</caption>
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Label</th>
-                    </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Label</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="ql : ${qualificationlevellist}">
-                        <th scope="row" th:text="${ql.id}" />
-                        <td th:text="${ql.label}" />
-                        <!-- <td th:if="${#ctx.session.uid} != null AND ${#ctx.session.logintype} == 'adm'" class="nav-item active">
-                                <a th:href="@{/deletequalificationlevel/{id}(id=${ql.id})}">
-                                    <img th:src="@{img/minus.png}" alt="Delete this sector" class="minilogo"/>
-                                </a>
-                            </td> -->
-                    </tr>
+                <tr th:each="ql : ${qualificationlevellist}">
+                    <th scope="row" th:text="${ql.id}"/>
+                    <td th:text="${ql.label}"/>
+                    <!-- <td th:if="${#ctx.session.uid} != null AND ${#ctx.session.logintype} == 'adm'" class="nav-item active">
+                            <a th:href="@{/deletequalificationlevel/{id}(id=${ql.id})}">
+                                <img th:src="@{img/minus.png}" alt="Delete this sector" class="minilogo"/>
+                            </a>
+                        </td> -->
+                </tr>
                 </tbody>
             </table>
         </th:block>

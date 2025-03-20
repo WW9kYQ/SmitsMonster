@@ -13,22 +13,22 @@
             <table class="table table-striped">
                 <caption>List of fields</caption>
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Label</th>
-                    </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Label</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="f : ${fieldlist}">
-                        <th scope="row" th:text="${f.id}" />
-                        <td th:text="${f.label}" />
-                        <td th:if="${#ctx.session.uid} != null AND ${#ctx.session.logintype} == 'adm'"
-                            class="nav-item active">
-                            <a th:href="@{/deletefield/{id}(id=${f.id})}">
-                                <img th:src="@{img/minus.png}" alt="Delete this sector" class="minilogo" />
-                            </a>
-                        </td>
-                    </tr>
+                <tr th:each="f : ${fieldlist}">
+                    <th scope="row" th:text="${f.id}"/>
+                    <td th:text="${f.label}"/>
+                    <td th:if="${#ctx.session.uid} != null AND ${#ctx.session.logintype} == 'adm'"
+                        class="nav-item active">
+                        <a th:href="@{/deletefield/{id}(id=${f.id})}">
+                            <img th:src="@{img/minus.png}" alt="Delete this sector" class="minilogo"/>
+                        </a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </th:block>
@@ -38,9 +38,9 @@
                 <fieldset>
                     <label for="labelsector">Label</label>
                     <input type="text" id="labelsector" name="labelsector" autofocus="autofocus" minlength="3"
-                        required />
+                           required/>
                 </fieldset>
-                <input type="submit" value="Add" />
+                <input type="submit" value="Add"/>
             </form>
         </aside>
     </article>

@@ -50,7 +50,7 @@
                    readonly/>
         </fieldset>
     </form>
-<!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'-->
+    <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'candidate'-->
     <aside th:if="${#lists.size(offerslist) > 0}">
         <h2>List of eligible job offers</h2>
         <table class="table table-striped">
@@ -92,6 +92,31 @@
                        alt="Job offer deletion" class="btn btn-large btn-danger">
                         <i class="bi bi-trash"></i>
                     </a>
+                    <a th:if="${#ctx.session.mail == offer.company.mail}" href="" class="btn btn-large btn-danger"
+                       alt="Delete"
+                       title="Delete job offer" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                       th:data="'Job offer ' + ${offer.id}">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="JobOfferModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="JobOfferModalLabel">Confirmation of deletion</h5>
+                                    <a href="" class="btn btn-close"><i class="bi bi-x"></i></a>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">Are you sure you want to delete job offer n°<span
+                                            th:text="${offer.id}"></span> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                    <a th:href="@{|joboffers/delete/${offer.id}|}" class="btn btn-danger" id="delRef">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -100,7 +125,8 @@
 
 
     <footer>
-        <a th:if="${app.candidate.mail == #ctx.session.mail}" th:href="@{|/applications/edit/${app.id}|}" class="btn btn-large btn-primary"
+        <a th:if="${app.candidate.mail == #ctx.session.mail}" th:href="@{|/applications/edit/${app.id}|}"
+           class="btn btn-large btn-primary"
            title="Unlock to update"><i class="bi bi-pencil"></i></a>
         <a th:href="@{/applications}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
     </footer>

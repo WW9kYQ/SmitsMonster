@@ -39,13 +39,15 @@
                        title="Delete Job Offers">
                         <i class="bi bi-trash"></i>
                     </a>
+
                 </th:block>
             </td>
         </tr>
         </tbody>
     </table>
     <footer>
-        <a th:if="${#ctx.session.mail!=null and #ctx.session.usertype == 'company'}" th:href="@{joboffers/add}" class="btn btn-large btn-primary" title="Add new job offer">
+        <a th:if="${#ctx.session.mail!=null and #ctx.session.usertype == 'company'}" th:href="@{joboffers/add}"
+           class="btn btn-large btn-primary" title="Add new job offer">
             <i class="bi bi-plus"></i>
         </a>
 

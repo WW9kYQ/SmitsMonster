@@ -67,8 +67,8 @@
     </aside>
     <footer>
         <th:block th:if="${#ctx.session.mail} == ${company.mail}">
-        <a th:href="@{|/companies/edit/${company.mail}|}" class="btn btn-large btn-primary"
-           title="Unlock to update"><i class="bi bi-pencil"></i></a>
+            <a th:href="@{|/companies/edit/${company.mail}|}" class="btn btn-large btn-primary"
+               title="Unlock to update"><i class="bi bi-pencil"></i></a>
         </th:block>
         <a th:href="@{/companies}" class="btn btn-secondary" title="Go back"><i class="bi bi-list-columns"></i></a>
     </footer>

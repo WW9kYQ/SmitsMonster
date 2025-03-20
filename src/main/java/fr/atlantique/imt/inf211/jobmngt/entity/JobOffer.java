@@ -18,7 +18,7 @@ import java.util.Set;
         , schema = "public"
 )
 @NamedQueries({
-        @NamedQuery(name = "JobOffer.findAll", query = "SELECT j FROM JobOffer j"),
+        @NamedQuery(name = "JobOffer.findAll", query = "SELECT j FROM JobOffer j order by j.id ASC"),
         @NamedQuery(name = "JobOffer.findById", query = "SELECT j FROM JobOffer j WHERE j.id = :id"),
         @NamedQuery(name = "JobOffer.findByTitle", query = "SELECT j FROM JobOffer j WHERE j.title = :title"),
         @NamedQuery(name = "JobOffer.findByTaskdescription", query = "SELECT j FROM JobOffer j WHERE j.taskdescription = :taskdescription"),

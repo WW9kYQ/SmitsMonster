@@ -62,7 +62,8 @@ public class JobOfferDao {
             return result;
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "merge failed", re);
-            throw re;
+            return null;
+//            throw re;
         }
     }
 
@@ -74,7 +75,8 @@ public class JobOfferDao {
             return query.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get all failed", re);
-            throw re;
+            return null;
+//            throw re;
         }
     }
 
@@ -88,7 +90,8 @@ public class JobOfferDao {
             return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            throw re;
+            return null;
+//            throw re;
         }
     }
 

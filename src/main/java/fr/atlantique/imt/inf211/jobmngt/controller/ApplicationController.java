@@ -54,7 +54,7 @@ public class ApplicationController {
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView applicationDetails(@PathVariable Integer id) {
+    public ModelAndView applicationDetails(@PathVariable Integer id, @RequestParam(required = false) String ack, @RequestParam(required = false) String error) {
         ModelAndView mav = new ModelAndView("application/applicationView");
         Application a = aServ.findById(id);
         if (a == null) {
@@ -64,21 +64,43 @@ public class ApplicationController {
         mav.addObject("app", a);
         mav.addObject("fieldslist", fServ.listOfSectors());
         mav.addObject("offerslist", offerslist);
+        mav.addObject("ack", ack);
+        mav.addObject("error", error);
         return mav;
     }
 
     @RequestMapping("/add")
-    public ModelAndView addApplication() {
-        ModelAndView mav = new ModelAndView("application/applicationAddForm");
+    public ModelAndView addApplication(@RequestParam(required = false) String error, HttpSession request) {
+        ModelAndView mav = new ModelAndView();
+        if (request.getAttribute("usertype") == null || request.getAttribute("mail") == null) {
+            mav.setViewName("redirect:/applications?error=" + URLEncoder.encode("You must be logged in to add an application.", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
+        }
+        if (request.getAttribute("usertype").equals("company")) {
+            mav.setViewName("redirect:/applications?error=" + URLEncoder.encode("You must be logged as a candidate to add an application.", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
+        }
+        mav.setViewName("application/applicationAddForm");
+
         mav.addObject("fieldslist", fServ.listOfSectors());
         mav.addObject("levels", qServ.listOfQualificationLevels());
+        mav.addObject("error", error);
         return mav;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addApplication(@RequestParam String cv, @RequestParam String qualif, @RequestParam String selectedFields, HttpSession request) {
         Application a = new Application();
+        if ((request.getAttribute("usertype") == null) || request.getAttribute("mail") == null) {
+            return "redirect:/applications?error=" + URLEncoder.encode("You must be logged in to add an application", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (request.getAttribute("usertype").equals("company")) {
+            return "redirect:/applications?error=" + URLEncoder.encode("You must be logged as a candidate to add an application", java.nio.charset.StandardCharsets.UTF_8);
+        }
         Candidate c = cServ.getCandidate((String) request.getAttribute("mail"));
+        if (c == null) {
+            return "redirect:/applications?error=" + URLEncoder.encode("Candidate not found", java.nio.charset.StandardCharsets.UTF_8);
+        }
         QualificationLevel q = qServ.findQualificationLevel(qualif);
         Set<Field> f = fServ.findFields(selectedFields);
         a.setCandidate(c);
@@ -88,27 +110,32 @@ public class ApplicationController {
         a.setAppdate(Date.from(java.time.Instant.now()));
         aServ.addApplication(a);
         if (aServ.findById(a.getId()) == null) {
-            return "redirect:/applications?error=" + URLEncoder.encode("Application not added", java.nio.charset.StandardCharsets.UTF_8);
+            return "redirect:/applications/add?error=" + URLEncoder.encode("Application not added", java.nio.charset.StandardCharsets.UTF_8);
         }
-        return "redirect:/applications/" + a.getId();
+        return "redirect:/applications/" + a.getId() + "?ack=" + URLEncoder.encode("Application successfully added", java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @RequestMapping("/edit/{id}")
-    public ModelAndView editApplication(@PathVariable Integer id, HttpSession request) {
+    public ModelAndView editApplication(@PathVariable Integer id, @RequestParam(required = false) String error, HttpSession request) {
         Application a = aServ.findById(id);
+        ModelAndView mav = new ModelAndView();
         if (a == null) {
-            return new ModelAndView("redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8));
+            mav.setViewName("redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
         }
         if (request.getAttribute("mail") == null) {
-            return new ModelAndView("redirect:/applications?error=" + URLEncoder.encode("You must be logged in to edit an application.", java.nio.charset.StandardCharsets.UTF_8));
+            mav.setViewName("redirect:/applications/" + id + "?error=" + URLEncoder.encode("You must be logged in to edit an application.", java.nio.charset.StandardCharsets.UTF_8));
+            return  mav;
         }
         if (!request.getAttribute("mail").equals(a.getCandidate().getMail())) {
-            return new ModelAndView("redirect:/applications?error=" + URLEncoder.encode("You must be the owner of the application to edit it.", java.nio.charset.StandardCharsets.UTF_8));
+            mav.setViewName("redirect:/applications/" + id + "?error=" + URLEncoder.encode("You must be the owner of the application to edit it.", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
         }
-        ModelAndView mav = new ModelAndView("application/applicationEditForm");
+        mav.setViewName("application/applicationEditForm");
         mav.addObject("app", a);
         mav.addObject("fieldslist", fServ.listOfSectors());
         mav.addObject("levels", qServ.listOfQualificationLevels());
+        mav.addObject("error", error);
         return mav;
     }
 
@@ -125,17 +152,23 @@ public class ApplicationController {
         a.setFields(f);
         a.setAppdate(Date.from(java.time.Instant.now()));
         aServ.editApplication(a);
-        if(aServ.findById(a.getId()) == null) {
+        if (aServ.findById(a.getId()) == null) {
             return "redirect:/applications?error=" + URLEncoder.encode("Application not edited", java.nio.charset.StandardCharsets.UTF_8);
         }
-        return "redirect:/applications/" + a.getId();
+        return "redirect:/applications/" + a.getId() + "?ack=" + URLEncoder.encode("Application edited", java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @RequestMapping("/delete/{id}")
-    public String deleteApplication(@PathVariable Integer id) {
+    public String deleteApplication(@PathVariable Integer id, HttpSession session) {
         Application a = aServ.findById(id);
         if (a == null) {
             return "redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (session.getAttribute("mail") == null) {
+            return "redirect:/applications?error=" + URLEncoder.encode("You must be logged in to delete an application.", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (!session.getAttribute("mail").equals(a.getCandidate().getMail())) {
+            return "redirect:/applications?error=" + URLEncoder.encode("You must be the owner of the application to delete it.", java.nio.charset.StandardCharsets.UTF_8);
         }
         aServ.deleteApplication(a);
         return "redirect:/applications?ack=" + URLEncoder.encode("Application n°" + id + " deleted", java.nio.charset.StandardCharsets.UTF_8);
