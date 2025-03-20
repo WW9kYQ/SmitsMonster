@@ -32,13 +32,36 @@
                 </a>
                 <th:block th:if="${#ctx.session.mail} == ${job.company.userapp.mail}">
                     <a th:href="@{|joboffers/edit/${job.id}|}" class="btn btn-large btn-success" alt="Edit"
-                       title="Edit Job Offers">
+                       title="Edit application">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{|joboffers/delete/${job.id}|}" class="btn btn-large btn-danger" alt="Delete"
-                       title="Delete Job Offers">
+                    <div class="modal fade" th:id="${'deleteJobOfferModal' + job.id}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation of deletion</h5>
+                                    <button type="button" class="close btn btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">
+                                        Are you sure you want to delete job offer n°<span th:text="${job.id}"></span> ?</span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <form th:action="@{|joboffers/delete/${job.id}|}" method="get">
+                                        <button type="submit" class="btn btn-danger" id="delRef">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${job.company.userapp.mail == #ctx.session.mail}" class="btn btn-large btn-danger delBtn"
+                            data-bs-toggle="modal" th:data-bs-target="${'#deleteJobOfferModal' + job.id}">
                         <i class="bi bi-trash"></i>
-                    </a>
+                    </button>
 
                 </th:block>
             </td>

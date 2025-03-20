@@ -53,6 +53,7 @@ public class Company implements java.io.Serializable {
         this.description = description;
         this.jobOffers = jobOffers;
     }
+
     @GenericGenerator(name = "CompanyIdGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "userapp"))
     @Id
     @GeneratedValue(generator = "CompanyIdGenerator")

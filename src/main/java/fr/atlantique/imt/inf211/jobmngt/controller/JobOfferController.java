@@ -56,8 +56,10 @@ public class JobOfferController {
     @RequestMapping("/{id}")
     public ModelAndView jobOfferDetails(@PathVariable Integer id, @RequestParam(required = false) String ack, @RequestParam(required = false) String error) {
         ModelAndView mav = new ModelAndView("joboffer/jobView");
-        JobOffer j = jServ.findById(id);
-        if (j == null) {
+        JobOffer j;
+        try {
+            j = jServ.findById(id);
+        } catch (RuntimeException re) {
             return new ModelAndView("redirect:/applications?error=" + URLEncoder.encode("Job offer not found", java.nio.charset.StandardCharsets.UTF_8));
         }
         List<Application> applicationslist = aServ.findByFieldsAndQualif(j.getFields(), j.getQualificationlevel());
@@ -96,8 +98,10 @@ public class JobOfferController {
         if (request.getAttribute("usertype").equals("candidate")) {
             return "redirect:/joboffers?error=" + URLEncoder.encode("You must be logged as a company to add a job offer", java.nio.charset.StandardCharsets.UTF_8);
         }
-        Company c = cServ.getCompany((String) request.getAttribute("mail"));
-        if (c == null) {
+        Company c;
+        try {
+            c = cServ.getCompany((String) request.getAttribute("mail"));
+        } catch (RuntimeException re) {
             return "redirect:/joboffers?error=" + URLEncoder.encode("Company not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         QualificationLevel q = qServ.findQualificationLevel(qualif);
@@ -109,7 +113,9 @@ public class JobOfferController {
         j.setFields(f);
         j.setPublicationdate(Date.from(java.time.Instant.now()));
         jServ.addJobOffer(j);
-        if (jServ.findById(j.getId()) == null) {
+        try {
+            jServ.findById(j.getId());
+        } catch (RuntimeException re) {
             return "redirect:/joboffers/add?error=" + URLEncoder.encode("Application not added", java.nio.charset.StandardCharsets.UTF_8);
         }
         return "redirect:/joboffers/" + j.getId() + "?ack=" + URLEncoder.encode("Job offer successfully added", java.nio.charset.StandardCharsets.UTF_8);
@@ -118,14 +124,16 @@ public class JobOfferController {
     @RequestMapping("/edit/{id}")
     public ModelAndView editJobOffer(@PathVariable Integer id, @RequestParam(required = false) String error, HttpSession request) {
         ModelAndView mav = new ModelAndView();
-        JobOffer j = jServ.findById(id);
-        if (j == null) {
+        JobOffer j;
+        try {
+            j = jServ.findById(id);
+        } catch (RuntimeException re) {
             mav.setViewName("redirect:/joboffers?error=" + URLEncoder.encode("Job offer not found", java.nio.charset.StandardCharsets.UTF_8));
             return mav;
         }
         if (request.getAttribute("mail") == null) {
             mav.setViewName("redirect:/joboffers/" + id + "?error=" + URLEncoder.encode("You must be logged in to edit a job offer.", java.nio.charset.StandardCharsets.UTF_8));
-            return  mav;
+            return mav;
         }
         if (!request.getAttribute("mail").equals(j.getCompany().getMail())) {
             mav.setViewName("redirect:/joboffers/" + id + "?error=" + URLEncoder.encode("You must be the owner of the job offer to edit it.", java.nio.charset.StandardCharsets.UTF_8));
@@ -141,8 +149,10 @@ public class JobOfferController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editJobOffer(@PathVariable Integer id, @RequestParam String title, @RequestParam String qualif, @RequestParam String selectedFields, @RequestParam String taskdescription) {
-        JobOffer j = jServ.findById(id);
-        if (j == null) {
+        JobOffer j;
+        try {
+            j = jServ.findById(id);
+        } catch (RuntimeException re) {
             return "redirect:/joboffers?error=" + URLEncoder.encode("Job offer not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         QualificationLevel q = qServ.findQualificationLevel(qualif);
@@ -158,8 +168,10 @@ public class JobOfferController {
 
     @RequestMapping("/delete/{id}")
     public String deleteJobOffer(@PathVariable Integer id, HttpSession request) {
-        JobOffer j = jServ.findById(id);
-        if (j == null) {
+        JobOffer j;
+        try {
+            j = jServ.findById(id);
+        } catch (RuntimeException re) {
             return "redirect:/joboffers?error=" + URLEncoder.encode("Job offer not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         if (request.getAttribute("mail") == null) {

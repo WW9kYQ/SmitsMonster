@@ -25,6 +25,7 @@ public class JobOfferServiceImp implements JobOfferService {
     public Integer countOfJobOffers() {
         return jobOfferDao.countOfJobOffers();
     }
+
     @Override
     public List<JobOffer> listOfJobOffers() {
         return jobOfferDao.findAll();
@@ -39,10 +40,12 @@ public class JobOfferServiceImp implements JobOfferService {
     public void addJobOffer(JobOffer a) {
         jobOfferDao.persist(a);
     }
+
     @Override
     public void editJobOffer(JobOffer a) {
         jobOfferDao.merge(a);
     }
+
     @Override
     public void deleteJobOffer(JobOffer a) {
         jobOfferDao.remove(a);

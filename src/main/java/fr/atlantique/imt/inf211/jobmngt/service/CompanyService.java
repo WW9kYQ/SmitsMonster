@@ -8,9 +8,14 @@ import java.util.List;
 
 public interface CompanyService {
     List<Company> listOfCompanies();
+
     Company getCompany(String mail);
+
     Integer countOfCompanies();
+
     void editCompany(Company c);
+
     void addCompany(Company c);
+
     void deleteCompany(Company c);
 }

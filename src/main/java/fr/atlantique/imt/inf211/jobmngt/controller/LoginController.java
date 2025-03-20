@@ -5,11 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +53,7 @@ public class LoginController {
         Optional<UserApp> user = compRepo.checkLogin(u);
         if (user.isPresent()) {
             u = user.get();
-            System.out.println("User found mail: " + u.getMail() +" usertype: "+ compRepo.getUserType(u.getMail()));
+            System.out.println("User found mail: " + u.getMail() + " usertype: " + compRepo.getUserType(u.getMail()));
             mav.addObject("user", u);
             session.setAttribute("mail", u.getMail());
             session.setAttribute("usertype", compRepo.getUserType(u.getMail()));
@@ -65,11 +68,15 @@ public class LoginController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(@RequestParam(required = false) String redirect, HttpServletRequest request, @RequestParam(required = false) String ack) {
         HttpSession session = request.getSession();
         session.setAttribute("mail", null);
         session.setAttribute("usertype", null);
-        return "redirect:/";
+        System.out.println(redirect);
+        if (redirect != null) {
+            return "redirect:" + redirect + "?ack=" + URLEncoder.encode(ack, java.nio.charset.StandardCharsets.UTF_8);
+        }
+        return "redirect:/?ack=" + URLEncoder.encode("Log out successful", java.nio.charset.StandardCharsets.UTF_8);
     }
 
 }

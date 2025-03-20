@@ -29,10 +29,33 @@
                        title="Edit candidate">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{|candidates/delete/${cand.mail}|}" class="btn btn-large btn-danger" alt="Delete"
-                       title="Delete candidate">
+                    <div class="modal fade" th:id="${'deleteCandidateModal' + cand.mail}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation of deletion</h5>
+                                    <button type="button" class="close btn btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">
+                                        Are you sure you want to delete candidate <span th:text="${cand.firstname}"></span> <span th:text="${cand.lastname}"></span> ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <form th:action="@{|candidates/delete/${cand.mail}|}" method="get">
+                                        <button type="submit" class="btn btn-danger" id="delRef">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${cand.mail == #ctx.session.mail}" class="btn btn-large btn-danger delBtn"
+                            data-bs-toggle="modal" th:data-bs-target="${'#deleteCandidateModal' + cand.mail}">
                         <i class="bi bi-trash"></i>
-                    </a>
+                    </button>
                 </th:block>
             </td>
         </tr>

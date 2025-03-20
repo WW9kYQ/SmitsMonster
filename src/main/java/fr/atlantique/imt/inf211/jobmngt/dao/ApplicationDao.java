@@ -76,7 +76,7 @@ public class ApplicationDao {
             return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            return null;
+            throw re;
         }
     }
 
@@ -104,7 +104,7 @@ public class ApplicationDao {
             return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            return null;
+            throw re;
         }
     }
 
@@ -118,7 +118,7 @@ public class ApplicationDao {
             return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            return null;
+            throw re;
         }
     }
 
@@ -133,7 +133,7 @@ public class ApplicationDao {
             return q.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            return null;
+            throw re;
         }
     }
 

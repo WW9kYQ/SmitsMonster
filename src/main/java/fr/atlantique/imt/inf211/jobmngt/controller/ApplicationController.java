@@ -56,8 +56,10 @@ public class ApplicationController {
     @RequestMapping("/{id}")
     public ModelAndView applicationDetails(@PathVariable Integer id, @RequestParam(required = false) String ack, @RequestParam(required = false) String error) {
         ModelAndView mav = new ModelAndView("application/applicationView");
-        Application a = aServ.findById(id);
-        if (a == null) {
+        Application a;
+        try {
+            a = aServ.findById(id);
+        } catch (RuntimeException re) {
             return new ModelAndView("redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8));
         }
         List<JobOffer> offerslist = jServ.findByFieldsAndQualif(a.getFields(), a.getQualificationlevel());
@@ -81,7 +83,6 @@ public class ApplicationController {
             return mav;
         }
         mav.setViewName("application/applicationAddForm");
-
         mav.addObject("fieldslist", fServ.listOfSectors());
         mav.addObject("levels", qServ.listOfQualificationLevels());
         mav.addObject("error", error);
@@ -97,8 +98,10 @@ public class ApplicationController {
         if (request.getAttribute("usertype").equals("company")) {
             return "redirect:/applications?error=" + URLEncoder.encode("You must be logged as a candidate to add an application", java.nio.charset.StandardCharsets.UTF_8);
         }
-        Candidate c = cServ.getCandidate((String) request.getAttribute("mail"));
-        if (c == null) {
+        Candidate c;
+        try {
+            c = cServ.getCandidate((String) request.getAttribute("mail"));
+        } catch (RuntimeException re) {
             return "redirect:/applications?error=" + URLEncoder.encode("Candidate not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         QualificationLevel q = qServ.findQualificationLevel(qualif);
@@ -108,8 +111,14 @@ public class ApplicationController {
         a.setQualificationlevel(q);
         a.setFields(f);
         a.setAppdate(Date.from(java.time.Instant.now()));
-        aServ.addApplication(a);
-        if (aServ.findById(a.getId()) == null) {
+        try {
+            aServ.addApplication(a);
+        } catch (RuntimeException re) {
+            return "redirect:/applications/add?error=" + URLEncoder.encode("Application not added", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        try {
+            aServ.findById(a.getId());
+        } catch (RuntimeException re) {
             return "redirect:/applications/add?error=" + URLEncoder.encode("Application not added", java.nio.charset.StandardCharsets.UTF_8);
         }
         return "redirect:/applications/" + a.getId() + "?ack=" + URLEncoder.encode("Application successfully added", java.nio.charset.StandardCharsets.UTF_8);
@@ -117,15 +126,17 @@ public class ApplicationController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView editApplication(@PathVariable Integer id, @RequestParam(required = false) String error, HttpSession request) {
-        Application a = aServ.findById(id);
+        Application a;
         ModelAndView mav = new ModelAndView();
-        if (a == null) {
+        try {
+            a = aServ.findById(id);
+        } catch (RuntimeException re) {
             mav.setViewName("redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8));
             return mav;
         }
         if (request.getAttribute("mail") == null) {
             mav.setViewName("redirect:/applications/" + id + "?error=" + URLEncoder.encode("You must be logged in to edit an application.", java.nio.charset.StandardCharsets.UTF_8));
-            return  mav;
+            return mav;
         }
         if (!request.getAttribute("mail").equals(a.getCandidate().getMail())) {
             mav.setViewName("redirect:/applications/" + id + "?error=" + URLEncoder.encode("You must be the owner of the application to edit it.", java.nio.charset.StandardCharsets.UTF_8));
@@ -141,8 +152,10 @@ public class ApplicationController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editApplication(@PathVariable Integer id, @RequestParam String cv, @RequestParam String qualif, @RequestParam String selectedFields) {
-        Application a = aServ.findById(id);
-        if (a == null) {
+        Application a;
+        try {
+            a = aServ.findById(id);
+        } catch (RuntimeException re) {
             return "redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         QualificationLevel q = qServ.findQualificationLevel(qualif);
@@ -151,8 +164,9 @@ public class ApplicationController {
         a.setQualificationlevel(q);
         a.setFields(f);
         a.setAppdate(Date.from(java.time.Instant.now()));
-        aServ.editApplication(a);
-        if (aServ.findById(a.getId()) == null) {
+        try {
+            aServ.editApplication(a);
+        } catch (RuntimeException re) {
             return "redirect:/applications?error=" + URLEncoder.encode("Application not edited", java.nio.charset.StandardCharsets.UTF_8);
         }
         return "redirect:/applications/" + a.getId() + "?ack=" + URLEncoder.encode("Application edited", java.nio.charset.StandardCharsets.UTF_8);
@@ -160,8 +174,10 @@ public class ApplicationController {
 
     @RequestMapping("/delete/{id}")
     public String deleteApplication(@PathVariable Integer id, HttpSession session) {
-        Application a = aServ.findById(id);
-        if (a == null) {
+        Application a;
+        try {
+            a = aServ.findById(id);
+        } catch (RuntimeException re) {
             return "redirect:/applications?error=" + URLEncoder.encode("Application not found", java.nio.charset.StandardCharsets.UTF_8);
         }
         if (session.getAttribute("mail") == null) {

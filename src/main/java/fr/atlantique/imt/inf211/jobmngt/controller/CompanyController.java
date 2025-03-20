@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.net.URLEncoder;
 import java.util.HashSet;
 
 @Controller
@@ -28,7 +30,6 @@ public class CompanyController {
     private CompanyService cServ;
 
 
-
     @RequestMapping("/panel")
     public ModelAndView companyPanel() {
         ModelAndView mav = new ModelAndView("company/companyPanel");
@@ -37,23 +38,30 @@ public class CompanyController {
     }
 
     @RequestMapping("")
-    public ModelAndView listCompanies() {
+    public ModelAndView listCompanies(@RequestParam(required = false) String error, @RequestParam(required = false) String ack) {
         //model and view is located in the templates/company folder
         ModelAndView mav = new ModelAndView("company/companyList");
         mav.addObject("companieslist", cServ.listOfCompanies());
+        mav.addObject("error", error);
+        mav.addObject("ack", ack);
         return mav;
     }
 
     @RequestMapping("/{mail}")
-    public ModelAndView viewCompany(@PathVariable String mail) {
-        Company company = cServ.getCompany(mail);
-
-        if (company == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
+    public ModelAndView viewCompany(@PathVariable String mail, @RequestParam(required = false) String error, @RequestParam(required = false) String ack) {
+        Company company;
+        ModelAndView mav = new ModelAndView();
+        try {
+            company = cServ.getCompany(mail);
+        } catch (RuntimeException re) {
+            mav.setViewName("redirect:/companies?error=" + URLEncoder.encode("Company not found", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
         }
         System.out.println("Company found: " + company.getMail() + ", " + company.getDenomination());
-        ModelAndView mav = new ModelAndView("company/companyView");
+        mav.setViewName("company/companyView");
         mav.addObject("company", company);
+        mav.addObject("error", error);
+        mav.addObject("ack", ack);
         return mav;
     }
 
@@ -62,14 +70,14 @@ public class CompanyController {
         return "company/companyAddForm";
     }
 
-    @RequestMapping(value="/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addCompany(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, Model model) {
         //check that email is  a mail with regex
         if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             model.addAttribute("mailError", "Invalid email format");
             return "company/companyAddForm";
         }
-        if (password.length()<4) {
+        if (password.length() < 4) {
             model.addAttribute("passwordError", "Password must be at least 4 characters long");
             return "company/companyAddForm";
         }
@@ -79,45 +87,83 @@ public class CompanyController {
         c.setDenomination(denomination);
         c.setDescription(description);
         c.getUserapp().setCity(city);
-        cServ.addCompany(c);
+        try {
+            cServ.addCompany(c);
+        } catch (RuntimeException re) {
+            return "redirect:/companies?error=" + URLEncoder.encode("Company not added", java.nio.charset.StandardCharsets.UTF_8);
+        }
         return "redirect:/companies/" + mail;
 
     }
-    public ModelAndView checkMail(String mail){
-        ModelAndView mav = new ModelAndView("company/companyAddForm");
-        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            mav.addObject("error", "Invalid email");
-            return mav;
-        }
-        return null;
-    }
 
-    @RequestMapping("/remove/{mail}")
-    public String removeCompany(@PathVariable String mail, HttpServletRequest request) {
-        Company c = cServ.getCompany(mail);
-        cServ.deleteCompany(c);
-        HttpSession session = request.getSession();
-        session.setAttribute("mail", null);
-        session.setAttribute("usertype", null);
-        return "redirect:/companies";
+    @RequestMapping("/delete/{mail}")
+    public String removeCompany(@PathVariable String mail, HttpSession session) {
+        Company c;
+        try {
+            c = cServ.getCompany(mail);
+        } catch (RuntimeException re) {
+            return "redirect:/companies?error=" + URLEncoder.encode("Company not found", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (session.getAttribute("mail") == null) {
+            return "redirect:/companies?error=" + URLEncoder.encode("You must be logged in to delete a company.", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (!session.getAttribute("mail").equals(c.getMail())) {
+            return "redirect:/companies?error=" + URLEncoder.encode("You must be the owner of the company to delete it.", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        try {
+            cServ.deleteCompany(c);
+        } catch (RuntimeException re) {
+            return "redirect:/companies?error=" + URLEncoder.encode("Company not removed", java.nio.charset.StandardCharsets.UTF_8);
+        }
+
+        return "redirect:/login/logout?redirect=/companies&ack=" + URLEncoder.encode("Company deleted successfully", java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @RequestMapping("/edit/{mail}")
-    public ModelAndView editCompany(@PathVariable String mail) {
-        ModelAndView mav = new ModelAndView("company/companyEditForm");
-
-        Company c = cServ.getCompany(mail);
+    public ModelAndView editCompany(@PathVariable String mail, HttpSession request) {
+        ModelAndView mav = new ModelAndView();
+        Company c;
+        try {
+            c = cServ.getCompany(mail);
+        } catch (RuntimeException re) {
+            mav.setViewName("redirect:/companies?error=" + URLEncoder.encode("Company not found", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
+        }
+        if (request.getAttribute("mail") == null) {
+            mav.setViewName("redirect:/companies/" + mail + "?error=" + URLEncoder.encode("You must be logged in to edit a company.", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
+        }
+        if (!request.getAttribute("mail").equals(c.getMail())) {
+            mav.setViewName("redirect:/companies/" + mail + "?error=" + URLEncoder.encode("You must be the owner of the company to edit it.", java.nio.charset.StandardCharsets.UTF_8));
+            return mav;
+        }
+        mav.setViewName("company/companyEditForm");
         mav.addObject("company", c);
         return mav;
     }
-    @RequestMapping(value="/edit/{mail}", method = RequestMethod.POST)
-    public String editCompany(@PathVariable String mail ,@RequestParam String description, @RequestParam String denomination, @RequestParam String city) {
-        Company c = cServ.getCompany(mail);
+
+    @RequestMapping(value = "/edit/{mail}", method = RequestMethod.POST)
+    public String editCompany(@PathVariable String mail, @RequestParam String description, @RequestParam String denomination, @RequestParam String city, HttpSession request) {
+        Company c;
+        try {
+            c = cServ.getCompany(mail);
+        } catch (RuntimeException re) {
+            return "redirect:/companies?error=" + URLEncoder.encode("Company not found", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (request.getAttribute("mail") == null) {
+            return "redirect:/companies/" + mail + "?error=" + URLEncoder.encode("You must be logged in to edit a company.", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        if (!request.getAttribute("mail").equals(c.getMail())) {
+            return "redirect:/companies/" + mail + "?error=" + URLEncoder.encode("You must be the owner of the company to edit it.", java.nio.charset.StandardCharsets.UTF_8);
+        }
         c.setDescription(description);
         c.setDenomination(denomination);
         c.getUserapp().setCity(city);
-
-        cServ.editCompany(c);
+        try {
+            cServ.editCompany(c);
+        } catch (RuntimeException re) {
+            return "redirect:/companies?error=" + URLEncoder.encode("Error while editing company", java.nio.charset.StandardCharsets.UTF_8);
+        }
         return "redirect:/companies/" + mail;
     }
 

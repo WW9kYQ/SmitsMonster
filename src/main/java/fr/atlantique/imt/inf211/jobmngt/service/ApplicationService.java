@@ -11,11 +11,17 @@ import java.util.Set;
 
 public interface ApplicationService {
     Integer countOfApplications();
+
     List<Application> listOfApplications();
+
     Application findById(Integer id);
+
     void addApplication(Application a);
+
     void editApplication(Application a);
+
     void deleteApplication(Application a);
+
     List<Application> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualif);
 
 }

@@ -10,10 +10,16 @@ import java.util.Set;
 
 public interface JobOfferService {
     List<JobOffer> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualif);
+
     Integer countOfJobOffers();
+
     List<JobOffer> listOfJobOffers();
+
     JobOffer findById(Integer id);
+
     void addJobOffer(JobOffer a);
+
     void editJobOffer(JobOffer a);
+
     void deleteJobOffer(JobOffer a);
 }

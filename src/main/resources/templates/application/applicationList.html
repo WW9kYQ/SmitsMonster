@@ -35,10 +35,33 @@
                        title="Edit application">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{|applications/delete/${app.id}|}" class="btn btn-large btn-danger" alt="Delete"
-                       title="Delete application">
+                    <div class="modal fade" th:id="${'deleteApplicationModal' + app.id}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation of deletion</h5>
+                                    <button type="button" class="close btn btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">
+                                        Are you sure you want to delete application n°<span th:text="${app.id}"></span> ?</span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <form th:action="@{|applications/delete/${app.id}|}" method="get">
+                                        <button type="submit" class="btn btn-danger" id="delRef">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${app.candidate.userapp.mail == #ctx.session.mail}" class="btn btn-large btn-danger delBtn"
+                            data-bs-toggle="modal" th:data-bs-target="${'#deleteApplicationModal' + app.id}">
                         <i class="bi bi-trash"></i>
-                    </a>
+                    </button>
 
                 </th:block>
             </td>

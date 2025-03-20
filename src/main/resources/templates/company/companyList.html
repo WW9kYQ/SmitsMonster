@@ -25,17 +25,37 @@
                     <i class="bi bi-eye"></i>
                 </a>
                 <th:block th:if="${#ctx.session.mail} == ${comp.mail}">
-                    <a th:href="@{companies/edit/{companyMail}(companyMail=${comp.mail})}"
+                    <a th:href="@{|companies/edit/${comp.mail}|}"
                        class="btn btn-large btn-success" alt="Edit" title="edit company">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:href="@{companies/remove/{companyMail}(companyMail=${comp.mail})}"
-                       class="btn btn-large btn-danger"
-                       alt="Delete" title="delete company "
-                       data-id="@{companies/{companyId}/delete(companyId=${comp.id})}"
-                       th:attrappend="title=${' ' + comp.denomination}">
+                    <div class="modal fade" th:id="${'deleteCompanyModal' + comp.mail}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation of deletion</h5>
+                                    <button type="button" class="close btn btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="alert alert-danger">
+                                        Are you sure you want to delete company <span th:text="${comp.denomination}"></span> ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <form th:action="@{|companies/delete/${comp.mail}|}" method="get">
+                                        <button type="submit" class="btn btn-danger" id="delRef">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${comp.mail == #ctx.session.mail}" class="btn btn-large btn-danger delBtn"
+                            data-bs-toggle="modal" th:data-bs-target="${'#deleteCompanyModal' + comp.mail}">
                         <i class="bi bi-trash"></i>
-                    </a>
+                    </button>
                 </th:block>
             </td>
         </tr>

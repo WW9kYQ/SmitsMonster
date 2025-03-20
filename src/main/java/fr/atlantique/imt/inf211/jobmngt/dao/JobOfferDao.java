@@ -62,8 +62,7 @@ public class JobOfferDao {
             return result;
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "merge failed", re);
-            return null;
-//            throw re;
+            throw re;
         }
     }
 
@@ -75,8 +74,7 @@ public class JobOfferDao {
             return query.getResultList();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get all failed", re);
-            return null;
-//            throw re;
+            throw re;
         }
     }
 
@@ -90,8 +88,7 @@ public class JobOfferDao {
             return q.getSingleResult();
         } catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
-            return null;
-//            throw re;
+            throw re;
         }
     }
 
@@ -110,21 +107,33 @@ public class JobOfferDao {
 
     @Transactional(readOnly = true)
     public List<JobOffer> findByFieldAndQualif(Field field, QualificationLevel qualificationLevel) {
-        TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldAndQualif", JobOffer.class);
-        q.setParameter("field", field);
-        q.setParameter("qualificationLevel", qualificationLevel);
-        logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
-        return q.getResultList();
+        logger.log(Level.INFO, "getting Joboffer instance by field: " + field + " and qualif: " + qualificationLevel);
+        try {
+            TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldAndQualif", JobOffer.class);
+            q.setParameter("field", field);
+            q.setParameter("qualificationLevel", qualificationLevel);
+            logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
+            return q.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
     }
 
     @Transactional(readOnly = true)
     public List<JobOffer> findByFieldsAndQualif(Set<Field> fields, QualificationLevel qualificationLevel) {
-        TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldsAndQualif", JobOffer.class);
-        q.setParameter("fields", fields);
-        q.setParameter("qualificationlevel", qualificationLevel);
-        logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
-        return q.getResultList();
+        try {
+            TypedQuery<JobOffer> q = entityManager.createNamedQuery("JobOffer.findByFieldsAndQualif", JobOffer.class);
+            q.setParameter("fields", fields);
+            q.setParameter("qualificationlevel", qualificationLevel);
+            logger.log(Level.INFO, "Number of jpb offers found: " + q.getResultList().size());
+            return q.getResultList();
+        } catch (RuntimeException re) {
+            logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
     }
+
     //countOfJobOffers
     @Transactional(readOnly = true)
     public Integer countOfJobOffers() {
