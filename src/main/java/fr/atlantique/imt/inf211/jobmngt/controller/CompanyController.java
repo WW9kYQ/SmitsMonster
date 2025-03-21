@@ -73,14 +73,22 @@ public class CompanyController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addCompany(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, Model model) {
         //check that email is  a mail with regex
-        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        boolean errormail= false;
+        boolean errorpwd = false;
+        if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") ) {
             model.addAttribute("mailError", "Invalid email format");
-            return "company/companyAddForm";
+            errormail= true;
+            //return "company/companyAddForm";
         }
         if (password.length() < 4) {
             model.addAttribute("passwordError", "Password must be at least 4 characters long");
+            //return "company/companyAddForm";
+            errorpwd= true;
+        }
+        if (errorpwd && errormail){
             return "company/companyAddForm";
         }
+
         UserApp userApp = new UserApp(mail, password);
         Company c = new Company();
         c.setUserapp(userApp);

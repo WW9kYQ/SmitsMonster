@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 @Table(name = "userapp"
         , schema = "public"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mail",scope= UserApp.class)
 public class UserApp implements java.io.Serializable {
 
 

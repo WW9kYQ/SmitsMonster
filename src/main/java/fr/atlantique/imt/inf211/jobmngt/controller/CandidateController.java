@@ -105,12 +105,21 @@ public class CandidateController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addCandidate(@RequestParam String mail, @RequestParam String password, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, Model model) {
+        boolean errormail= false;
+        boolean errorpwd = false;
+
         if (!mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             model.addAttribute("mailError", "Invalid email format");
-            return "candidate/candidateAddForm";
+            //return "candidate/candidateAddForm";
+            errormail= true;
         }
         if (password.length() < 4) {
             model.addAttribute("passwordError", "Password must be at least 4 characters long");
+            //return "candidate/candidateAddForm";
+            errorpwd= true;
+        }
+
+        if (errorpwd && errormail){
             return "candidate/candidateAddForm";
         }
         UserApp userApp = new UserApp(mail, password);

@@ -46,7 +46,7 @@
             </thead>
             <tbody>
             <tr th:each="job : ${company.joboffers}">
-                <th scope="row" th:text="${app.id}"/>
+                <th scope="row" th:text="${job.id}"/>
                 <td th:text="${job.title}"/>
                 <td th:text="${job.taskdescription}"/>
                 <td th:text="${job.publicationdate}"/>
