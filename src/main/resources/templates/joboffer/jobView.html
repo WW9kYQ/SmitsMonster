@@ -53,7 +53,7 @@
         </fieldset>
     </form>
     <!--    th:if="${#ctx.session.mail != null} and ${#ctx.session.usertype == 'company'-->
-    <aside th:if="${#lists.size(applicationslist) > 0 } and ${#ctx.session.mail == job.company.mail}">
+    <aside th:if="${#lists.size(applicationslist) > 0 }">
         <h2>List of eligible Applications</h2>
         <table class="table table-striped">
             <thead>

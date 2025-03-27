@@ -87,11 +87,6 @@
                        alt="Job offer modification" class="btn btn-large btn-success">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a th:if="${#ctx.session.mail} == ${offer.company.mail}"
-                       th:href="@{|/joboffers/delete/${offer.id}|}"
-                       alt="Job offer deletion" class="btn btn-large btn-danger">
-                        <i class="bi bi-trash"></i>
-                    </a>
                     <a th:if="${#ctx.session.mail == offer.company.mail}" href="" class="btn btn-large btn-danger"
                        alt="Delete"
                        title="Delete job offer" data-bs-toggle="modal" data-bs-target="#deleteModal"
